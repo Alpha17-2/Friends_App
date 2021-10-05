@@ -10,7 +10,7 @@ class homeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    addNewProfile(BuildContext context) {
+    profileBuilder(BuildContext context) {
       return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -28,7 +28,7 @@ class homeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Create a New Profle",
+                          "Create a New Profile",
                           style: TextStyle(
                               color: Color(0xfb124568),
                               fontSize: 25,
@@ -114,7 +114,7 @@ class homeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.add), onPressed: () => addNewProfile(context)),
+              icon: Icon(Icons.add), onPressed: () => profileBuilder(context)),
           IconButton(
             icon: Icon(Icons.alarm),
             onPressed: () => print('Button Clicked'),
