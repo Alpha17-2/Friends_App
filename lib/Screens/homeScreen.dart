@@ -7,6 +7,13 @@ import 'package:provider/provider.dart';
 class homeScreen extends StatelessWidget {
   //const homeScreen({Key? key}) : super(key: key);
   final _profileFormKey = GlobalKey<FormState>();
+  TextEditingController nameControlller = new TextEditingController();
+  TextEditingController sexControlller = new TextEditingController();
+  TextEditingController ageControlller = new TextEditingController();
+  TextEditingController phoneControlller = new TextEditingController();
+  TextEditingController eduControlller = new TextEditingController();
+ 
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +43,7 @@ class homeScreen extends StatelessWidget {
                         ),
                         Opacity(opacity: 0, child: Divider()),
                         TextFormField(
+                          controller: nameControlller,
                           validator: (value) {
                             if (value.isEmpty)
                               return 'This field cannot be empty';
@@ -47,6 +55,7 @@ class homeScreen extends StatelessWidget {
                           ),
                         ),
                         TextFormField(
+                          controller: ageControlller,
                           validator: (value) {
                             if (value.isEmpty)
                               return 'This field cannot be empty';
@@ -58,6 +67,7 @@ class homeScreen extends StatelessWidget {
                           ),
                         ),
                         TextFormField(
+                          controller: sexControlller,
                           validator: (value) {
                             if (value.isEmpty)
                               return 'This field cannot be empty';
@@ -69,6 +79,7 @@ class homeScreen extends StatelessWidget {
                           ),
                         ),
                         TextFormField(
+                          controller: eduControlller,
                           validator: (value) {
                             if (value.isEmpty)
                               return 'This field cannot be empty';
@@ -80,6 +91,7 @@ class homeScreen extends StatelessWidget {
                           ),
                         ),
                         TextFormField(
+                          controller: phoneControlller,
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value.isEmpty)
@@ -89,11 +101,37 @@ class homeScreen extends StatelessWidget {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: "Number"
-                            ,
+                            hintText: "Number",
                             labelText: "Contact Number",
                           ),
-                        )
+                        ),
+                        Opacity(opacity: 0, child: Divider()),
+                        TextButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xfb124568))),
+                            onPressed: () {
+                              if (_profileFormKey.currentState.validate()) {
+                                Provider.of<ProfileProvider>(context,listen: false)
+                                    .addProfile(
+                                      Profile(
+                                        age: ageControlller.text.toString(),
+                                        edu: eduControlller.text.toString(),
+                                        sex: sexControlller.text.toString(),
+                                        name: nameControlller.text.toString(),
+                                        phone_number: phoneControlller.text.toString(),
+                                      
+                                      )
+                                    );
+                              }
+                            },
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            )),
                       ],
                     ),
                   ),
@@ -136,7 +174,7 @@ class homeScreen extends StatelessWidget {
                   ),
                 ),
               )
-            : null,
+            : Center(child: Text('Total Friends = ${displayListOfFriends.length}'),),
       ),
     );
   }
