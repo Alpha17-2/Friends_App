@@ -12,8 +12,6 @@ class homeScreen extends StatelessWidget {
   TextEditingController ageControlller = new TextEditingController();
   TextEditingController phoneControlller = new TextEditingController();
   TextEditingController eduControlller = new TextEditingController();
- 
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,17 +110,16 @@ class homeScreen extends StatelessWidget {
                                     Color(0xfb124568))),
                             onPressed: () {
                               if (_profileFormKey.currentState.validate()) {
-                                Provider.of<ProfileProvider>(context,listen: false)
-                                    .addProfile(
-                                      Profile(
-                                        age: ageControlller.text.toString(),
-                                        edu: eduControlller.text.toString(),
-                                        sex: sexControlller.text.toString(),
-                                        name: nameControlller.text.toString(),
-                                        phone_number: phoneControlller.text.toString(),
-                                      
-                                      )
-                                    );
+                                Provider.of<ProfileProvider>(context,
+                                        listen: false)
+                                    .addProfile(Profile(
+                                  age: ageControlller.text.toString(),
+                                  edu: eduControlller.text.toString(),
+                                  sex: sexControlller.text.toString(),
+                                  name: nameControlller.text.toString(),
+                                  phone_number:
+                                      phoneControlller.text.toString(),
+                                ));
                               }
                             },
                             child: Text(
@@ -174,8 +171,32 @@ class homeScreen extends StatelessWidget {
                   ),
                 ),
               )
-            : Center(child: Text('Total Friends = ${displayListOfFriends.length}'),),
+            : ListView.builder(
+                itemCount: displayListOfFriends.length,
+                itemBuilder: (context, index) {
+                  return displayListTileForFriends(
+                      context, displayListOfFriends[index]);
+                },
+              ),
       ),
     );
   }
+}
+
+displayListTileForFriends(BuildContext context, Profile profile) {
+  return ListTile(
+    tileColor: Colors.white,
+    title: Text(
+      profile.name,
+      style: TextStyle(
+          color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+    ),
+    leading: CircleAvatar(
+      backgroundColor: Colors.grey[200],
+      child: Icon(Icons.person),
+    ),
+    trailing: Text(profile.edu),
+    subtitle:
+        Text(profile.sex),
+  );
 }
