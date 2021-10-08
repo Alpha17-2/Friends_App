@@ -1,3 +1,4 @@
+import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Profile.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
 import 'package:flutter/material.dart';
@@ -184,19 +185,41 @@ class homeScreen extends StatelessWidget {
 }
 
 displayListTileForFriends(BuildContext context, Profile profile) {
-  return ListTile(
-    tileColor: Colors.white,
-    title: Text(
-      profile.name,
-      style: TextStyle(
-          color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+  return Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 10,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white24,
+          borderRadius: BorderRadius.circular(10)
+        ),
+        height: displayHeight(context)*0.1,
+        width: displayWidth(context),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+
+            // This widget displays the profile picture (Icons.person if DP not found)
+            Positioned(
+              left: displayWidth(context)*0.04,
+              child: CircleAvatar(
+              radius: displayWidth(context)*0.06,
+              backgroundColor: Colors.indigo[200],
+              child: Icon(Icons.person,color: Colors.black,),
+            )),
+
+            // This widget displays the profile name
+            Positioned(
+              top: displayHeight(context)*0.015,
+              child: Text(profile.name,style: TextStyle(
+              color: Colors.black,fontSize: displayWidth(context)*0.038,
+              fontWeight: FontWeight.bold
+            ),))
+          ],
+        ),
+      ),
     ),
-    leading: CircleAvatar(
-      backgroundColor: Colors.grey[200],
-      child: Icon(Icons.person),
-    ),
-    trailing: Text(profile.edu),
-    subtitle:
-        Text(profile.sex),
   );
 }
