@@ -214,9 +214,31 @@ displayListTileForFriends(BuildContext context, Profile profile) {
             Positioned(
               top: displayHeight(context)*0.015,
               child: Text(profile.name,style: TextStyle(
-              color: Colors.black,fontSize: displayWidth(context)*0.038,
+              color: Colors.black,fontSize: displayWidth(context)*0.04,
               fontWeight: FontWeight.bold
-            ),))
+            ),)),
+
+            Positioned(
+              left: displayWidth(context)*0.32,
+              bottom: displayHeight(context)*0.02,
+              child: Text('${profile.age} Y/O',style: TextStyle(
+              color: Colors.black,
+              fontSize: displayWidth(context)*0.035,fontWeight: FontWeight.w500
+            ),)),
+            Positioned(
+              right: displayWidth(context)*0.32,
+              bottom: displayHeight(context)*0.02,
+              child: Text(profile.sex,style: TextStyle(
+              color: Colors.black,
+              fontSize: displayWidth(context)*0.035,fontWeight: FontWeight.w500
+            ),)),
+            Positioned(
+              right: displayWidth(context)*0.04,
+              //bottom: displayHeight(context)*0.02,
+              child: IconButton(
+                onPressed: () => print('Navigate to detail screen'),
+                icon: Icon(Icons.forward,color: Colors.teal[600],size: displayWidth(context)*0.1,),
+              )),
           ],
         ),
       ),
