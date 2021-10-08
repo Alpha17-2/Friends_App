@@ -9,6 +9,15 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteProfile(Profile profile) {
+    int indexToDelete =
+        listOfProfiles.indexWhere((element) => element.id == profile.id);
+    if (indexToDelete != -1) {
+      listOfProfiles.removeAt(indexToDelete);
+    }
+    notifyListeners();
+  }
+
   List<Profile> get fetchListOfProfiles {
     return [...listOfProfiles];
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Profile.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
@@ -110,6 +112,9 @@ class homeScreen extends StatelessWidget {
                                 backgroundColor: MaterialStateProperty.all(
                                     Color(0xfb124568))),
                             onPressed: () {
+                              Random random = Random();
+                              int number = random.nextInt(100000);
+                              String id = number.toString();
                               if (_profileFormKey.currentState.validate()) {
                                 Provider.of<ProfileProvider>(context,
                                         listen: false)
@@ -120,6 +125,7 @@ class homeScreen extends StatelessWidget {
                                   name: nameControlller.text.toString(),
                                   phone_number:
                                       phoneControlller.text.toString(),
+                                  id: id,
                                 ));
                               }
                             },
@@ -185,61 +191,79 @@ class homeScreen extends StatelessWidget {
 }
 
 displayListTileForFriends(BuildContext context, Profile profile) {
-  return Padding(
-    padding: const EdgeInsets.all(10.0),
-    child: Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 10,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white24,
-          borderRadius: BorderRadius.circular(10)
-        ),
-        height: displayHeight(context)*0.1,
-        width: displayWidth(context),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
+  return GestureDetector(
+    onTap: () {
+      Provider.of<ProfileProvider>(context,listen: false).deleteProfile(profile);
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 10,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white24, borderRadius: BorderRadius.circular(10)),
+          height: displayHeight(context) * 0.1,
+          width: displayWidth(context),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // This widget displays the profile picture (Icons.person if DP not found)
+              Positioned(
+                  left: displayWidth(context) * 0.04,
+                  child: CircleAvatar(
+                    radius: displayWidth(context) * 0.06,
+                    backgroundColor: Colors.indigo[200],
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                  )),
 
-            // This widget displays the profile picture (Icons.person if DP not found)
-            Positioned(
-              left: displayWidth(context)*0.04,
-              child: CircleAvatar(
-              radius: displayWidth(context)*0.06,
-              backgroundColor: Colors.indigo[200],
-              child: Icon(Icons.person,color: Colors.black,),
-            )),
+              // This widget displays the profile name
+              Positioned(
+                  top: displayHeight(context) * 0.015,
+                  child: Text(
+                    profile.name,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: displayWidth(context) * 0.04,
+                        fontWeight: FontWeight.bold),
+                  )),
 
-            // This widget displays the profile name
-            Positioned(
-              top: displayHeight(context)*0.015,
-              child: Text(profile.name,style: TextStyle(
-              color: Colors.black,fontSize: displayWidth(context)*0.04,
-              fontWeight: FontWeight.bold
-            ),)),
-
-            Positioned(
-              left: displayWidth(context)*0.32,
-              bottom: displayHeight(context)*0.02,
-              child: Text('${profile.age} Y/O',style: TextStyle(
-              color: Colors.black,
-              fontSize: displayWidth(context)*0.035,fontWeight: FontWeight.w500
-            ),)),
-            Positioned(
-              right: displayWidth(context)*0.32,
-              bottom: displayHeight(context)*0.02,
-              child: Text(profile.sex,style: TextStyle(
-              color: Colors.black,
-              fontSize: displayWidth(context)*0.035,fontWeight: FontWeight.w500
-            ),)),
-            Positioned(
-              right: displayWidth(context)*0.04,
-              //bottom: displayHeight(context)*0.02,
-              child: IconButton(
-                onPressed: () => print('Navigate to detail screen'),
-                icon: Icon(Icons.forward,color: Colors.teal[600],size: displayWidth(context)*0.1,),
-              )),
-          ],
+              Positioned(
+                  left: displayWidth(context) * 0.32,
+                  bottom: displayHeight(context) * 0.02,
+                  child: Text(
+                    '${profile.age} Y/O',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: displayWidth(context) * 0.035,
+                        fontWeight: FontWeight.w500),
+                  )),
+              Positioned(
+                  right: displayWidth(context) * 0.32,
+                  bottom: displayHeight(context) * 0.02,
+                  child: Text(
+                    profile.sex,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: displayWidth(context) * 0.035,
+                        fontWeight: FontWeight.w500),
+                  )),
+              Positioned(
+                  right: displayWidth(context) * 0.04,
+                  //bottom: displayHeight(context)*0.02,
+                  child: IconButton(
+                    onPressed: () => print('Navigate to detail screen'),
+                    icon: Icon(
+                      Icons.forward,
+                      color: Colors.teal[600],
+                      size: displayWidth(context) * 0.1,
+                    ),
+                  )),
+            ],
+          ),
         ),
       ),
     ),
