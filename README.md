@@ -1,16 +1,36 @@
-# firstapp
+## Friends App
 
-A new Flutter project.
+An app made with Flutter and Dart that allows users to save their friend's details.
 
-## Getting Started
+# Requirements
 
-This project is a starting point for a Flutter application.
+* Dart sdk: ">=2.12.0-0 <3.0.0
+* [Flutter ">=2.0.6"](https://flutter.dev/docs/get-started/install)
+* Android: minSdkVersion 17 and add support for androidx (see AndroidX Migration to migrate an existing app)
 
-A few resources to get you started if this is your first Flutter project:
+# Get Started
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+* Fork the the project
+* Clone the repository to your local machine 
+* Checkout the master branch 
+* run command - 'flutter run' 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Developed by
+
+Subhojeet Sahoo
+
+# Get in touch
+
+* [Instagram](https://www.instagram.com/alpha__77__/)
+* [Twitter](https://twitter.com/subhojeet_sahoo)
+
+## Contribute
+
+1. Check out the issues .
+2. Comment 'want to work on this' to work on the particular issue and wait for the admin to assign you with the task .
+3. After you are assigned with a task fork the the project
+4. Make required changes and commit (git commit -m 'Added some feature or fixed this issue') .
+5. Create new Pull Request
+
+## Happy Fluttering 
+
