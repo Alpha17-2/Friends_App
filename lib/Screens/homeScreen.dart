@@ -14,6 +14,15 @@ class homeScreen extends StatefulWidget {
 
 class _homeScreenState extends State<homeScreen> {
   bool isScreenLoading;
+  TextEditingController nameControlller = new TextEditingController();
+
+  TextEditingController sexControlller = new TextEditingController();
+
+  TextEditingController ageControlller = new TextEditingController();
+
+  TextEditingController phoneControlller = new TextEditingController();
+
+  TextEditingController eduControlller = new TextEditingController();
 
   @override
   void initState() {
@@ -24,6 +33,11 @@ class _homeScreenState extends State<homeScreen> {
   @override
   void dispose() {
     super.dispose();
+    ageControlller.dispose();
+    phoneControlller.dispose();
+    eduControlller.dispose();
+    phoneControlller.dispose();
+    sexControlller.dispose();
   }
 
   @override
@@ -35,16 +49,6 @@ class _homeScreenState extends State<homeScreen> {
   }
 
   final _profileFormKey = GlobalKey<FormState>();
-
-  TextEditingController nameControlller = new TextEditingController();
-
-  TextEditingController sexControlller = new TextEditingController();
-
-  TextEditingController ageControlller = new TextEditingController();
-
-  TextEditingController phoneControlller = new TextEditingController();
-
-  TextEditingController eduControlller = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +190,8 @@ class _homeScreenState extends State<homeScreen> {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.person_add), onPressed: () => profileBuilder(context)),
+              icon: Icon(Icons.person_add),
+              onPressed: () => profileBuilder(context)),
         ],
       ),
       body: Container(
@@ -194,27 +199,27 @@ class _homeScreenState extends State<homeScreen> {
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: (isScreenLoading)
-        ? Center(
-          child: CircularProgressIndicator(),
-        )
-        : (displayListOfFriends.length == 0)
             ? Center(
-                child: Text(
-                  'Ooops !! Its seems you are an introvert',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.width * 0.06,
-                  ),
-                ),
+                child: CircularProgressIndicator(),
               )
-            : ListView.builder(
-                itemCount: displayListOfFriends.length,
-                itemBuilder: (context, index) {
-                  return displayListTileForFriends(
-                      context, displayListOfFriends[index]);
-                },
-              ),
+            : (displayListOfFriends.length == 0)
+                ? Center(
+                    child: Text(
+                      'Ooops !! Its seems you are an introvert',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: displayListOfFriends.length,
+                    itemBuilder: (context, index) {
+                      return displayListTileForFriends(
+                          context, displayListOfFriends[index]);
+                    },
+                  ),
       ),
     );
   }
