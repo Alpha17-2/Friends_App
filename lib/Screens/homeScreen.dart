@@ -186,11 +186,7 @@ class _homeScreenState extends State<homeScreen> {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.add), onPressed: () => profileBuilder(context)),
-          IconButton(
-            icon: Icon(Icons.alarm),
-            onPressed: () => print('Button Clicked'),
-          ),
+              icon: Icon(Icons.person_add), onPressed: () => profileBuilder(context)),
         ],
       ),
       body: Container(
