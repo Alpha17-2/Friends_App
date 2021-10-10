@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Profile.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
@@ -7,13 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class homeScreen extends StatelessWidget {
+class homeScreen extends StatefulWidget {
   //const homeScreen({Key? key}) : super(key: key);
+  @override
+  _homeScreenState createState() => _homeScreenState();
+}
+
+class _homeScreenState extends State<homeScreen> {
+  bool isScreenLoading;
+
+  @override
+  void initState() {
+    isScreenLoading = true;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    await Provider.of<ProfileProvider>(context).fetchAndSetData().then((value) {
+      isScreenLoading = false;
+    });
+    super.didChangeDependencies();
+  }
+
   final _profileFormKey = GlobalKey<FormState>();
+
   TextEditingController nameControlller = new TextEditingController();
+
   TextEditingController sexControlller = new TextEditingController();
+
   TextEditingController ageControlller = new TextEditingController();
+
   TextEditingController phoneControlller = new TextEditingController();
+
   TextEditingController eduControlller = new TextEditingController();
 
   @override
@@ -167,7 +197,11 @@ class homeScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
-        child: (displayListOfFriends.length == 0)
+        child: (isScreenLoading)
+        ? Center(
+          child: CircularProgressIndicator(),
+        )
+        : (displayListOfFriends.length == 0)
             ? Center(
                 child: Text(
                   'Ooops !! Its seems you are an introvert',
@@ -193,7 +227,8 @@ class homeScreen extends StatelessWidget {
 displayListTileForFriends(BuildContext context, Profile profile) {
   return GestureDetector(
     onTap: () {
-      Provider.of<ProfileProvider>(context,listen: false).deleteProfile(profile);
+      Provider.of<ProfileProvider>(context, listen: false)
+          .deleteProfile(profile);
     },
     child: Padding(
       padding: const EdgeInsets.all(10.0),
