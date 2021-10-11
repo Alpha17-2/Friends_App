@@ -228,8 +228,7 @@ class _homeScreenState extends State<homeScreen> {
 displayListTileForFriends(BuildContext context, Profile profile) {
   return GestureDetector(
     onTap: () {
-      Provider.of<ProfileProvider>(context, listen: false)
-          .deleteProfile(profile);
+     // to-do -> Navigate to Friend's detail screen
     },
     child: Padding(
       padding: const EdgeInsets.all(10.0),
