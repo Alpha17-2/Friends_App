@@ -1,5 +1,5 @@
 import 'package:firstapp/Providers/ProfileProvider.dart';
-import 'package:firstapp/Screens/homeScreen.dart';
+import 'package:firstapp/Screens/authScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     ],
     child: MaterialApp(
        debugShowCheckedModeBanner: false,
-        home: homeScreen(),
+        home: authScreen(),
       ),
     );
   }
