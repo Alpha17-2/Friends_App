@@ -4,6 +4,7 @@ import 'package:firstapp/Providers/AuthOptions.dart';
 import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class authScreen extends StatelessWidget {
   //const authScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class authScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool loginState = Provider.of<AuthOptions>(context).fetchLoginState;
     bool viewPass = Provider.of<AuthOptions>(context).fetchObscureTextInfo;
+    bool authStatus = Provider.of<AuthOptions>(context).fetchAuthStatus;
     final authservice _auth = authservice(FirebaseAuth.instance);
     return Scaffold(
       body: Container(
@@ -104,7 +106,8 @@ class authScreen extends StatelessWidget {
                                         TextButton(
                                             onPressed: () {
                                               if (!loginState) {
-                                                Provider.of<AuthOptions>(context,
+                                                Provider.of<AuthOptions>(
+                                                        context,
                                                         listen: false)
                                                     .toggle();
                                               }
@@ -116,7 +119,8 @@ class authScreen extends StatelessWidget {
                                                     ? Colors.indigo
                                                     : Colors.black45,
                                                 fontSize:
-                                                    displayWidth(context) * 0.05,
+                                                    displayWidth(context) *
+                                                        0.05,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             )),
@@ -126,7 +130,8 @@ class authScreen extends StatelessWidget {
                                         TextButton(
                                             onPressed: () {
                                               if (loginState) {
-                                                Provider.of<AuthOptions>(context,
+                                                Provider.of<AuthOptions>(
+                                                        context,
                                                         listen: false)
                                                     .toggle();
                                               }
@@ -138,32 +143,41 @@ class authScreen extends StatelessWidget {
                                                     ? Colors.black45
                                                     : Colors.indigo,
                                                 fontSize:
-                                                    displayWidth(context) * 0.05,
+                                                    displayWidth(context) *
+                                                        0.05,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             )),
                                       ],
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                     ),
-                                    Opacity(child: Divider(),opacity: 0.0,),
+                                    Opacity(
+                                      child: Divider(),
+                                      opacity: 0.0,
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
                                       height: displayHeight(context) * 0.062,
                                       width: displayWidth(context) * 0.7,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
                                         child: Form(
                                           key: _formKey,
                                           child: TextFormField(
                                             validator: (value) {
-                                              if (value.isEmpty || value == null || value.length == 0)
+                                              if (value.isEmpty ||
+                                                  value == null ||
+                                                  value.length == 0)
                                                 return 'Cannot be empty';
                                               else {
                                                 bool emailValid = RegExp(
-                                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                                     .hasMatch(value);
                                                 if (!emailValid)
                                                   return 'Provide valid email';
@@ -199,32 +213,38 @@ class authScreen extends StatelessWidget {
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
                                       height: displayHeight(context) * 0.062,
                                       width: displayWidth(context) * 0.7,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
                                         child: TextFormField(
                                           toolbarOptions: ToolbarOptions(
-                                              copy: true, cut: true, selectAll: true, paste: true),
+                                              copy: true,
+                                              cut: true,
+                                              selectAll: true,
+                                              paste: true),
                                           controller: password,
                                           autofocus: false,
                                           obscureText: !viewPass,
                                           decoration: InputDecoration(
                                             suffixIcon: IconButton(
                                               icon: Icon(
-
                                                 viewPass
                                                     ? Icons.visibility_off
                                                     : Icons.visibility,
                                                 color: Colors.grey,
                                               ),
                                               onPressed: () {
-                                                Provider.of<AuthOptions>(context,listen: false).viewPassword();
+                                                Provider.of<AuthOptions>(
+                                                        context,
+                                                        listen: false)
+                                                    .viewPassword();
                                               },
                                             ),
-
                                             hintText: "Password",
                                             border: InputBorder.none,
                                             focusedBorder: InputBorder.none,
@@ -236,68 +256,106 @@ class authScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                      Opacity(child: Divider(height: displayHeight(context)*0.03,),opacity: 0.0,),
-                      GestureDetector(
-                        onTap: () async {
-                          Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
-                          if (loginState) {
-                            // User trying to login !!
-                            dynamic currentUser =
-                            await _auth.signIn(email: email.text.toString(),
-                                password: password.text.toString());
-                            if (currentUser.toString() != 'valid') {
-                              Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    content: Text(currentUser.toString()),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Try again"))
-                                    ],
-                                  ));
-                            }
-                          } else {
-                            // User trying to sign-up
-                            dynamic currentUser =
-                            await _auth.signUp(email: email.text.toString(), password: password.text.toString());
-                            if (currentUser.toString() != 'valid') {
-                              Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    content: Text(currentUser.toString()),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Try again"))
-                                    ],
-                                  ));
-                            }
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          height: displayHeight(context) * 0.05,
-                          width: displayWidth(context) * 0.35,
-                          child: Center(
-                              child: Text(
-                                loginState ? "LOGIN" : "REGISTER",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: displayWidth(context) * 0.04),
-                              )),
-                        ),
-                      ),
+                                    Opacity(
+                                      child: Divider(
+                                        height: displayHeight(context) * 0.03,
+                                      ),
+                                      opacity: 0.0,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        Provider.of<AuthOptions>(context,
+                                                listen: false)
+                                            .tryToAuthenticate();
+                                        if (loginState) {
+                                          // User trying to login !!
+                                          dynamic currentUser =
+                                              await _auth.signIn(
+                                                  email: email.text.toString(),
+                                                  password:
+                                                      password.text.toString());
+                                          if (currentUser.toString() !=
+                                              'valid') {
+                                            Provider.of<AuthOptions>(context,
+                                                    listen: false)
+                                                .tryToAuthenticate();
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                      content: Text(currentUser
+                                                          .toString()),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text(
+                                                                "Try again"))
+                                                      ],
+                                                    ));
+                                          }
+                                        } else {
+                                          // User trying to sign-up
+                                          dynamic currentUser =
+                                              await _auth.signUp(
+                                                  email: email.text.toString(),
+                                                  password:
+                                                      password.text.toString());
+                                          if (currentUser.toString() !=
+                                              'valid') {
+                                            Provider.of<AuthOptions>(context,
+                                                    listen: false)
+                                                .tryToAuthenticate();
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                      content: Text(currentUser
+                                                          .toString()),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text(
+                                                                "Try again"))
+                                                      ],
+                                                    ));
+                                          }
+                                        }
+                                      },
+                                      child: (authStatus)
+                                          ? SpinKitPumpingHeart(
+                                              color: Colors.blue,
+                                              size: displayWidth(context)*0.035,
+                                            )
+                                          : Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.orange,
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                              height:
+                                                  displayHeight(context) * 0.05,
+                                              width:
+                                                  displayWidth(context) * 0.35,
+                                              child: Center(
+                                                  child: Text(
+                                                loginState
+                                                    ? "LOGIN"
+                                                    : "REGISTER",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        displayWidth(context) *
+                                                            0.04),
+                                              )),
+                                            ),
+                                    ),
                                   ],
                                 ),
                               ),
