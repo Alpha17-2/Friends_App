@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Providers/AuthOptions.dart';
+import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,7 @@ class authScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool loginState = Provider.of<AuthOptions>(context).fetchLoginState;
     bool viewPass = Provider.of<AuthOptions>(context).fetchObscureTextInfo;
+    final authservice _auth = authservice(FirebaseAuth.instance);
     return Scaffold(
       body: Container(
         height: displayHeight(context),
@@ -38,7 +41,7 @@ class authScreen extends StatelessWidget {
                     ),
                     elevation: 12,
                     child: Container(
-                      height: displayHeight(context) * 0.8,
+                      height: displayHeight(context) * 0.81,
                       width: displayWidth(context) * 0.9,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -81,7 +84,7 @@ class authScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             Container(
-                              height: displayHeight(context) * 0.35,
+                              height: displayHeight(context) * 0.36,
                               width: displayWidth(context) * 0.78,
                               decoration: BoxDecoration(
                                   color: Colors.transparent,
@@ -233,6 +236,68 @@ class authScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                      Opacity(child: Divider(height: displayHeight(context)*0.03,),opacity: 0.0,),
+                      GestureDetector(
+                        onTap: () async {
+                          Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
+                          if (loginState) {
+                            // User trying to login !!
+                            dynamic currentUser =
+                            await _auth.signIn(email: email.text.toString(),
+                                password: password.text.toString());
+                            if (currentUser.toString() != 'valid') {
+                              Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Text(currentUser.toString()),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Try again"))
+                                    ],
+                                  ));
+                            }
+                          } else {
+                            // User trying to sign-up
+                            dynamic currentUser =
+                            await _auth.signUp(email: email.text.toString(), password: password.text.toString());
+                            if (currentUser.toString() != 'valid') {
+                              Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Text(currentUser.toString()),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Try again"))
+                                    ],
+                                  ));
+                            }
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          height: displayHeight(context) * 0.05,
+                          width: displayWidth(context) * 0.35,
+                          child: Center(
+                              child: Text(
+                                loginState ? "LOGIN" : "REGISTER",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: displayWidth(context) * 0.04),
+                              )),
+                        ),
+                      ),
                                   ],
                                 ),
                               ),
