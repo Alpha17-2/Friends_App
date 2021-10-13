@@ -327,13 +327,7 @@ class authScreen extends StatelessWidget {
                                           }
                                         }
                                       },
-                                      child: (authStatus)
-                                          ? SpinKitPumpingHeart(
-                                              color: Colors.blue,
-                                              size:
-                                                  displayWidth(context) * 0.035,
-                                            )
-                                          : Container(
+                                      child: Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.orange,
                                                 borderRadius:
@@ -343,7 +337,15 @@ class authScreen extends StatelessWidget {
                                                   displayHeight(context) * 0.05,
                                               width:
                                                   displayWidth(context) * 0.35,
-                                              child: Center(
+                                              child:(authStatus)
+                                                  ? SpinKitHourGlass(
+                                                color: Colors.white,
+                                                size:
+                                                displayWidth(context) * 0.06,
+                                              )
+                                                  :
+
+                                              Center(
                                                   child: Text(
                                                 loginState
                                                     ? "LOGIN"
