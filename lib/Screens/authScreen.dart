@@ -12,13 +12,13 @@ class authScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final authservice _auth = authservice(FirebaseAuth.instance);
 
   @override
   Widget build(BuildContext context) {
     bool loginState = Provider.of<AuthOptions>(context).fetchLoginState;
     bool viewPass = Provider.of<AuthOptions>(context).fetchObscureTextInfo;
     bool authStatus = Provider.of<AuthOptions>(context).fetchAuthStatus;
-    final authservice _auth = authservice(FirebaseAuth.instance);
     return Scaffold(
       body: Container(
         height: displayHeight(context),
