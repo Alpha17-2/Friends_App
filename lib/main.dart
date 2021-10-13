@@ -6,7 +6,6 @@ import 'package:firstapp/Screens/authScreen.dart';
 import 'package:firstapp/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'Services/auth.dart';
 import 'Services/auth_notifier.dart';
 
@@ -17,31 +16,36 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (context) => AuthNotifier(),
-      ),
-      Provider<authservice>(
-          create: (_) => authservice(FirebaseAuth.instance)),
-      // ignore: missing_required_param
-      StreamProvider(
-          create: (context) =>
-          context.read<authservice>().austhStateChanges),
-      ChangeNotifierProvider(create: (context) => AuthOptions(),),
-      ChangeNotifierProvider(create: (context) => ProfileProvider(),)
-    ],
-    child: MaterialApp(
-       debugShowCheckedModeBanner: false,
-        home: Consumer<AuthNotifier>(
-          builder: (context, notifier, child) {
-            return notifier.user != null ? homeScreen() : wrapper();
-          },
-        )));
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => AuthNotifier(),
+          ),
+          Provider<authservice>(
+              create: (_) => authservice(FirebaseAuth.instance)),
+          // ignore: missing_required_param
+          StreamProvider(
+              create: (context) =>
+                  context.read<authservice>().austhStateChanges),
+          ChangeNotifierProvider(
+            create: (context) => AuthOptions(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ProfileProvider(),
+          )
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Consumer<AuthNotifier>(
+              builder: (context, notifier, child) {
+                return notifier.user != null ? homeScreen() : wrapper();
+              },
+            )));
   }
 }
+
 class wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -53,5 +57,3 @@ class wrapper extends StatelessWidget {
       return authScreen();
   }
 }
-
-

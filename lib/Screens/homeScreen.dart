@@ -195,9 +195,12 @@ class _homeScreenState extends State<homeScreen> {
           IconButton(
               icon: Icon(Icons.person_add),
               onPressed: () => profileBuilder(context)),
-          IconButton(icon: Icon(Icons.logout), onPressed: () {
-            _auth.signOut();
-          },)
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _auth.signOut();
+            },
+          )
         ],
       ),
       body: Container(
@@ -234,7 +237,7 @@ class _homeScreenState extends State<homeScreen> {
 displayListTileForFriends(BuildContext context, Profile profile) {
   return GestureDetector(
     onTap: () {
-     // to-do -> Navigate to Friend's detail screen
+      // to-do -> Navigate to Friend's detail screen
     },
     child: Padding(
       padding: const EdgeInsets.all(10.0),

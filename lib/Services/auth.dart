@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 class authservice {
@@ -31,9 +30,9 @@ class authservice {
 
   Future<String> signUp({String email, String password}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password).then((value) {
-      });
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {});
       return "valid";
     } on FirebaseAuthException catch (e) {
       return e.message;

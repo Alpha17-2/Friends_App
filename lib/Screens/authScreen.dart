@@ -330,7 +330,8 @@ class authScreen extends StatelessWidget {
                                       child: (authStatus)
                                           ? SpinKitPumpingHeart(
                                               color: Colors.blue,
-                                              size: displayWidth(context)*0.035,
+                                              size:
+                                                  displayWidth(context) * 0.035,
                                             )
                                           : Container(
                                               decoration: BoxDecoration(

@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 
-class AuthOptions extends ChangeNotifier{
+class AuthOptions extends ChangeNotifier {
   bool loginState = true;
   bool viewPass = false;
   bool authenticationState = false;
-  bool get fetchAuthStatus{
+  bool get fetchAuthStatus {
     return authenticationState;
   }
-  bool get fetchObscureTextInfo{
+
+  bool get fetchObscureTextInfo {
     return viewPass;
   }
-  bool get fetchLoginState{
+
+  bool get fetchLoginState {
     return loginState;
   }
-  void tryToAuthenticate(){
-    authenticationState=!authenticationState;
+
+  void tryToAuthenticate() {
+    authenticationState = !authenticationState;
     notifyListeners();
   }
-  void toggle(){
+
+  void toggle() {
     loginState = !loginState;
     notifyListeners();
   }
-  void viewPassword(){
+
+  void viewPassword() {
     viewPass = !viewPass;
     notifyListeners();
   }
