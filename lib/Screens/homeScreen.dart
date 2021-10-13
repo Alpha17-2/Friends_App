@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Profile.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
+import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,7 @@ class _homeScreenState extends State<homeScreen> {
   TextEditingController phoneControlller = new TextEditingController();
 
   TextEditingController eduControlller = new TextEditingController();
+  final authservice _auth = authservice(FirebaseAuth.instance);
 
   @override
   void initState() {
@@ -192,6 +195,9 @@ class _homeScreenState extends State<homeScreen> {
           IconButton(
               icon: Icon(Icons.person_add),
               onPressed: () => profileBuilder(context)),
+          IconButton(icon: Icon(Icons.logout), onPressed: () {
+            _auth.signOut();
+          },)
         ],
       ),
       body: Container(
