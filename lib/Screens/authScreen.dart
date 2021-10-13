@@ -25,12 +25,11 @@ class authScreen extends StatelessWidget {
         width: displayWidth(context),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/auth'),
+            image: AssetImage('images/auth.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
-        child: Container(
-          child: Center(
+        child: Center(
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
@@ -328,25 +327,21 @@ class authScreen extends StatelessWidget {
                                         }
                                       },
                                       child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.orange,
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                              ),
-                                              height:
-                                                  displayHeight(context) * 0.05,
-                                              width:
-                                                  displayWidth(context) * 0.35,
-                                              child:(authStatus)
-                                                  ? SpinKitHourGlass(
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange,
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        height: displayHeight(context) * 0.05,
+                                        width: displayWidth(context) * 0.35,
+                                        child: (authStatus)
+                                            ? SpinKitHourGlass(
                                                 color: Colors.white,
-                                                size:
-                                                displayWidth(context) * 0.06,
+                                                size: displayWidth(context) *
+                                                    0.06,
                                               )
-                                                  :
-
-                                              Center(
-                                                  child: Text(
+                                            : Center(
+                                                child: Text(
                                                 loginState
                                                     ? "LOGIN"
                                                     : "REGISTER",
@@ -357,7 +352,7 @@ class authScreen extends StatelessWidget {
                                                         displayWidth(context) *
                                                             0.04),
                                               )),
-                                            ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -373,7 +368,6 @@ class authScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
