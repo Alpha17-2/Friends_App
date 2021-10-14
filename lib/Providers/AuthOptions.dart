@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class AuthOptions extends ChangeNotifier {
   bool loginState = true;
   bool viewPass = false;
-  bool authenticationState = false;
-  bool get fetchAuthStatus {
-    return authenticationState;
+  bool authenticationStateForLoading = false;
+  bool get fetchAuthStatusForLoading {
+    return authenticationStateForLoading;
   }
 
   bool get fetchObscureTextInfo {
@@ -17,7 +17,7 @@ class AuthOptions extends ChangeNotifier {
   }
 
   void tryToAuthenticate() {
-    authenticationState = !authenticationState;
+    authenticationStateForLoading = !authenticationStateForLoading;
     notifyListeners();
   }
 
