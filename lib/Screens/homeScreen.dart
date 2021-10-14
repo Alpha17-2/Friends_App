@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Profile.dart';
+import 'package:firstapp/Providers/AuthOptions.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
 import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,15 @@ class homeScreen extends StatefulWidget {
 
 class _homeScreenState extends State<homeScreen> {
   bool isScreenLoading;
-  TextEditingController nameControlller = new TextEditingController();
+  TextEditingController nameControlller = TextEditingController();
 
-  TextEditingController sexControlller = new TextEditingController();
+  TextEditingController sexControlller = TextEditingController();
 
-  TextEditingController ageControlller = new TextEditingController();
+  TextEditingController ageControlller = TextEditingController();
 
-  TextEditingController phoneControlller = new TextEditingController();
+  TextEditingController phoneControlller = TextEditingController();
 
-  TextEditingController eduControlller = new TextEditingController();
+  TextEditingController eduControlller = TextEditingController();
   final authservice _auth = authservice(FirebaseAuth.instance);
 
   @override
@@ -48,6 +49,9 @@ class _homeScreenState extends State<homeScreen> {
     await Provider.of<ProfileProvider>(context).fetchAndSetData().then((value) {
       isScreenLoading = false;
     });
+    if(Provider.of<AuthOptions>(context,listen: false).fetchAuthStatusForLoading!=null && Provider.of<AuthOptions>(context,listen: false).fetchAuthStatusForLoading){
+      Provider.of<AuthOptions>(context,listen: false).tryToAuthenticate();
+    }
     super.didChangeDependencies();
   }
 
