@@ -33,14 +33,14 @@ class exploreScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            height: displayHeight(context) * 0.45,
+            height: displayHeight(context) * 0.48,
             width: displayWidth(context),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               image: DecorationImage(
                   image:
-                      AssetImage('images/08809940d40530bfdb457d7a60466657.jpg'),
+                      AssetImage('images/d971ec8a43caea653f4de41cf9c204b4.jpg'),
                   fit: BoxFit.cover),
             ),
             child: BackdropFilter(
@@ -147,9 +147,9 @@ class exploreScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black,
-              fontFamily: 'Pacifico',
-              // fontWeight: FontWeight.w300,
-              fontSize: displayWidth(context) * 0.052,
+              fontFamily: 'Dancing',
+               fontWeight: FontWeight.w500,
+              fontSize: displayWidth(context) * 0.062,
             ),
           ),
         ),
