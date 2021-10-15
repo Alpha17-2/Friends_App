@@ -4,5 +4,6 @@ class userProfile {
   final String email;
   final String dp;
   final String education;
-  userProfile({this.dp, this.education, this.email, this.id, this.title});
+  final String docId;
+  userProfile({this.dp,this.docId,this.education, this.email, this.id, this.title});
 }
