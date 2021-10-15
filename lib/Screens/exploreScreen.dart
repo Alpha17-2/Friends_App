@@ -40,7 +40,7 @@ class exploreScreen extends StatelessWidget {
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               image: DecorationImage(
                   image:
-                      AssetImage('images/d971ec8a43caea653f4de41cf9c204b4.jpg'),
+                      AssetImage('images/bg2.jpg'),
                   fit: BoxFit.cover),
             ),
             child: BackdropFilter(
