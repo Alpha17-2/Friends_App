@@ -1,12 +1,24 @@
 import 'dart:ui';
 import 'package:firstapp/Helpers/deviceSize.dart';
+import 'package:firstapp/Screens/addFriendScreen.dart';
 import 'package:firstapp/Screens/exploreScreen.dart';
+import 'package:firstapp/Screens/myFriendsScreen.dart';
+import 'package:firstapp/Screens/profileScreen.dart';
+import 'package:firstapp/Screens/quotesScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class homeScreen extends StatelessWidget {
   //const homeScreen({Key? key}) : super(key: key);
+
+  final List<dynamic> screens= [
+    exploreScreen(),
+    myFriendsScreen(),
+    addFriendScreen(),
+    quotesScreen(),
+    profileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
