@@ -27,6 +27,7 @@ class homeScreen extends StatelessWidget {
     final screenProvider = Provider.of<screenIndexProvider>(context);
     int currentScreen = screenProvider.currentScreen;
     final iconSize = displayWidth(context) * 0.075;
+    final selectedIconSize = displayWidth(context)*0.078;
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(color: Color(0xfb004953)),
@@ -65,41 +66,41 @@ class homeScreen extends StatelessWidget {
                         onPressed: () {
                           screenProvider.updateIndex(0);
                         },
-                        icon: Icon(Icons.home_outlined),
-                        color: Colors.white,
-                        iconSize: iconSize,
+                        icon: Icon((currentScreen == 0)?Icons.home:Icons.home_outlined),
+                        color: (currentScreen == 0)?Colors.white:Colors.white70,
+                        iconSize: (currentScreen==0)?selectedIconSize:iconSize,
                       ),
                       IconButton(
                         onPressed: () {
                           screenProvider.updateIndex(1);
                         },
-                        icon: Icon(Icons.favorite_outline),
-                        color: Colors.white,
-                        iconSize: iconSize,
+                        icon: Icon((currentScreen == 1)?Icons.favorite:Icons.favorite_outline),
+                        color: (currentScreen == 1)?Colors.white:Colors.white70,
+                        iconSize: (currentScreen==1)?selectedIconSize:iconSize,
                       ),
                       IconButton(
                         onPressed: () {
                           screenProvider.updateIndex(2);
                         },
-                        icon: Icon(Icons.add_circle_outline),
-                        color: Colors.white,
-                        iconSize: iconSize,
+                        icon: Icon((currentScreen == 2)?Icons.add_circle:Icons.add_circle_outline),
+                        color: (currentScreen == 2)?Colors.white:Colors.white70,
+                        iconSize: (currentScreen==2)?selectedIconSize:iconSize,
                       ),
                       IconButton(
                         onPressed: () {
                           screenProvider.updateIndex(3);
                         },
-                        icon: Icon(Icons.auto_awesome_outlined),
-                        color: Colors.white,
-                        iconSize: iconSize,
+                        icon: Icon((currentScreen == 3)?Icons.auto_awesome:Icons.auto_awesome_outlined),
+                        color: (currentScreen == 3)?Colors.white:Colors.white70,
+                        iconSize: (currentScreen==3)?selectedIconSize:iconSize,
                       ),
                       IconButton(
                         onPressed: () {
                           screenProvider.updateIndex(4);
                         },
-                        icon: Icon(Icons.person_outlined),
-                        color: Colors.white,
-                        iconSize: iconSize,
+                        icon: Icon((currentScreen == 4)?Icons.person:Icons.person_outlined),
+                        color: (currentScreen == 4)?Colors.white:Colors.white70,
+                        iconSize: (currentScreen==4)?selectedIconSize:iconSize,
                       ),
                     ],
                   ),
