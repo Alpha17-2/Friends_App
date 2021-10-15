@@ -5,6 +5,7 @@ import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/friends.dart';
 import 'package:firstapp/Models/quote.dart';
 import 'package:firstapp/Providers/QuoteProvider.dart';
+import 'package:firstapp/Screens/editProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 class exploreScreen extends StatelessWidget {
@@ -15,18 +16,31 @@ class exploreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<quoteModel> quotes = QuoteProvider().fetchQuotesList;
     List<friend> friends = friendsProvider().fetchBestFriends;
-    displayBestFriends(BuildContext context,friend f){
+    displayBestFriends(BuildContext context, friend f) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CircleAvatar(backgroundImage: AssetImage(f.image),
-            radius: displayWidth(context)*0.065,
+          CircleAvatar(
+            backgroundImage: AssetImage(f.image),
+            radius: displayWidth(context) * 0.065,
           ),
-          Opacity(child: Divider(height: 1,),opacity: 0.0,),
-          Text(f.title,style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w600,letterSpacing: 0.4),),
+          Opacity(
+            child: Divider(
+              height: 1,
+            ),
+            opacity: 0.0,
+          ),
+          Text(
+            f.title,
+            style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.4),
+          ),
         ],
       );
     }
+
     final randomInddex = random.nextInt(quotes.length);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -39,9 +53,7 @@ class exploreScreen extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               image: DecorationImage(
-                  image:
-                      AssetImage('images/bg2.jpg'),
-                  fit: BoxFit.cover),
+                  image: AssetImage('images/bg2.jpg'), fit: BoxFit.cover),
             ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 0.7, sigmaY: 0.7),
@@ -63,7 +75,12 @@ class exploreScreen extends StatelessWidget {
                             backgroundColor: Colors.grey[300],
                             child: Center(
                               child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => editProfileScreen(),
+                                    ));
+                                  },
                                   icon: Icon(Icons.settings),
                                   color: Colors.black,
                                   iconSize: displayWidth(context) * 0.055),
@@ -127,12 +144,13 @@ class exploreScreen extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: ListView.builder(itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right:20.0),
-                    child: displayBestFriends(context, friends[index]),
-                  );
-                },
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: displayBestFriends(context, friends[index]),
+                    );
+                  },
                   itemCount: friends.length,
                   scrollDirection: Axis.horizontal,
                 ),
@@ -148,7 +166,7 @@ class exploreScreen extends StatelessWidget {
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Dancing',
-               fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w500,
               fontSize: displayWidth(context) * 0.062,
             ),
           ),
