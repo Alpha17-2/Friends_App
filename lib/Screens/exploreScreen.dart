@@ -1,16 +1,19 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/friends.dart';
 import 'package:firstapp/Models/quote.dart';
 import 'package:firstapp/Providers/QuoteProvider.dart';
 import 'package:firstapp/Screens/editProfileScreen.dart';
+import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 
 class exploreScreen extends StatelessWidget {
   //const exploreScreen({Key? key}) : super(key: key);
   Random random = Random();
+  final authservice _auth = authservice(FirebaseAuth.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +79,9 @@ class exploreScreen extends StatelessWidget {
                             child: Center(
                               child: IconButton(
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => editProfileScreen(),
-                                    ));
+                                    _auth.signOut();
                                   },
-                                  icon: Icon(Icons.settings),
+                                  icon: Icon(Icons.logout_outlined),
                                   color: Colors.black,
                                   iconSize: displayWidth(context) * 0.055),
                             ),

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:firstapp/Helpers/deviceSize.dart';
+import 'package:firstapp/Providers/AuthOptions.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/addFriendScreen.dart';
 import 'package:firstapp/Screens/exploreScreen.dart';

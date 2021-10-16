@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firstapp/Providers/AuthOptions.dart';
 import 'package:firstapp/Providers/ProfileProvider.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
+import 'package:firstapp/Providers/usersProvider.dart';
 import 'package:firstapp/Screens/authScreen.dart';
 import 'package:firstapp/Screens/homeScreen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => screenIndexProvider(),),
+          ChangeNotifierProvider(create :(context) => usersProvider(),),
           ChangeNotifierProvider(
             create: (context) => AuthNotifier(),
           ),

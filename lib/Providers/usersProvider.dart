@@ -6,39 +6,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class usersProvider extends ChangeNotifier {
-  Map<String, userProfile> profilesUsingId = {};
-  Map<String, userProfile> profilesUsingDocId = {};
+  Map<String, UserProfile> profilesUsingId = {};
+  Map<String, UserProfile> profilesUsingDocId = {};
 
-  Map<String, userProfile> get fetchUsersUsingId {
+  Map<String, UserProfile> get fetchUsersUsingId {
     return profilesUsingId;
   }
 
-  Map<String, userProfile> get fetchUsersUsingDocId {
+  Map<String, UserProfile> get fetchUsersUsingDocId {
     return profilesUsingDocId;
+  }
+
+  UserProfile getUserUsingId(String id) {
+    return profilesUsingId[id];
   }
 
   Future<void> setUsers() async {
     try {
-      Map<String, userProfile> tempId = {};
-      Map<String, userProfile> tempDocId = {};
+      Map<String, UserProfile> tempId = {};
+      Map<String, UserProfile> tempDocId = {};
       final String api = constants().fetchApi + 'users.json';
       final response = await http.get(Uri.parse(api));
       final data = json.decode(response.body) as Map<String, dynamic>;
       if (data != null) {
         data.forEach((key, value) {
-          tempDocId[key] = userProfile(
-            docId: key,
-            dp: value['dp'],
-            education: value['education'],
-            email: value['email'],
+          tempDocId[key] = UserProfile(
             id: value['id'],
             title: value['title'],
           );
-          tempId[value['id']] = userProfile(
-            docId: key,
-            dp: value['dp'],
-            education: value['education'],
-            email: value['email'],
+          tempId[value['id']] = UserProfile(
             id: value['id'],
             title: value['title'],
           );
@@ -50,5 +46,27 @@ class usersProvider extends ChangeNotifier {
     } catch (error) {
       print(error);
     }
+  }
+
+  Future<void> createProfile(UserProfile profile) async {
+    try {
+      final String api = constants().fetchApi + 'users.json';
+      return http
+          .post(Uri.parse(api),
+              body: json.encode({
+                'title': profile.title,
+                'id': profile.id,
+              }))
+          .then((value) {
+        profilesUsingId[profile.id] = profile;
+        notifyListeners();
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  bool profileExist(String uid) {
+    return profilesUsingId.containsKey(uid);
   }
 }
