@@ -20,6 +20,8 @@ class _authScreenState extends State<authScreen> {
 
   TextEditingController email = TextEditingController();
 
+  TextEditingController displayName = TextEditingController();
+
   TextEditingController password = TextEditingController();
 
   final authservice _auth = authservice(FirebaseAuth.instance);
@@ -34,6 +36,237 @@ class _authScreenState extends State<authScreen> {
   Widget build(BuildContext context) {
     bool loginState = Provider.of<AuthOptions>(context).fetchLoginState;
     bool viewPass = Provider.of<AuthOptions>(context).fetchObscureTextInfo;
+    Container loginBox() {
+      return Container(
+        height: displayHeight(context) * 0.158,
+        width: displayWidth(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              height: displayHeight(context) * 0.062,
+              width: displayWidth(context) * 0.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty || value == null || value.length == 0)
+                      return 'Cannot be empty';
+                    else {
+                      bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value);
+                      if (!emailValid)
+                        return 'Provide valid email';
+                      else
+                        return null;
+                    }
+                  },
+
+                  controller: email,
+                  //autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: "Email ID",
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                  showCursor: true,
+                ),
+              ),
+            ),
+
+            Opacity(
+              opacity: 0.0,
+              child: Divider(
+                height: displayHeight(context) * 0.02,
+              ),
+            ),
+
+            // Password box
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              height: displayHeight(context) * 0.062,
+              width: displayWidth(context) * 0.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextFormField(
+                  toolbarOptions: ToolbarOptions(
+                      copy: true, cut: true, selectAll: true, paste: true),
+                  controller: password,
+                  autofocus: false,
+                  obscureText: !viewPass,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        viewPass ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        Provider.of<AuthOptions>(context, listen: false)
+                            .viewPassword();
+                      },
+                    ),
+                    hintText: "Password",
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                  showCursor: true,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Container signUpBox() {
+      return Container(
+        height: displayHeight(context) * 0.21,
+        width: displayWidth(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              height: displayHeight(context) * 0.058,
+              width: displayWidth(context) * 0.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty || value == null || value.length == 0)
+                      return 'Cannot be empty';
+                    else {
+                      return null;
+                    }
+                  },
+
+                  controller: displayName,
+                  //autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: "Display name",
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                  showCursor: true,
+                ),
+              ),
+            ),
+            Opacity(
+              opacity: 0.0,
+              child: Divider(
+                height: displayHeight(context) * 0.015,
+              ),
+            ),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              height: displayHeight(context) * 0.058,
+              width: displayWidth(context) * 0.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty || value == null || value.length == 0)
+                      return 'Cannot be empty';
+                    else {
+                      bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value);
+                      if (!emailValid)
+                        return 'Provide valid email';
+                      else
+                        return null;
+                    }
+                  },
+
+                  controller: email,
+                  //autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: "Email ID",
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                  showCursor: true,
+                ),
+              ),
+            ),
+
+            Opacity(
+              opacity: 0.0,
+              child: Divider(
+                height: displayHeight(context) * 0.015,
+              ),
+            ),
+
+            // Password box
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              height: displayHeight(context) * 0.058,
+              width: displayWidth(context) * 0.7,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextFormField(
+                  toolbarOptions: ToolbarOptions(
+                      copy: true, cut: true, selectAll: true, paste: true),
+                  controller: password,
+                  autofocus: false,
+                  obscureText: !viewPass,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        viewPass ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        Provider.of<AuthOptions>(context, listen: false)
+                            .viewPassword();
+                      },
+                    ),
+                    hintText: "Password",
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                  ),
+                  showCursor: true,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       body: Container(
         height: displayHeight(context),
@@ -57,7 +290,7 @@ class _authScreenState extends State<authScreen> {
                   ),
                   elevation: 12,
                   child: Container(
-                    height: displayHeight(context) * 0.81,
+                    height: displayHeight(context) * 0.85,
                     width: displayWidth(context) * 0.9,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -100,7 +333,7 @@ class _authScreenState extends State<authScreen> {
                             fit: BoxFit.cover,
                           ),
                           Container(
-                            height: displayHeight(context) * 0.36,
+                            height: displayHeight(context) * 0.4,
                             width: displayWidth(context) * 0.78,
                             decoration: BoxDecoration(
                                 color: Colors.transparent,
@@ -169,106 +402,12 @@ class _authScreenState extends State<authScreen> {
                                           MainAxisAlignment.center,
                                     ),
                                     Opacity(
-                                      child: Divider(),
-                                      opacity: 0.0,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      height: displayHeight(context) * 0.062,
-                                      width: displayWidth(context) * 0.7,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10.0),
-                                        child: TextFormField(
-                                          validator: (value) {
-                                            if (value.isEmpty ||
-                                                value == null ||
-                                                value.length == 0)
-                                              return 'Cannot be empty';
-                                            else {
-                                              bool emailValid = RegExp(
-                                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                  .hasMatch(value);
-                                              if (!emailValid)
-                                                return 'Provide valid email';
-                                              else
-                                                return null;
-                                            }
-                                          },
-
-                                          controller: email,
-                                          //autofocus: false,
-                                          decoration: InputDecoration(
-                                            hintText: "Email ID",
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            enabledBorder: InputBorder.none,
-                                            errorBorder: InputBorder.none,
-                                            disabledBorder: InputBorder.none,
-                                          ),
-                                          showCursor: true,
-                                        ),
-                                      ),
-                                    ),
-
-                                    Opacity(
-                                      opacity: 0.0,
                                       child: Divider(
-                                        height: displayHeight(context) * 0.02,
+                                        height: displayHeight(context)*0.01,
                                       ),
+                                      opacity: 0.0,
                                     ),
-
-                                    // Password box
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      height: displayHeight(context) * 0.062,
-                                      width: displayWidth(context) * 0.7,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10.0),
-                                        child: TextFormField(
-                                          toolbarOptions: ToolbarOptions(
-                                              copy: true,
-                                              cut: true,
-                                              selectAll: true,
-                                              paste: true),
-                                          controller: password,
-                                          autofocus: false,
-                                          obscureText: !viewPass,
-                                          decoration: InputDecoration(
-                                            suffixIcon: IconButton(
-                                              icon: Icon(
-                                                viewPass
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
-                                                color: Colors.grey,
-                                              ),
-                                              onPressed: () {
-                                                Provider.of<AuthOptions>(
-                                                        context,
-                                                        listen: false)
-                                                    .viewPassword();
-                                              },
-                                            ),
-                                            hintText: "Password",
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            enabledBorder: InputBorder.none,
-                                            errorBorder: InputBorder.none,
-                                            disabledBorder: InputBorder.none,
-                                          ),
-                                          showCursor: true,
-                                        ),
-                                      ),
-                                    ),
+                                   loginState?loginBox():signUpBox(),
                                     Opacity(
                                       child: Divider(
                                         height: displayHeight(context) * 0.03,
