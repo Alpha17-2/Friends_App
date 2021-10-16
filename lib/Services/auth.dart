@@ -28,11 +28,23 @@ class authservice {
     }
   }
 
-  Future<String> signUp({String email, String password}) async {
+  Future<void> changeDisplayName(String displayName)async{
+    try{
+      User user = FirebaseAuth.instance.currentUser;
+      return user.updateDisplayName(displayName);
+    }
+    catch(error){
+      return error;
+    }
+  }
+
+  Future<String> signUp({String email,String displayName, String password}) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {});
+          .then((value) {
+            value.user.updateDisplayName(displayName);
+      });
       return "valid";
     } on FirebaseAuthException catch (e) {
       return e.message;
