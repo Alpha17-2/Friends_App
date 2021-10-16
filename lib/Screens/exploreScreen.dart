@@ -14,6 +14,9 @@ class exploreScreen extends StatelessWidget {
   //const exploreScreen({Key? key}) : super(key: key);
   Random random = Random();
   final authservice _auth = authservice(FirebaseAuth.instance);
+  User currentUser = FirebaseAuth.instance.currentUser;
+  final _keyForm = GlobalKey<FormState>();
+  TextEditingController displayNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +89,47 @@ class exploreScreen extends StatelessWidget {
                                   iconSize: displayWidth(context) * 0.055),
                             ),
                           ),
-                          CircleAvatar(
-                            radius: displayWidth(context) * 0.06,
-                            backgroundColor: Colors.grey[300],
-                            backgroundImage:
-                                AssetImage('images/friendsIcon2.png'),
+                          GestureDetector(
+                            onTap: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    title: Text('Change display name'),
+                                    content: Form(
+                                      key: _keyForm,
+                                      child: TextFormField(
+                                        controller: displayNameController,
+                                        validator: (value) {
+                                          if(value.isEmpty) return 'Cannot be empty';
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: currentUser.displayName,
+                                          labelText: 'Display name',
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(onPressed: () {
+                                        _auth.changeDisplayName(displayNameController.text.toString()).then((value) {
+
+                                          Navigator.pop(context);
+                                        } );
+                                      }, child: Text('Submit'))
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: displayWidth(context) * 0.06,
+                              backgroundColor: Colors.grey[300],
+                              backgroundImage:
+                                  AssetImage('images/friendsIcon2.png'),
+                            ),
                           )
                         ],
                       ),
@@ -108,7 +147,7 @@ class exploreScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Subhojeet Sahoo',
+                            currentUser.displayName,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
