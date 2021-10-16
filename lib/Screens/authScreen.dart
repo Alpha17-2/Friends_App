@@ -453,6 +453,7 @@ class _authScreenState extends State<authScreen> {
                                           // User trying to sign-up
                                           dynamic currentUser =
                                               await _auth.signUp(
+                                                displayName: displayName.text.toString(),
                                                   email: email.text.toString(),
                                                   password:
                                                       password.text.toString());
