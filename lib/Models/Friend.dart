@@ -8,7 +8,13 @@ class Friend {
   final String dp;
   final String dob;
   final String docId;
+  final String contactNumber;
+  final String instagram;
+  final String twitter;
+  final String youtube;
+  final String facebook;
+  final String mail;
 
   Friend(this.title, this.gender, this.about, this.education, this.profession,
-      this.dob, this.interests, this.dp, this.docId);
+      this.dob, this.interests, this.dp, this.docId, this.contactNumber, this.instagram, this.twitter, this.youtube, this.facebook, this.mail);
 }
