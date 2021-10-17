@@ -203,6 +203,7 @@ class exploreScreen extends StatelessWidget {
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'Dancing',
+              wordSpacing: 2.2,
               fontWeight: FontWeight.w500,
               fontSize: displayWidth(context) * 0.062,
             ),
