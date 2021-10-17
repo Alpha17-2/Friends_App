@@ -1,12 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/friends.dart';
 import 'package:firstapp/Models/quote.dart';
 import 'package:firstapp/Providers/QuoteProvider.dart';
-import 'package:firstapp/Screens/editProfileScreen.dart';
 import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 
