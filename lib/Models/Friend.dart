@@ -14,7 +14,9 @@ class Friend {
   final String youtube;
   final String facebook;
   final String mail;
+  final String snapchat;
+  final String linkedin;
 
   Friend(this.title, this.gender, this.about, this.education, this.profession,
-      this.dob, this.interests, this.dp, this.docId, this.contactNumber, this.instagram, this.twitter, this.youtube, this.facebook, this.mail);
+      this.dob, this.interests, this.dp, this.docId, this.contactNumber, this.instagram, this.twitter, this.youtube, this.facebook, this.mail, this.snapchat, this.linkedin);
 }
