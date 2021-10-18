@@ -84,6 +84,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,6 +280,131 @@ class _addFriendScreenState extends State<addFriendScreen> {
                   ),
                 ],
               ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.02,
+                  )),
+              Text(
+                'Education',
+                style: TextStyle(color: Colors.black),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.01,
+                  )),
+              Container(
+                height: displayHeight(context) * 0.06,
+                width: displayWidth(context),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey, width: 1.1)),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
+                  child: Center(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || value.length == 0)
+                          return 'Cannot be empty';
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'School or University name',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.02,
+                  )),
+              Text(
+                'Profession',
+                style: TextStyle(color: Colors.black),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.01,
+                  )),
+              Container(
+                height: displayHeight(context) * 0.06,
+                width: displayWidth(context),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey, width: 1.1)),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
+                  child: Center(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || value.length == 0)
+                          return 'Cannot be empty';
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Student , Engineer , Doctor ..',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.02,
+                  )),
+              Text(
+                'About',
+                style: TextStyle(color: Colors.black),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.01,
+                  )),
+              Container(
+                height: displayHeight(context) * 0.15,
+                width: displayWidth(context),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey, width: 1.1)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                    maxLines: 10,
+                      validator: (value) {
+                        if (value.isEmpty || value.length == 0)
+                          return 'Cannot be empty';
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Tell us about your new friend',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+
               Opacity(
                   opacity: 0,
                   child: Divider(
