@@ -84,7 +84,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +142,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                     border: Border.all(color: Colors.grey, width: 1.1)),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 10.0, left: 8.0, right: 8.0, bottom: 4.0),
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
                   child: Center(
                     child: TextFormField(
                       validator: (value) {
@@ -185,7 +184,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                     border: Border.all(color: Colors.grey, width: 1.1)),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 10.0, left: 8.0, right: 8.0, bottom: 4.0),
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
                   child: Center(
                     child: TextFormField(
                       keyboardType: TextInputType.datetime,
@@ -315,7 +314,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                     border: Border.all(color: Colors.grey, width: 1.1)),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 10.0, left: 8.0, right: 8.0, bottom: 4.0),
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
                   child: Center(
                     child: TextFormField(
                       keyboardType: TextInputType.phone,
@@ -338,6 +337,58 @@ class _addFriendScreenState extends State<addFriendScreen> {
                   ),
                 ),
               ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.02,
+                  )),
+              Text(
+                'Email Address',
+                style: TextStyle(color: Colors.black),
+              ),
+              Opacity(
+                  opacity: 0,
+                  child: Divider(
+                    height: displayHeight(context) * 0.01,
+                  )),
+
+              Container(
+                height: displayHeight(context) * 0.06,
+                width: displayWidth(context),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Colors.grey, width: 1.1)),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
+                  child: Center(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty || value == null || value.length == 0)
+                          return 'Cannot be empty';
+                        else {
+                          bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value);
+                          if (!emailValid)
+                            return 'Provide valid email';
+                          else
+                            return null;
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'friends@gmail.com',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
