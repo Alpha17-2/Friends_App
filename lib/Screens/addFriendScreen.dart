@@ -888,6 +888,21 @@ class _addFriendScreenState extends State<addFriendScreen> {
                       ),
                     ),
                   ),
+                  Opacity(
+                      opacity: 0,
+                      child: Divider(
+                        height: displayHeight(context) * 0.01,
+                      )),
+                  Center(
+                    child: TextButton(
+
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigo[400])),
+                        onPressed: () {
+
+                    }, child: Text('Submit',style: TextStyle(
+                      color: Colors.white
+                    ),)),
+                  )
                 ],
               ),
             ),
