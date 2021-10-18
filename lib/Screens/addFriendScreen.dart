@@ -480,7 +480,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            hintText: 'Cricket , Dance ... (Separate interests using \',\') ',
+                            hintText:
+                                'Cricket , Dance ... (Separate interests using \',\') ',
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
@@ -768,7 +769,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                         child: TextFormField(
                           controller: twiiter,
                           keyboardType: TextInputType.name,
-
                           decoration: InputDecoration(
                             hintText: 'Twitter ID',
                             border: InputBorder.none,
@@ -895,13 +895,14 @@ class _addFriendScreenState extends State<addFriendScreen> {
                       )),
                   Center(
                     child: TextButton(
-
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigo[400])),
-                        onPressed: () {
-
-                    }, child: Text('Submit',style: TextStyle(
-                      color: Colors.white
-                    ),)),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.indigo[400])),
+                        onPressed: () {},
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(color: Colors.white),
+                        )),
                   )
                 ],
               ),
