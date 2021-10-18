@@ -47,190 +47,203 @@ class exploreScreen extends StatelessWidget {
     }
 
     final randomInddex = random.nextInt(quotes.length);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-            height: displayHeight(context) * 0.45,
-            width: displayWidth(context),
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              image: DecorationImage(
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top:12.0,left: 10,right: 10,bottom: 10),
+        child: Container(
+          height: displayHeight(context),
+          width: displayWidth(context),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  height: displayHeight(context) * 0.45,
+                  width: displayWidth(context),
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                    image: DecorationImage(
 
-                  image: AssetImage('images/bg2.jpg'), fit: BoxFit.cover),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 0.7, sigmaY: 0.7),
-              child: Container(
-                color: Colors.black.withOpacity(0.4),
-                height: displayHeight(context) * 0.45,
-                width: displayWidth(context),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, right: 10, top: 12, bottom: 12),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: displayWidth(context) * 0.06,
-                            backgroundColor: Colors.grey[300],
-                            child: Center(
-                              child: IconButton(
-                                  onPressed: () {
-                                    _auth.signOut();
-                                  },
-                                  icon: Icon(Icons.logout_outlined),
-                                  color: Colors.black,
-                                  iconSize: displayWidth(context) * 0.055),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                    title: Text('Change display name'),
-                                    content: Form(
-                                      key: _keyForm,
-                                      child: TextFormField(
-                                        controller: displayNameController,
-                                        validator: (value) {
-                                          if(value.isEmpty) return 'Cannot be empty';
-                                          return null;
+                        image: AssetImage('images/bg2.jpg'), fit: BoxFit.cover),
+                  ),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 0.7, sigmaY: 0.7),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                      height: displayHeight(context) * 0.45,
+                      width: displayWidth(context),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10.0, right: 10, top: 12, bottom: 12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: displayWidth(context) * 0.06,
+                                  backgroundColor: Colors.grey[300],
+                                  child: Center(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          _auth.signOut();
                                         },
-                                        decoration: InputDecoration(
-                                          hintText: currentUser.displayName,
-                                          labelText: 'Display name',
-                                        ),
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(onPressed: () {
-                                        _auth.changeDisplayName(displayNameController.text.toString()).then((value) {
+                                        icon: Icon(Icons.logout_outlined),
+                                        color: Colors.black,
+                                        iconSize: displayWidth(context) * 0.055),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          elevation: 10,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                          title: Text('Change display name'),
+                                          content: Form(
+                                            key: _keyForm,
+                                            child: TextFormField(
+                                              controller: displayNameController,
+                                              validator: (value) {
+                                                if(value.isEmpty) return 'Cannot be empty';
+                                                return null;
+                                              },
+                                              decoration: InputDecoration(
+                                                hintText: currentUser.displayName,
+                                                labelText: 'Display name',
+                                              ),
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(onPressed: () {
+                                              _auth.changeDisplayName(displayNameController.text.toString()).then((value) {
 
-                                          Navigator.pop(context);
-                                        } );
-                                      }, child: Text('Submit'))
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: CircleAvatar(
-                              radius: displayWidth(context) * 0.06,
-                              backgroundColor: Colors.grey[300],
-                              backgroundImage:
-                                  AssetImage('images/friendsIcon2.png'),
+                                                Navigator.pop(context);
+                                              } );
+                                            }, child: Text('Submit'))
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    radius: displayWidth(context) * 0.06,
+                                    backgroundColor: Colors.grey[300],
+                                    backgroundImage:
+                                        AssetImage('images/friendsIcon2.png'),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Welcome,',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: displayWidth(context) * 0.05,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Welcome,',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: displayWidth(context) * 0.05,
+                                  ),
+                                ),
+                                Text(
+                                  currentUser.displayName,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: displayWidth(context) * 0.07,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(
-                            currentUser.displayName,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: displayWidth(context) * 0.07,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                            Divider(),
+                            Divider(),
+                          ],
+                        ),
                       ),
-                      Divider(),
-                      Divider(),
-                    ],
+                    ),
+                  )),
+              Opacity(opacity: 0.0,child: Divider()),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Best Friends',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: displayWidth(context) * 0.05,
                   ),
                 ),
               ),
-            )),
-        Opacity(opacity: 0.0,child: Divider()),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text(
-            'Best Friends',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: displayWidth(context) * 0.05,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: displayHeight(context) * 0.15,
-            width: displayWidth(context),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: displayBestFriends(context, friends[index]),
-                    );
-                  },
-                  itemCount: friends.length,
-                  scrollDirection: Axis.horizontal,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: displayHeight(context) * 0.15,
+                  width: displayWidth(context),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: displayBestFriends(context, friends[index]),
+                          );
+                        },
+                        itemCount: friends.length,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Text(
-            quotes[randomInddex].quote,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Dancing',
-              wordSpacing: 2.2,
-              fontWeight: FontWeight.w500,
-              fontSize: displayWidth(context) * 0.062,
-            ),
-          ),
-        ),
-        Opacity(opacity: 0.0, child: Divider()),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                '- ${quotes[randomInddex].author}',
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: Colors.indigo,
-                  fontWeight: FontWeight.bold,
-                  fontSize: displayWidth(context) * 0.04,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Text(
+                  quotes[randomInddex].quote,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Dancing',
+                    wordSpacing: 2.2,
+                    fontWeight: FontWeight.w500,
+                    fontSize: displayWidth(context) * 0.062,
+                  ),
                 ),
               ),
+              Opacity(opacity: 0.0, child: Divider()),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '- ${quotes[randomInddex].author}',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        fontWeight: FontWeight.bold,
+                        fontSize: displayWidth(context) * 0.04,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }
