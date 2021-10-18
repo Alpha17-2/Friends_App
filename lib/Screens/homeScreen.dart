@@ -27,8 +27,8 @@ class homeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenProvider = Provider.of<screenIndexProvider>(context);
     int currentScreen = screenProvider.currentScreen;
-    final iconSize = displayWidth(context) * 0.075;
-    final selectedIconSize = displayWidth(context)*0.078;
+    final iconSize = displayWidth(context) * 0.07;
+    final selectedIconSize = displayWidth(context)*0.075;
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(color: Color(0xfb004953)),
@@ -38,7 +38,7 @@ class homeScreen extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-              top: displayHeight(context) * 0.03,
+              top: displayHeight(context) * 0.05,
               left: displayWidth(context) * 0.025,
               right: displayWidth(context) * 0.025,
               child: Container(
