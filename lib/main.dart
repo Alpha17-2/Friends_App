@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstapp/Providers/AuthOptions.dart';
+import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/authScreen.dart';
 import 'package:firstapp/Screens/homeScreen.dart';
@@ -24,8 +25,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => AuthNotifier(),
           ),
+          ChangeNotifierProvider(create :(context) => FriendsManager(),),
           Provider<authservice>(
               create: (_) => authservice(FirebaseAuth.instance)),
+
           // ignore: missing_required_param
           StreamProvider(
               create: (context) =>
