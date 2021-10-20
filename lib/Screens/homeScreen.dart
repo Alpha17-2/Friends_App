@@ -29,15 +29,15 @@ class homeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
           iconSize: iconSize,
-          showSelectedLabels: false,
-          backgroundColor: Colors.white70,
-          fixedColor: Colors.white70,
+          showSelectedLabels: true,
+          backgroundColor: Colors.white,
+          fixedColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           currentIndex: currentScreen,
           onTap: (value) {
             screenProvider.updateIndex(value);
           },
-          elevation: 50,
+          elevation: 0,
           items: [
             BottomNavigationBarItem(
               backgroundColor: Colors.black54,
