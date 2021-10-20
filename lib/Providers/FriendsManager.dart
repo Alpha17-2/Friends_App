@@ -60,7 +60,7 @@ class FriendsManager extends ChangeNotifier {
                 'dob': friend.dob,
                 'education': friend.education,
                 'gender': friend.gender,
-                'about': friend.gender,
+                'about': friend.about,
                 'profession': friend.profession,
                 'interests': friend.interests,
                 'instagram': friend.instagram,

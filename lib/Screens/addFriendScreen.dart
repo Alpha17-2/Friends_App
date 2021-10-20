@@ -1000,10 +1000,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                     .then((value) {
                                   setState(() {
                                     isUploading = false;
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Congratulations !! ${title.text.toString()} is now your friend")));
                                   });
+
                                 });
                                 }
-                                
                               },
                               child: Text(
                                 'Submit',
