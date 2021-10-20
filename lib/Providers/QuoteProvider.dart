@@ -62,6 +62,66 @@ class QuoteProvider{
       author: 'Mark Twain',
       quote: 'Good friends, good books, and a sleepy conscience: this is the ideal life.',
     ),
+    quoteModel(
+      author: "Elisabeth Foley",
+      quote: "The most beautiful discovery true friends make is that they can grow separately without growing apart.",
+    ),
+    quoteModel(
+      author: "Anais Nin",
+      quote: "Each friend represents a world in us, a world possibly not born until they arrive, and it is only by this meeting that a new world is born.",
+    ),
+    quoteModel(
+      author: "Tennessee Williams",
+      quote: "Life is partly what we make it, and partly what it is made by the friends we choose.",
+    ),
+    quoteModel(
+      author: "Maria Shriver",
+      quote: "When the world is so complicated, the simple gift of friendship is within all of our hands.",
+    ),
+    quoteModel(
+      author: "Ed Cunningham",
+      quote: "Friends are those rare people who ask how we are and then wait to hear the answer.",
+    ),
+    quoteModel(
+      author: "G. Randolf",
+      quote: "Truly great friends are hard to find, difficult to leave, and impossible to forget.",
+    ),
+    quoteModel(
+      author: "Irish Proverb",
+      quote: "A good friend is like a four-leaf clover; hard to find and lucky to have.",
+    ),
+    quoteModel(
+      author: "Helen Keller",
+      quote: "True friends are never apart, maybe in distance but never in heart.",
+    ),
+    quoteModel(
+      author: "Arnold H. Glasgow",
+      quote: "A true friend never gets in your way unless you happen to be going down.",
+    ),
+    quoteModel(
+      author: "Henry David Thoreau",
+      quote: "Friends…they cherish one another’s hopes. They are kind to one another’s dreams.",
+    ),
+    quoteModel(
+      author: "Patrick Lindsay",
+      quote: "Every new friend is a new adventure… the start of more memories.",
+    ),
+    quoteModel(
+      author: "Ann Kaiser Stearns",
+      quote: "The kindest way of helping yourself is to find a friend.",
+    ),
+    quoteModel(
+      author: "Kahlil Gibran",
+      quote: "A friend who is far away is sometimes much nearer than one who is at hand.",
+    ),
+    quoteModel(
+      author: "Ethel Barrymore",
+      quote: "The best time to make friends is before you need them.",
+    ),
+    quoteModel(
+      author: "Len Wein",
+      quote: "A true friend is someone who is there for you when he’d rather be anywhere else.",
+    ),
   ];
   List<quoteModel> get fetchQuotesList{
     return [...quotes];
