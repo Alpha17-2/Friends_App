@@ -26,57 +26,56 @@ class homeScreen extends StatelessWidget {
     int currentScreen = screenProvider.currentScreen;
     final iconSize = displayWidth(context) * 0.06;
     return Scaffold(
-        backgroundColor: Color(0xfb004953),
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
           iconSize: iconSize,
           showSelectedLabels: false,
-          backgroundColor: Color(0xfb004953),
-          fixedColor: Color(0xfb004953),
+          backgroundColor: Colors.white70,
+          fixedColor: Colors.white70,
           type: BottomNavigationBarType.fixed,
           currentIndex: currentScreen,
           onTap: (value) {
             screenProvider.updateIndex(value);
           },
-          elevation: 0,
+          elevation: 50,
           items: [
             BottomNavigationBarItem(
-              backgroundColor: Color(0xfb004953),
-                label: '',
+              backgroundColor: Colors.black54,
+                label: 'Home',
+
                 icon: Icon(
                     (currentScreen == 0) ? Icons.home : Icons.home_outlined,
                     color:
-                        (currentScreen == 0) ? Colors.white : Colors.white70)),
+                        (currentScreen == 0) ? Colors.black : Colors.black54)),
             BottomNavigationBarItem(
-                label: '',
+                label: 'Friends',
                 icon: Icon(
                     (currentScreen == 1)
                         ? Icons.favorite
                         : Icons.favorite_outline,
                     color:
-                        (currentScreen == 1) ? Colors.white : Colors.white70)),
+                        (currentScreen == 1) ? Colors.black : Colors.black54)),
             BottomNavigationBarItem(
-                label: '',
+                label: 'Connect',
                 icon: Icon(
                   (currentScreen == 2)
                       ? Icons.add_circle
                       : Icons.add_circle_outline,
-                  color: (currentScreen == 2) ? Colors.white : Colors.white70,
+                  color: (currentScreen == 2) ? Colors.black : Colors.black54,
                 )),
             BottomNavigationBarItem(
-                label: '',
+                label: 'Quotes',
+
                 icon: Icon(
                   (currentScreen == 3)
                       ? Icons.auto_awesome
                       : Icons.auto_awesome_outlined,
-                  color: (currentScreen == 3) ? Colors.white : Colors.white70,
+                  color: (currentScreen == 3) ? Colors.black : Colors.black54,
                 )),
 
           ],
         ),
-        body: Container(
-            decoration: BoxDecoration(color: Color(0xfb004953)),
-            height: displayHeight(context),
-            width: displayWidth(context),
-            child: screens[currentScreen]));
+        body:
+             screens[currentScreen]);
   }
 }

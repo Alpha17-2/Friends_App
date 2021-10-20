@@ -47,16 +47,10 @@ class exploreScreen extends StatelessWidget {
     }
 
     final randomInddex = random.nextInt(quotes.length);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top:12.0,left: 10,right: 10,bottom: 10),
-        child: Container(
+    return  Container(
           height: displayHeight(context),
           width: displayWidth(context),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,10 +58,8 @@ class exploreScreen extends StatelessWidget {
               Container(
                   height: displayHeight(context) * 0.45,
                   width: displayWidth(context),
-                  clipBehavior: Clip.hardEdge,
+
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                     image: DecorationImage(
 
                         image: AssetImage('images/bg2.jpg'), fit: BoxFit.cover),
@@ -80,7 +72,7 @@ class exploreScreen extends StatelessWidget {
                       width: displayWidth(context),
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 10.0, right: 10, top: 12, bottom: 12),
+                            left: 10.0, right: 10, top: 45, bottom: 12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -144,6 +136,7 @@ class exploreScreen extends StatelessWidget {
                                 )
                               ],
                             ),
+                            Opacity(opacity: 0.0,child: Divider()),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -167,8 +160,8 @@ class exploreScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Divider(),
-                            Divider(),
+                            Opacity(child: Divider(),opacity: 0.0,),
+                            Opacity(child: Divider(),opacity: 0.0,),
                           ],
                         ),
                       ),
@@ -242,8 +235,6 @@ class exploreScreen extends StatelessWidget {
               )
             ],
           ),
-        ),
-      ),
     );
   }
 }
