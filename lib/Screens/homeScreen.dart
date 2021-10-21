@@ -26,12 +26,13 @@ class homeScreen extends StatelessWidget {
     int currentScreen = screenProvider.currentScreen;
     final iconSize = displayWidth(context) * 0.06;
     return Scaffold(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 0,
           iconSize: iconSize,
-          showSelectedLabels: true,
-          backgroundColor: Colors.white,
-          fixedColor: Colors.white,
+          showSelectedLabels: false,
+
+
           type: BottomNavigationBarType.fixed,
           currentIndex: currentScreen,
           onTap: (value) {
@@ -40,7 +41,7 @@ class homeScreen extends StatelessWidget {
           elevation: 0,
           items: [
             BottomNavigationBarItem(
-              backgroundColor: Colors.black54,
+            //  backgroundColor: Colors.black54,
                 label: 'Home',
 
                 icon: Icon(
