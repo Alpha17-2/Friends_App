@@ -50,7 +50,7 @@ class exploreScreen extends StatelessWidget {
     return  Container(
           height: displayHeight(context),
           width: displayWidth(context),
-
+          color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
