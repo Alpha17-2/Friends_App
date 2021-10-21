@@ -7,8 +7,8 @@ import 'package:firstapp/Screens/quotesScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'addFriendScreen.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class homeScreen extends StatelessWidget {
   //const homeScreen({Key? key}) : super(key: key);
@@ -27,56 +27,35 @@ class homeScreen extends StatelessWidget {
     final iconSize = displayWidth(context) * 0.06;
     return Scaffold(
         //backgroundColor: Colors.white,
-        bottomNavigationBar: BottomNavigationBar(
-          selectedFontSize: 0,
-          iconSize: iconSize,
-          showSelectedLabels: false,
-
-
-          type: BottomNavigationBarType.fixed,
-          currentIndex: currentScreen,
-          onTap: (value) {
-            screenProvider.updateIndex(value);
-          },
-          elevation: 0,
+        bottomNavigationBar: CurvedNavigationBar(
+          animationCurve: Curves.easeOutQuart,
+          animationDuration: Duration(microseconds: 500000),
+          backgroundColor: Colors.white,
+          color: Colors.orange[400],
           items: [
-            BottomNavigationBarItem(
-            //  backgroundColor: Colors.black54,
-                label: 'Home',
-
-                icon: Icon(
-                    (currentScreen == 0) ? Icons.home : Icons.home_outlined,
-                    color:
-                        (currentScreen == 0) ? Colors.black : Colors.black54)),
-            BottomNavigationBarItem(
-                label: 'Friends',
-                icon: Icon(
-                    (currentScreen == 1)
-                        ? Icons.favorite
-                        : Icons.favorite_outline,
-                    color:
-                        (currentScreen == 1) ? Colors.black : Colors.black54)),
-            BottomNavigationBarItem(
-                label: 'Connect',
-                icon: Icon(
-                  (currentScreen == 2)
-                      ? Icons.add_circle
-                      : Icons.add_circle_outline,
-                  color: (currentScreen == 2) ? Colors.black : Colors.black54,
-                )),
-            BottomNavigationBarItem(
-                label: 'Quotes',
-
-                icon: Icon(
-                  (currentScreen == 3)
-                      ? Icons.auto_awesome
-                      : Icons.auto_awesome_outlined,
-                  color: (currentScreen == 3) ? Colors.black : Colors.black54,
-                )),
-
+            Icon((currentScreen == 0) ? Icons.home : Icons.home_outlined,
+                color: (currentScreen == 0) ? Colors.white : Colors.white70),
+            Icon((currentScreen == 1) ? Icons.favorite : Icons.favorite_outline,
+                color: (currentScreen == 1) ? Colors.white : Colors.white70),
+            Icon(
+              (currentScreen == 2)
+                  ? Icons.add_circle
+                  : Icons.add_circle_outline,
+              color: (currentScreen == 2) ? Colors.white : Colors.white70,
+            ),
+            Icon(
+              (currentScreen == 3)
+                  ? Icons.auto_awesome
+                  : Icons.auto_awesome_outlined,
+              color: (currentScreen == 3) ? Colors.white : Colors.white70,
+            ),
           ],
+          height: displayHeight(context) * 0.07,
+          index: currentScreen,
+          onTap: (value) =>
+              Provider.of<screenIndexProvider>(context, listen: false)
+                  .updateIndex(value),
         ),
-        body:
-             screens[currentScreen]);
+        body: screens[currentScreen]);
   }
 }
