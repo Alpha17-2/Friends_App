@@ -12,7 +12,7 @@ class FriendsManager extends ChangeNotifier {
   // String denotes ID ,
   Map<String, Friend> friendsMap = {};
 
-  List<Friend> get list {
+  List<Friend> get fetchList {
     return friendsMap.values.toList();
   }
 
