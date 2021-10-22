@@ -4,6 +4,7 @@ import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Helpers/widgets.dart';
 import 'package:firstapp/Models/Friend.dart';
 import 'package:firstapp/Providers/FriendsManager.dart';
+import 'package:firstapp/Providers/categoryManager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,8 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   bool init = true;
   bool isLoading = true;
   User currentUser;
-
+  final selectedCategory = [Colors.orange[300],Colors.orange[200]];
+  final unselectedCategory = [Colors.black54, Colors.black54];
   @override
   void initState() {
     // TODO: implement initState
@@ -38,6 +40,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     List<Friend> friends = Provider.of<FriendsManager>(context).fetchList;
+    int currentCategory = Provider.of<categoryManager>(context).fetchCurrentCategory;
     searchBox() {
       return TextFormField(
         decoration: InputDecoration(
@@ -130,47 +133,43 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                         children: [
                           Card(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(45)
                             ),
-                            elevation: 10,
-                            child: Container(
-                              height: displayHeight(context) * 0.06,
-                              width: displayWidth(context) * 0.28,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Colors.green[400],
-                                      Colors.green[300],
-                                      Colors.green[200],
-                                    ]),
-                              ),
-                              child: Center(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-
-                                  Image.asset(
-                                    'images/all.png',
-                                    height: displayHeight(context) * 0.035,
-                                    fit: BoxFit.cover,
+                            //color: Colors.orange[300],
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: (currentCategory == 0)?selectedCategory:unselectedCategory,
                                   ),
-                                  Text(
-                                    'All',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            displayWidth(context) * 0.045),
-                                  )
-                                ],
-                              )),
+                                  borderRadius: BorderRadius.circular(45)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top:8.0,left: 16,right: 16,bottom: 8),
+                                  child: Center(
+                                      child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'images/all.png',
+                                        height: displayHeight(context) * 0.03,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      VerticalDivider(width: displayWidth(context)*0.02,),
+                                      Text(
+                                        'ALL',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                displayWidth(context) * 0.032),
+                                      )
+                                    ],
+                                  )),
+                                ),
+                              ),
                             ),
-                          )
                         ],
                       ),
                     ],
