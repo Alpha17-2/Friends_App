@@ -21,28 +21,33 @@ class FriendsManager extends ChangeNotifier {
       Map<String, Friend> temp = {};
       final String api = constants().fetchApi + 'friends.json';
       final response = await http.get(Uri.parse(api));
-      final data = json.decode(response.body) as Map<String, dynamic>;
-      data.forEach((key, value) {
-        temp[key] = Friend(
-          title: value['title'],
-          docId: value['docId'],
-          dp: value['dp'],
-          dob: value['dob'],
-          about: value['about'],
-          contactNumber: value['contactNumber'],
-          education: value['eduction'],
-          facebook: value['facebook'],
-          gender: value['gender'],
-          instagram: value['instagram'],
-          interests: value['interests'],
-          linkedin: value['linkedin'],
-          mail: value['mail'],
-          profession: value['profession'],
-          snapchat: value['snapchat'],
-          twitter: value['twitter'],
-          youtube: value['youtube'],
-        );
-      });
+      print(response.statusCode);
+      final Map<String,dynamic> data = json.decode(response.body) as Map<String, dynamic>;
+      if(data.length!=0){
+        print('enter');
+        data.forEach((key, value) {
+          temp[key] = Friend(
+            title: value['title'],
+            docId: value['docId'],
+            dp: value['dp'],
+            dob: value['dob'],
+            about: value['about'],
+            contactNumber: value['contactNumber'],
+            education: value['eduction'],
+            facebook: value['facebook'],
+            gender: value['gender'],
+            instagram: value['instagram'],
+            interests: value['interests'],
+            linkedin: value['linkedin'],
+            mail: value['mail'],
+            profession: value['profession'],
+            snapchat: value['snapchat'],
+            twitter: value['twitter'],
+            youtube: value['youtube'],
+          );
+        });
+      }
+      print('exit');
       friendsMap = temp;
       notifyListeners();
     } catch (error) {
@@ -50,7 +55,7 @@ class FriendsManager extends ChangeNotifier {
     }
   }
 
-  Future<void> addFriend(File image, Friend friend) async {
+  Future<void> addFriend(File? image, Friend friend) async {
     try {
       final String api = constants().fetchApi + 'friends.json';
       return http
@@ -76,12 +81,12 @@ class FriendsManager extends ChangeNotifier {
               }))
           .then((value) async {
         final data = json.decode(value.body) as Map<String, dynamic>;
-        String docId = data['name'];
+        String? docId = data['name'];
         final api2 = constants().fetchApi + 'friends/${docId}.json';
         String imageLocation = 'friends/${docId}/dp';
         final Reference storageReference =
         FirebaseStorage.instance.ref().child(imageLocation);
-        final UploadTask uploadTask = storageReference.putFile(image);
+        final UploadTask uploadTask = storageReference.putFile(image!);
         final TaskSnapshot taskSnapshot = await uploadTask;
         taskSnapshot.ref.getDownloadURL().then((value) {
           http.patch(Uri.parse(api2), body: json.encode(

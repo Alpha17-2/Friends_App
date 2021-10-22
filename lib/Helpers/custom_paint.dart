@@ -4,9 +4,9 @@ class CurvePainter extends CustomPainter{
   void paint(Canvas canvas, Size size) {
     Path path = Path();
     Paint paint = Paint();
-    Color colorOne = Colors.orange[600];
-    Color colorTwo = Colors.orange[300];
-    Color colorThree = Colors.orange[200];
+    Color colorOne = Colors.orange[600]!;
+    Color colorTwo = Colors.orange[300]!;
+    Color colorThree = Colors.orange[200]!;
 
 
     path.lineTo(0, size.height *0.75);

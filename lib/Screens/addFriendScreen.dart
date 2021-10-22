@@ -15,41 +15,41 @@ class addFriendScreen extends StatefulWidget {
 
 class _addFriendScreenState extends State<addFriendScreen> {
   bool isMale = true;
-  TextEditingController about;
-  TextEditingController dob;
-  TextEditingController edu;
-  String gender;
-  TextEditingController interest;
-  TextEditingController instagram;
-  TextEditingController linkedin;
-  TextEditingController phone;
-  TextEditingController facebook;
-  TextEditingController email;
-  TextEditingController youtube;
-  TextEditingController snapchat;
-  TextEditingController profession;
-  TextEditingController twiiter;
+  TextEditingController? about;
+  TextEditingController? dob;
+  TextEditingController? edu;
+  String? gender;
+  TextEditingController? interest;
+  TextEditingController? instagram;
+  TextEditingController? linkedin;
+  TextEditingController? phone;
+  TextEditingController? facebook;
+  TextEditingController? email;
+  TextEditingController? youtube;
+  TextEditingController? snapchat;
+  TextEditingController? profession;
+  TextEditingController? twiiter;
 
-  bool isUploading;
+  late bool isUploading;
   final picker = ImagePicker();
-  TextEditingController title;
+  TextEditingController? title;
   final _formKey = GlobalKey<FormState>();
-  File _imageFile;
+  File? _imageFile;
 
   @override
   void dispose() {
-    twiiter.dispose();
-    title.dispose();
-    about.dispose();
-    edu.dispose();
-    profession.dispose();
-    interest.dispose();
-    dob.dispose();
-    phone.dispose();
-    email.dispose();
-    instagram.dispose();
-    snapchat.dispose();
-    youtube.dispose();
+    twiiter!.dispose();
+    title!.dispose();
+    about!.dispose();
+    edu!.dispose();
+    profession!.dispose();
+    interest!.dispose();
+    dob!.dispose();
+    phone!.dispose();
+    email!.dispose();
+    instagram!.dispose();
+    snapchat!.dispose();
+    youtube!.dispose();
 
     super.dispose();
   }
@@ -81,14 +81,14 @@ class _addFriendScreenState extends State<addFriendScreen> {
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (mounted) {
         setState(() {
-          _imageFile = File(pickedFile.path);
+          _imageFile = File(pickedFile!.path);
         });
       }
     }
 
     dpExists() {
       return CircleAvatar(
-        backgroundImage: FileImage(_imageFile),
+        backgroundImage: FileImage(_imageFile!),
         radius: displayWidth(context) * 0.2,
       );
     }
@@ -190,7 +190,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: TextFormField(
                                 controller: title,
                                 validator: (value) {
-                                  if (value.isEmpty || value.length == 0)
+                                  if (value!.isEmpty || value.length == 0)
                                     return 'Cannot be empty';
                                   return null;
                                 },
@@ -235,7 +235,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 controller: dob,
                                 keyboardType: TextInputType.datetime,
                                 validator: (value) {
-                                  if (value.isEmpty || value.length == 0)
+                                  if (value!.isEmpty || value.length == 0)
                                     return 'Cannot be empty';
                                   else {
                                     bool validDate = RegExp(
@@ -281,7 +281,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               width: displayWidth(context) * 0.4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: Colors.grey[300])),
+                                  border: Border.all(color: Colors.grey[300]!)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -309,7 +309,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               width: displayWidth(context) * 0.4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: Colors.grey[300])),
+                                  border: Border.all(color: Colors.grey[300]!)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -362,7 +362,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: TextFormField(
                                 controller: edu,
                                 validator: (value) {
-                                  if (value.isEmpty || value.length == 0)
+                                  if (value!.isEmpty || value.length == 0)
                                     return 'Cannot be empty';
                                   return null;
                                 },
@@ -406,7 +406,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: TextFormField(
                                 controller: profession,
                                 validator: (value) {
-                                  if (value.isEmpty || value.length == 0)
+                                  if (value!.isEmpty || value.length == 0)
                                     return 'Cannot be empty';
                                   return null;
                                 },
@@ -449,7 +449,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               controller: about,
                               maxLines: 10,
                               validator: (value) {
-                                if (value.isEmpty || value.length == 0)
+                                if (value!.isEmpty || value.length == 0)
                                   return 'Cannot be empty';
                                 return null;
                               },
@@ -492,7 +492,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: TextFormField(
                                 controller: interest,
                                 validator: (value) {
-                                  if (value.isEmpty || value.length == 0)
+                                  if (value!.isEmpty || value.length == 0)
                                     return 'Cannot be empty';
                                   return null;
                                 },
@@ -552,7 +552,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 controller: phone,
                                 keyboardType: TextInputType.phone,
                                 validator: (value) {
-                                  if (value.length != 10)
+                                  if (value!.length != 10)
                                     return 'Mobile number should contain 10 digits';
                                   return null;
                                 },
@@ -596,7 +596,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: TextFormField(
                                 controller: email,
                                 validator: (value) {
-                                  if (value.isEmpty ||
+                                  if (value!.isEmpty ||
                                       value == null ||
                                       value.length == 0)
                                     return 'Cannot be empty';
@@ -973,34 +973,34 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.indigo[400])),
                               onPressed: () async {
-                                if(_formKey.currentState.validate()){
+                                if(_formKey.currentState!.validate()){
                                   setState(() {
                                   isUploading = true;
                                 });
                                 Provider.of<FriendsManager>(context,listen: false)
                                     .addFriend(_imageFile, Friend(
-                                      about: about.text.toString(),
-                                      contactNumber: phone.text.toString(),
-                                      dob: dob.text.toString(),
+                                      about: about!.text.toString(),
+                                      contactNumber: phone!.text.toString(),
+                                      dob: dob!.text.toString(),
                                       docId: '',
                                       dp: '',
-                                      education: edu.text.toString(),
-                                      facebook: facebook.text.toString(),
+                                      education: edu!.text.toString(),
+                                      facebook: facebook!.text.toString(),
                                       gender: (isMale)?"Male":"Female",
-                                      instagram: instagram.text.toString(),
-                                      interests: interest.text.toString(),
-                                      linkedin: linkedin.text.toString(),
-                                      mail: email.text.toString(),
-                                      profession: profession.text.toString(),
-                                      snapchat: snapchat.text.toString(),
-                                      title: title.text.toString(),
-                                      twitter: twiiter.text.toString(),
-                                      youtube: youtube.text.toString(),
+                                      instagram: instagram!.text.toString(),
+                                      interests: interest!.text.toString(),
+                                      linkedin: linkedin!.text.toString(),
+                                      mail: email!.text.toString(),
+                                      profession: profession!.text.toString(),
+                                      snapchat: snapchat!.text.toString(),
+                                      title: title!.text.toString(),
+                                      twitter: twiiter!.text.toString(),
+                                      youtube: youtube!.text.toString(),
                                     ))
                                     .then((value) {
                                   setState(() {
                                     isUploading = false;
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Congratulations !! ${title.text.toString()} is now your friend")));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Congratulations !! ${title!.text.toString()} is now your friend")));
                                   });
 
                                 });

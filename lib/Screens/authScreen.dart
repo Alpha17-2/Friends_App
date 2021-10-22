@@ -14,7 +14,7 @@ class authScreen extends StatefulWidget {
 }
 
 class _authScreenState extends State<authScreen> {
-  bool isLoading;
+  late bool isLoading;
 
   final _authFormKey = GlobalKey<FormState>();
 
@@ -54,7 +54,7 @@ class _authScreenState extends State<authScreen> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty || value == null || value.length == 0)
+                    if (value!.isEmpty || value == null || value.length == 0)
                       return 'Cannot be empty';
                     else {
                       bool emailValid = RegExp(
@@ -150,7 +150,7 @@ class _authScreenState extends State<authScreen> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty || value == null || value.length == 0)
+                    if (value!.isEmpty || value == null || value.length == 0)
                       return 'Cannot be empty';
                     else {
                       return null;
@@ -189,7 +189,7 @@ class _authScreenState extends State<authScreen> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty || value == null || value.length == 0)
+                    if (value!.isEmpty || value == null || value.length == 0)
                       return 'Cannot be empty';
                     else {
                       bool emailValid = RegExp(

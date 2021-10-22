@@ -9,7 +9,7 @@ class authservice {
 
   // ignore: non_constant_identifier_names
 
-  Stream<User> get austhStateChanges => _auth.authStateChanges();
+  Stream<User?> get austhStateChanges => _auth.authStateChanges();
 
 //sign out
   Future<void> signOut() async {
@@ -19,7 +19,7 @@ class authservice {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
 //sign in with email and password  !!
-  Future<String> signIn({String email, String password}) async {
+  Future<String?> signIn({required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "valid";
@@ -30,20 +30,20 @@ class authservice {
 
   Future<void> changeDisplayName(String displayName)async{
     try{
-      User user = FirebaseAuth.instance.currentUser;
+      User user = FirebaseAuth.instance.currentUser!;
       return user.updateDisplayName(displayName);
     }
     catch(error){
-      return error;
+      print(error);
     }
   }
 
-  Future<String> signUp({String email,String displayName, String password}) async {
+  Future<String?> signUp({required String email,String? displayName, required String password}) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-            value.user.updateDisplayName(displayName);
+            value.user!.updateDisplayName(displayName);
       });
       return "valid";
     } on FirebaseAuthException catch (e) {
@@ -51,7 +51,7 @@ class authservice {
     }
   }
 
-  Future<String> resetPassword(String email) async {
+  Future<String?> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return 'ok';

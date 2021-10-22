@@ -31,7 +31,7 @@ class homeScreen extends StatelessWidget {
           animationCurve: Curves.easeOutQuart,
           animationDuration: Duration(microseconds: 500000),
           backgroundColor: Colors.white,
-          color: Colors.orange[400],
+          color: Colors.orange[400]!,
           items: [
             Icon((currentScreen == 0) ? Icons.home : Icons.home_outlined,
                 color: (currentScreen == 0) ? Colors.white : Colors.white70),

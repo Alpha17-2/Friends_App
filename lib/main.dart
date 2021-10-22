@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           // ignore: missing_required_param
           StreamProvider(
               create: (context) =>
-                  context.read<authservice>().austhStateChanges),
+                  context.read<authservice>().austhStateChanges, initialData: null,),
           ChangeNotifierProvider(
             create: (context) => AuthOptions(),
           ),
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
 class wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+    final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
       return homeScreen();

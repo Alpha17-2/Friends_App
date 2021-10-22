@@ -12,7 +12,7 @@ class exploreScreen extends StatelessWidget {
   //const exploreScreen({Key? key}) : super(key: key);
   Random random = Random();
   final authservice _auth = authservice(FirebaseAuth.instance);
-  User currentUser = FirebaseAuth.instance.currentUser;
+  User? currentUser = FirebaseAuth.instance.currentUser;
   final _keyForm = GlobalKey<FormState>();
   TextEditingController displayNameController = TextEditingController();
 
@@ -25,7 +25,7 @@ class exploreScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage(f.image),
+            backgroundImage: AssetImage(f.image!),
             radius: displayWidth(context) * 0.065,
           ),
           Opacity(
@@ -35,7 +35,7 @@ class exploreScreen extends StatelessWidget {
             opacity: 0.0,
           ),
           Text(
-            f.title,
+            f.title!,
             style: TextStyle(
                 color: Colors.black54,
                 fontSize: displayWidth(context)*0.035,
@@ -93,7 +93,7 @@ class exploreScreen extends StatelessWidget {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     return showDialog(
                                       context: context,
                                       builder: (context) {
@@ -106,11 +106,11 @@ class exploreScreen extends StatelessWidget {
                                             child: TextFormField(
                                               controller: displayNameController,
                                               validator: (value) {
-                                                if(value.isEmpty) return 'Cannot be empty';
+                                                if(value!.isEmpty) return 'Cannot be empty';
                                                 return null;
                                               },
                                               decoration: InputDecoration(
-                                                hintText: currentUser.displayName,
+                                                hintText: currentUser!.displayName,
                                                 labelText: 'Display name',
                                               ),
                                             ),
@@ -151,7 +151,7 @@ class exploreScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  currentUser.displayName,
+                                  currentUser!.displayName!,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.white,
@@ -204,7 +204,7 @@ class exploreScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Text(
-                  quotes[randomInddex].quote,
+                  quotes[randomInddex].quote!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,

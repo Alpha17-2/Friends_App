@@ -16,8 +16,8 @@ class myFriendsScreen extends StatefulWidget {
 class _myFriendsScreenState extends State<myFriendsScreen> {
   bool init = true;
   bool isLoading = true;
-  User currentUser;
-  final selectedCategory = [Colors.orange[300],Colors.orange[200]];
+  User? currentUser;
+
   final unselectedCategory = [Colors.black54, Colors.black54];
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      currentUser.displayName,
+                      currentUser!.displayName!,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -139,7 +139,8 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
-                                    colors: (currentCategory == 0)?selectedCategory:unselectedCategory,
+                                    colors: (currentCategory == 0)?[Colors.orange[300]!,Colors.orange[200]!]:
+                                    unselectedCategory,
                                   ),
                                   borderRadius: BorderRadius.circular(45)
                                 ),
