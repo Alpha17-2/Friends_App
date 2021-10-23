@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
-import 'package:firstapp/Models/friends.dart';
 import 'package:firstapp/Models/quote.dart';
 import 'package:firstapp/Providers/QuoteProvider.dart';
 import 'package:firstapp/Services/auth.dart';
@@ -19,32 +18,7 @@ class exploreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<quoteModel> quotes = QuoteProvider().fetchQuotesList;
-    List<friend> friends = friendsProvider().fetchBestFriends;
-    displayBestFriends(BuildContext context, friend f) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(f.image!),
-            radius: displayWidth(context) * 0.065,
-          ),
-          Opacity(
-            child: Divider(
-              height: 1,
-            ),
-            opacity: 0.0,
-          ),
-          Text(
-            f.title!,
-            style: TextStyle(
-                color: Colors.black54,
-                fontSize: displayWidth(context)*0.035,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.2),
-          ),
-        ],
-      );
-    }
+    
 
     final randomInddex = random.nextInt(quotes.length);
     return  Container(
@@ -179,28 +153,7 @@ class exploreScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: displayHeight(context) * 0.15,
-                  width: displayWidth(context),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: displayBestFriends(context, friends[index]),
-                          );
-                        },
-                        itemCount: friends.length,
-                        scrollDirection: Axis.horizontal,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Text(
