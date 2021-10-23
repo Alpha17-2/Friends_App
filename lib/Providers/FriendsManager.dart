@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/Helpers/constants.dart';
 import 'package:firstapp/Models/Friend.dart';
@@ -33,7 +32,7 @@ class FriendsManager extends ChangeNotifier {
             dob: value['dob'],
             about: value['about'],
             contactNumber: value['contactNumber'],
-            education: value['eduction'],
+            education: value['education'],
             facebook: value['facebook'],
             gender: value['gender'],
             instagram: value['instagram'],
