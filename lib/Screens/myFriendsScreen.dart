@@ -14,17 +14,10 @@ class myFriendsScreen extends StatefulWidget {
 }
 
 class _myFriendsScreenState extends State<myFriendsScreen> {
+  User? currentUser;
   bool init = true;
   bool isLoading = true;
-  User? currentUser;
-
   final unselectedCategory = [Colors.black54, Colors.black54];
-  @override
-  void initState() {
-    // TODO: implement initState
-    currentUser = FirebaseAuth.instance.currentUser;
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() async {
@@ -38,9 +31,17 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    currentUser = FirebaseAuth.instance.currentUser;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Friend> friends = Provider.of<FriendsManager>(context).fetchList;
-    int currentCategory = Provider.of<categoryManager>(context).fetchCurrentCategory;
+    int currentCategory =
+        Provider.of<categoryManager>(context).fetchCurrentCategory;
     searchBox() {
       return TextFormField(
         decoration: InputDecoration(
@@ -96,7 +97,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.045),
+                          fontSize: displayWidth(context) * 0.043),
                     ),
                     Divider(
                       height: 2,
@@ -106,7 +107,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                       style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.04),
+                          fontSize: displayWidth(context) * 0.038),
                     ),
                   ],
                 )),
@@ -119,59 +120,197 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: displayHeight(context) * 0.06,
-                        width: displayWidth(context),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white70,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Container(
+                          height: displayHeight(context) * 0.055,
+                          width: displayWidth(context),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.grey[200],
+                          ),
+                          child: Center(child: searchBox()),
                         ),
-                        child: Center(child: searchBox()),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(45)
-                            ),
-                            //color: Colors.orange[300],
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: (currentCategory == 0)?[Colors.orange[300]!,Colors.orange[200]!]:
-                                    unselectedCategory,
-                                  ),
-                                  borderRadius: BorderRadius.circular(45)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top:8.0,left: 16,right: 16,bottom: 8),
-                                  child: Center(
-                                      child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'images/all.png',
-                                        height: displayHeight(context) * 0.03,
-                                        fit: BoxFit.cover,
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Provider.of<categoryManager>(context,
+                                        listen: false)
+                                    .updateCategory(0);
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(45)),
+                                //color: Colors.orange[300],
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: (currentCategory == 0)
+                                            ? [
+                                                Colors.orange[300]!,
+                                                Colors.orange[200]!
+                                              ]
+                                            : unselectedCategory,
                                       ),
-                                      VerticalDivider(width: displayWidth(context)*0.02,),
-                                      Text(
-                                        'ALL',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize:
-                                                displayWidth(context) * 0.032),
-                                      )
-                                    ],
-                                  )),
+                                      borderRadius: BorderRadius.circular(45)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 6.0, left: 16, right: 16, bottom: 6),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'images/all.png',
+                                            height: displayHeight(context) * 0.028,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          VerticalDivider(
+                                            width: displayWidth(context) * 0.02,
+                                          ),
+                                          Text(
+                                            'ALL',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: displayWidth(context) *
+                                                    0.03),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                        ],
+                            // Best friends
+                            InkWell(
+                              onTap: () {
+                                Provider.of<categoryManager>(context,
+                                        listen: false)
+                                    .updateCategory(1);
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(45)),
+                                //color: Colors.orange[300],
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: (currentCategory == 1)
+                                            ? [
+                                                Colors.orange[300]!,
+                                                Colors.orange[200]!
+                                              ]
+                                            : unselectedCategory,
+                                      ),
+                                      borderRadius: BorderRadius.circular(45)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 6.0, left: 16, right: 16, bottom: 6),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'images/bff.png',
+                                            height: displayHeight(context) * 0.028,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          VerticalDivider(
+                                            width: displayWidth(context) * 0.02,
+                                          ),
+                                          Text(
+                                            'BFF',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: displayWidth(context) *
+                                                    0.03),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Close Friends
+                            InkWell(
+                              onTap: () {
+                                Provider.of<categoryManager>(context,
+                                        listen: false)
+                                    .updateCategory(2);
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(45)),
+                                //color: Colors.orange[300],
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: (currentCategory == 2)
+                                            ? [
+                                                Colors.orange[300]!,
+                                                Colors.orange[200]!
+                                              ]
+                                            : unselectedCategory,
+                                      ),
+                                      borderRadius: BorderRadius.circular(45)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 6.0,
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 6),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'images/close.png',
+                                            height:
+                                                displayHeight(context) * 0.028,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          VerticalDivider(
+                                            width: displayWidth(context) * 0.02,
+                                          ),
+                                          Text(
+                                            'CLOSE FRIENDS',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize:
+                                                    displayWidth(context) *
+                                                        0.03),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -181,14 +320,15 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                 child: Container(
                   height: displayHeight(context) * 0.52,
                   width: displayWidth(context),
-                  color: Colors.pinkAccent,
+                  //color: Colors.pinkAccent,
                   child: (isLoading)
                       ? Center(child: CircularProgressIndicator())
                       : GridView.builder(
+                        padding: EdgeInsets.only(left:10,right: 10),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: 10,
+                            crossAxisSpacing: 25,
                             mainAxisSpacing: 5,
                             //childAspectRatio: 0.5
                           ),
