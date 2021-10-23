@@ -16,7 +16,27 @@ class Friend {
   final String? mail;
   final String? snapchat;
   final String? linkedin;
+  final bool? isBestFriend;
+  final bool? isCloseFriend;
 
-  Friend({this.title, this.gender, this.about, this.education, this.profession,
-      this.dob, this.interests, this.dp, this.docId, this.contactNumber, this.instagram, this.twitter, this.youtube, this.facebook, this.mail, this.snapchat, this.linkedin});
+  Friend(
+      {this.title,
+      this.isCloseFriend,
+      this.isBestFriend,
+      this.gender,
+      this.about,
+      this.education,
+      this.profession,
+      this.dob,
+      this.interests,
+      this.dp,
+      this.docId,
+      this.contactNumber,
+      this.instagram,
+      this.twitter,
+      this.youtube,
+      this.facebook,
+      this.mail,
+      this.snapchat,
+      this.linkedin});
 }
