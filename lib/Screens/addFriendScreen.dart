@@ -984,6 +984,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                       dob: dob!.text.toString(),
                                       docId: '',
                                       dp: '',
+                                      isBestFriend: false,
+                                      isCloseFriend: false,
                                       education: edu!.text.toString(),
                                       facebook: facebook!.text.toString(),
                                       gender: (isMale)?"Male":"Female",
