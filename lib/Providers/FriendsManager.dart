@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/Helpers/constants.dart';
 import 'package:firstapp/Models/Friend.dart';
-import 'package:firstapp/Models/friends.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +25,8 @@ class FriendsManager extends ChangeNotifier {
         print('enter');
         data.forEach((key, value) {
           temp[key] = Friend(
+            isBestFriend: value['isBestFriend'],
+            isCloseFriend: value['isCloseFriend'],
             title: value['title'],
             docId: value['docId'],
             dp: value['dp'],
@@ -60,6 +61,8 @@ class FriendsManager extends ChangeNotifier {
       return http
           .post(Uri.parse(api),
               body: json.encode({
+                'isBestFriend' : friend.isBestFriend,
+                'isCloseFriend' : friend.isCloseFriend,
                 'title': friend.title,
                 'dob': friend.dob,
                 'education': friend.education,
