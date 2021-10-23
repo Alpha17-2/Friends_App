@@ -12,56 +12,85 @@ Widget showMyFriends(BuildContext context, Friend f) {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Stack(
-        alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned(
-            top: displayHeight(context) * 0.02,
-            child: CircleAvatar(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
               backgroundImage: NetworkImage(f.dp!),
-              radius: displayWidth(context) * 0.13,
+              radius: displayWidth(context) * 0.11,
             ),
+            // Title and education
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                  
+                    f.title!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: displayWidth(context) * 0.0355),
+                  ),
+                  Text(
+                    f.education!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: displayWidth(context) * 0.031,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )
+            ],
           ),
-          Positioned(
-            top: displayHeight(context) * 0.03,
-            right: displayWidth(context) * 0.07,
-            child: CircleAvatar(
-              backgroundColor: Colors.orange[400],
-              radius: displayWidth(context) * 0.038,
-              child: Center(
-                child: IconButton(
-                  icon: Icon(Ionicons.star),
-                  onPressed: () {},
-                  iconSize: displayWidth(context) * 0.032,
-                  color: Colors.yellow,
-                ),
+
+          // Best friend and close friend icons
+
+          Card(
+            elevation: 6,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(45),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.orange[400]!,Colors.orange[300]!,Colors.orange[200]!])
+          
               ),
-            ),
-          ),
-          Positioned(
-              bottom: displayHeight(context) * 0.01,
+              height: displayHeight(context)*0.125,
+              width: displayWidth(context)*0.075,
+              
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    f.title!,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: displayWidth(context) * 0.036),
-                  ),
-                  Text(
-                   f.education!,
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: displayWidth(context) * 0.032,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  IconButton(
+                    color: Colors.white,
+                    iconSize: displayWidth(context)*0.035,
+                    onPressed: () {
+                    
+                  }, icon: (Icon((f.isBestFriend!)?Ionicons.heart_circle:Ionicons.heart_circle_outline))),
+                  IconButton(
+                    color: Colors.white,
+                    iconSize: displayWidth(context)*0.035,
+                    onPressed: () {
+                    
+                  }, icon: (Icon((f.isBestFriend!)?Ionicons.star:Ionicons.star_outline))),
                 ],
-              ))
+              ),
+            ),
+          )
+
         ],
-      ),
+      )
     ),
   );
 }
