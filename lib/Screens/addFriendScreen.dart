@@ -14,25 +14,25 @@ class addFriendScreen extends StatefulWidget {
 }
 
 class _addFriendScreenState extends State<addFriendScreen> {
-  bool isMale = true;
   TextEditingController? about;
   TextEditingController? dob;
   TextEditingController? edu;
+  TextEditingController? email;
+  TextEditingController? facebook;
   String? gender;
-  TextEditingController? interest;
   TextEditingController? instagram;
+  TextEditingController? interest;
+  bool isMale = true;
+  late bool isUploading;
   TextEditingController? linkedin;
   TextEditingController? phone;
-  TextEditingController? facebook;
-  TextEditingController? email;
-  TextEditingController? youtube;
-  TextEditingController? snapchat;
-  TextEditingController? profession;
-  TextEditingController? twiiter;
-
-  late bool isUploading;
   final picker = ImagePicker();
+  TextEditingController? profession;
+  TextEditingController? snapchat;
   TextEditingController? title;
+  TextEditingController? twiiter;
+  TextEditingController? youtube;
+
   final _formKey = GlobalKey<FormState>();
   File? _imageFile;
 
@@ -935,7 +935,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                             opacity: 0,
                             child: Divider(
                               height: displayHeight(context) * 0.01,
-                            )),
+                            ),),
                         Container(
                           height: displayHeight(context) * 0.06,
                           width: displayWidth(context),
