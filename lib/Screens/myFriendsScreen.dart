@@ -19,6 +19,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   bool isLoading = true;
   final unselectedCategory = [Colors.black54, Colors.black54];
 
+
   @override
   void didChangeDependencies() async {
     if (init) {
@@ -57,6 +58,8 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
             )),
       );
     }
+
+    
 
     return Container(
         height: displayHeight(context),
