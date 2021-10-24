@@ -33,7 +33,6 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     currentUser = FirebaseAuth.instance.currentUser;
     super.initState();
   }
