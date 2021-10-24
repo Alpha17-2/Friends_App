@@ -86,3 +86,6 @@ flutter:
     - family: Ephesis
       fonts:
         - asset: fonts/KaushanScript-Regular.ttf
+    - family: Zen
+      fonts:
+        - asset: fonts/Zen.ttf
