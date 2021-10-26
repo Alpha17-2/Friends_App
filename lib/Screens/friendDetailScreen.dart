@@ -30,10 +30,15 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
     super.initState();
     isDrawerOpen = false;
   }
+  final List<String> months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   @override
   Widget build(BuildContext context) {
     List<String> interests = widget.friend!.interests!.split(" ");
+    String day = widget.friend!.dob!.substring(0,2);
+    int month = int.parse(widget.friend!.dob!.substring(3,5))-1;
+    String year = widget.friend!.dob!.substring(6,10);
+
     int age = 20;
     print(age);
     return Scaffold(
@@ -109,7 +114,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Ionicons.heart,
-                            color: Colors.pink[400],
+                            color: Colors.pink[600],
                           ),
                         )),
                     Card(
@@ -245,10 +250,10 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                     height: 5,
                                   )),
                               Text(
-                                '${widget.friend!.profession}',
+                                '${widget.friend!.profession}, ${widget.friend!.education}',
                                 style: TextStyle(
                                   color: Colors.grey[500],
-                                  fontSize: displayWidth(context) * 0.04,
+                                  fontSize: displayWidth(context) * 0.042,
                                 ),
                               ),
                             ],
@@ -261,6 +266,27 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                 fontSize: displayWidth(context) * 0.04),
                           )
                         ],
+                      ),
+                      Opacity(opacity: 0.0, child: Divider()),
+                      Text(
+                        'Birthday',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: displayWidth(context) * 0.05),
+                      ),
+                      Opacity(
+                          opacity: 0.0,
+                          child: Divider(
+                            height: 5,
+                          )),
+                      Text(
+                        '${day} ${months[month]}, ${year}',
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                          letterSpacing: 0.45,
+                          fontSize: displayWidth(context) * 0.04,
+                        ),
                       ),
                       Opacity(opacity: 0.0, child: Divider()),
                       Text(
@@ -279,8 +305,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                         widget.friend!.about!,
                         style: TextStyle(
                           color: Colors.grey[500],
-                          letterSpacing: 0.4,
-                          fontSize: displayWidth(context) * 0.038,
+                          letterSpacing: 0.45,
+                          fontSize: displayWidth(context) * 0.04,
                         ),
                       ),
                       Opacity(opacity: 0.0, child: Divider()),
