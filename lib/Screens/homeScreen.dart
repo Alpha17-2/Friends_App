@@ -2,12 +2,9 @@ import 'dart:ui';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/exploreScreen.dart';
-import 'package:firstapp/Screens/groupImagesScreen.dart';
 import 'package:firstapp/Screens/myFriendsScreen.dart';
-import 'package:firstapp/Screens/quotesScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'addFriendScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -17,10 +14,8 @@ class homeScreen extends StatelessWidget {
 
   final List<dynamic> screens = [
     exploreScreen(),
-    myFriendsScreen(),
     addFriendScreen(),
-    groupImagesScreen(),
-    quotesScreen(),
+    myFriendsScreen(),
   ];
 
   @override
@@ -39,28 +34,18 @@ class homeScreen extends StatelessWidget {
             Icon((currentScreen == 0) ? Icons.home : Icons.home_outlined,
             size: displayWidth(context)*0.05,
                 color: (currentScreen == 0) ? Colors.white : Colors.white70),
-            Icon((currentScreen == 1) ? Icons.favorite : Icons.favorite_outline,
-                size: displayWidth(context)*0.05,color: (currentScreen == 1) ? Colors.white : Colors.white70),
             Icon(
-              (currentScreen == 2)
+              (currentScreen == 1)
                   ? Icons.add_circle
                   : Icons.add_circle_outline,size: displayWidth(context)*0.045,
-              color: (currentScreen == 2) ? Colors.white : Colors.white70,
+              color: (currentScreen == 1) ? Colors.white : Colors.white70,
             ),
             Icon(
-              (currentScreen == 3)
+              (currentScreen == 2)
                   ? Icons.group
                   : Icons.group_outlined,
                   size: displayWidth(context)*0.05,
-              color: (currentScreen == 3) ? Colors.white : Colors.white70,
-            ),
-            Icon(
-              
-              (currentScreen == 4)
-                  ? Icons.auto_awesome
-                  : Icons.auto_awesome_outlined,
-                  size: displayWidth(context)*0.05,
-              color: (currentScreen == 4) ? Colors.white : Colors.white70,
+              color: (currentScreen == 2) ? Colors.white : Colors.white70,
             ),
           ],
 
