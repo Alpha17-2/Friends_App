@@ -5,6 +5,7 @@ import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
@@ -232,18 +233,26 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 top: 14.0, left: 8.0, right: 8.0, bottom: 2.0),
                             child: Center(
                               child: TextFormField(
+                                readOnly: true,
                                 controller: dob,
-                                keyboardType: TextInputType.datetime,
-                                validator: (value) {
-                                  if (value!.isEmpty || value.length == 0)
-                                    return 'Cannot be empty';
-                                  else {
-                                    bool validDate = RegExp(
-                                            r"^(0[1-9]|[12][0-9]|3[01])[- /.]")
-                                        .hasMatch(value);
-                                    if (!validDate)
-                                      return 'Please fill correct date';
-                                    return null;
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context, initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime(2101)
+                                  );
+
+                                  if(pickedDate != null ){
+                                    print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                    print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    //you can implement different kind of Date Format here according to your requirement
+
+                                    setState(() {
+                                      dob!.text = formattedDate; //set output date to TextField value.
+                                    });
+                                  }else{
+                                    print("Date is not selected");
                                   }
                                 },
                                 decoration: InputDecoration(
