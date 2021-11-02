@@ -127,6 +127,63 @@ class _addFriendScreenState extends State<addFriendScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    isUploading = true;
+                  });
+                  Provider.of<FriendsManager>(context,
+                      listen: false)
+                      .addFriend(
+                      _imageFile,
+                      Friend(
+                        about: about!.text.toString(),
+                        contactNumber:
+                        phone!.text.toString(),
+                        dob: dob!.text.toString(),
+                        docId: '',
+                        dp: '',
+                        isBestFriend: false,
+                        isCloseFriend: false,
+                        education: edu!.text.toString(),
+                        facebook:
+                        facebook!.text.toString(),
+                        gender:
+                        (isMale) ? "Male" : "Female",
+                        instagram:
+                        instagram!.text.toString(),
+                        interests:
+                        interest!.text.toString(),
+                        linkedin:
+                        linkedin!.text.toString(),
+                        mail: email!.text.toString(),
+                        profession:
+                        profession!.text.toString(),
+                        snapchat:
+                        snapchat!.text.toString(),
+                        title: title!.text.toString(),
+                        twitter: twiiter!.text.toString(),
+                        youtube: youtube!.text.toString(),
+                      ))
+                      .then((value) {
+                    setState(() {
+                      isUploading = false;
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(
+                          content: Text(
+                              "Congratulations !! ${title!.text.toString()} is now your friend")));
+                    });
+                  });
+                }
+              },
+              child: Text(
+                'Done',
+                style: TextStyle(color: Colors.indigoAccent,fontSize: displayWidth(context)*0.045),
+
+              )),
+        ],
         backgroundColor: Colors.white,
         elevation: 1,
         centerTitle: true,
@@ -1083,65 +1140,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Divider(
                                 height: displayHeight(context) * 0.01,
                               )),
-                          Center(
-                            child: TextButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.indigo[400])),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      isUploading = true;
-                                    });
-                                    Provider.of<FriendsManager>(context,
-                                            listen: false)
-                                        .addFriend(
-                                            _imageFile,
-                                            Friend(
-                                              about: about!.text.toString(),
-                                              contactNumber:
-                                                  phone!.text.toString(),
-                                              dob: dob!.text.toString(),
-                                              docId: '',
-                                              dp: '',
-                                              isBestFriend: false,
-                                              isCloseFriend: false,
-                                              education: edu!.text.toString(),
-                                              facebook:
-                                                  facebook!.text.toString(),
-                                              gender:
-                                                  (isMale) ? "Male" : "Female",
-                                              instagram:
-                                                  instagram!.text.toString(),
-                                              interests:
-                                                  interest!.text.toString(),
-                                              linkedin:
-                                                  linkedin!.text.toString(),
-                                              mail: email!.text.toString(),
-                                              profession:
-                                                  profession!.text.toString(),
-                                              snapchat:
-                                                  snapchat!.text.toString(),
-                                              title: title!.text.toString(),
-                                              twitter: twiiter!.text.toString(),
-                                              youtube: youtube!.text.toString(),
-                                            ))
-                                        .then((value) {
-                                      setState(() {
-                                        isUploading = false;
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Congratulations !! ${title!.text.toString()} is now your friend")));
-                                      });
-                                    });
-                                  }
-                                },
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          )
                         ],
                       ),
                     ),
