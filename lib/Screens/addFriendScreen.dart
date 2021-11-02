@@ -128,7 +128,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
+          (isUploading)? CircularProgressIndicator(
+            backgroundColor: Colors.orange[400],
+            color: Colors.indigoAccent,
+          )
+              :TextButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   setState(() {
