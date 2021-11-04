@@ -614,58 +614,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               ),
                             ),
                           ),
-                          Opacity(
-                              opacity: 0,
-                              child: Divider(
-                                height: displayHeight(context) * 0.02,
-                              )),
-                          Text(
-                            'Interests',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Opacity(
-                              opacity: 0,
-                              child: Divider(
-                                height: displayHeight(context) * 0.01,
-                              )),
-                          Container(
-                            height: displayHeight(context) * 0.06,
-                            width: displayWidth(context),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border:
-                                    Border.all(color: Colors.grey, width: 1.1)),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 14.0,
-                                  left: 8.0,
-                                  right: 8.0,
-                                  bottom: 2.0),
-                              child: Center(
-                                child: TextFormField(
-                                  controller: interest,
-                                  validator: (value) {
-                                    if (value!.isEmpty || value.length == 0)
-                                      return 'Cannot be empty';
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        'Cricket , Dance ... (Separate interests using \',\') ',
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          
                           Opacity(
                             opacity: 0,
                             child: Divider(
-                              height: displayHeight(context) * 0.03,
+                              height: displayHeight(context) * 0.02,
                             ),
                           ),
                           Text(
