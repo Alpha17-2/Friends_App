@@ -15,7 +15,9 @@ class addFriendScreen extends StatefulWidget {
 }
 
 class _addFriendScreenState extends State<addFriendScreen> {
+  List<String> friendsInt = [];
   TextEditingController? about;
+  TextEditingController? addInterest;
   TextEditingController? dob;
   TextEditingController? edu;
   TextEditingController? email;
@@ -39,6 +41,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
 
   @override
   void dispose() {
+    addInterest!.dispose();
     twiiter!.dispose();
     title!.dispose();
     about!.dispose();
@@ -59,6 +62,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    addInterest = TextEditingController();
     phone = TextEditingController();
     title = TextEditingController();
     about = TextEditingController();
@@ -87,7 +91,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
       }
     }
 
-    clearAllTextField(){
+   
+
+    clearAllTextField() {
       email!.clear();
       twiiter!.clear();
       linkedin!.clear();
@@ -102,8 +108,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
       interest!.clear();
       edu!.clear();
       instagram!.clear();
-
-
     }
 
     dpExists() {
@@ -125,110 +129,175 @@ class _addFriendScreenState extends State<addFriendScreen> {
       );
     }
 
+    Future<void> addInterestInDialogBox()async{
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            elevation: 5,
+            title: Text("Add more interests"),
+            content: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('What is your friend interested in ?'),
+                    Opacity(child: Divider(),opacity: 0,),
+                    Container(
+                      height: displayHeight(context)*0.06,
+                      width: displayWidth(context)*0.8,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.green),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                     child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: TextFormField(
+                          controller: interest,
+                          toolbarOptions: ToolbarOptions(
+                              copy: true, cut: true, selectAll: true, paste: true),
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            hintText: "Dance , Music , etc ...",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                          ),
+                          showCursor: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+            ),
+
+            actions: [
+              TextButton(onPressed:  () {
+                Navigator.of(context).pop();
+              }, child: Text('Close',style: TextStyle(color: Colors.red[300],fontWeight: FontWeight.bold))),
+              TextButton(
+                onPressed:  () {
+
+              }, child: Text('Done',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),style: ButtonStyle(
+                elevation: MaterialStateProperty.all(3),
+                backgroundColor: MaterialStateProperty.all(Colors.orange[300])
+              ),),
+            ],
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         actions: [
-          (isUploading)? CircularProgressIndicator(
-            backgroundColor: Colors.orange[400],
-            color: Colors.indigoAccent,
-          )
-              :TextButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  setState(() {
-                    isUploading = true;
-                  });
-                  Provider.of<FriendsManager>(context,
-                      listen: false)
-                      .addFriend(
-                      _imageFile,
-                      Friend(
-                        about: about!.text.toString(),
-                        contactNumber:
-                        phone!.text.toString(),
-                        dob: dob!.text.toString(),
-                        docId: '',
-                        dp: '',
-                        isBestFriend: false,
-                        isCloseFriend: false,
-                        education: edu!.text.toString(),
-                        facebook:
-                        facebook!.text.toString(),
-                        gender:
-                        (isMale) ? "Male" : "Female",
-                        instagram:
-                        instagram!.text.toString(),
-                        interests:
-                        interest!.text.toString(),
-                        linkedin:
-                        linkedin!.text.toString(),
-                        mail: email!.text.toString(),
-                        profession:
-                        profession!.text.toString(),
-                        snapchat:
-                        snapchat!.text.toString(),
-                        title: title!.text.toString(),
-                        twitter: twiiter!.text.toString(),
-                        youtube: youtube!.text.toString(),
-                      ))
-                      .then((value) {
-                    setState(() {
-                      isUploading = false;
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(
-                          content: Text(
-                              "Congratulations !! ${title!.text.toString()} is now your friend")));
-                    });
-                  });
-                }
-              },
-              child: Text(
-                'Done',
-                style: TextStyle(color: Colors.indigoAccent,fontSize: displayWidth(context)*0.045),
-
-              )),
+          (isUploading)
+              ? CircularProgressIndicator(
+                  backgroundColor: Colors.orange[400],
+                  color: Colors.indigoAccent,
+                )
+              : TextButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        isUploading = true;
+                      });
+                      Provider.of<FriendsManager>(context, listen: false)
+                          .addFriend(
+                              _imageFile,
+                              Friend(
+                                about: about!.text.toString(),
+                                contactNumber: phone!.text.toString(),
+                                dob: dob!.text.toString(),
+                                docId: '',
+                                dp: '',
+                                isBestFriend: false,
+                                isCloseFriend: false,
+                                education: edu!.text.toString(),
+                                facebook: facebook!.text.toString(),
+                                gender: (isMale) ? "Male" : "Female",
+                                instagram: instagram!.text.toString(),
+                                interests: interest!.text.toString(),
+                                linkedin: linkedin!.text.toString(),
+                                mail: email!.text.toString(),
+                                profession: profession!.text.toString(),
+                                snapchat: snapchat!.text.toString(),
+                                title: title!.text.toString(),
+                                twitter: twiiter!.text.toString(),
+                                youtube: youtube!.text.toString(),
+                              ))
+                          .then((value) {
+                        setState(() {
+                          isUploading = false;
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Congratulations !! ${title!.text.toString()} is now your friend")));
+                        });
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Done',
+                    style: TextStyle(
+                        color: Colors.indigoAccent,
+                        fontSize: displayWidth(context) * 0.045),
+                  )),
         ],
         backgroundColor: Colors.white,
         elevation: 1,
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            showCupertinoDialog(context: context, builder: (context) {
-            return AlertDialog(
-              elevation: 8,
-              title: Text('Clear all'),
-              content: Text('Are you sure you want to clear all textfields ?'),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              actions: [
-                TextButton(onPressed: () {
-                  Navigator.pop(context);
-                }, child: Text('Close')),
-                TextButton(onPressed: () {
-                  clearAllTextField();
-                  Navigator.pop(context);
-                }, child: Card(
+            showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  elevation: 8,
+                  title: Text('Clear all'),
+                  content:
+                      Text('Are you sure you want to clear all textfields ?'),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                  color: Colors.red[300],
-                  elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top:8.0,left: 16,right: 16,bottom: 8),
-                      child: Text('Yes',style: TextStyle(
-                        color: Colors.white
-                      ),),
-                    )))
-              ],
+                      borderRadius: BorderRadius.circular(15)),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Close')),
+                    TextButton(
+                        onPressed: () {
+                          clearAllTextField();
+                          Navigator.pop(context);
+                        },
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            color: Colors.red[300],
+                            elevation: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 16, right: 16, bottom: 8),
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )))
+                  ],
+                );
+              },
             );
-              },);
           },
           icon: Icon(Icons.close),
           color: Colors.red,
         ),
-        title: Text('New Friend',style: TextStyle(
-          color: Colors.black,
-          letterSpacing: 0.5
-        ),),
+        title: Text(
+          'New Friend',
+          style: TextStyle(color: Colors.black, letterSpacing: 0.5),
+        ),
       ),
       body: Container(
         height: displayHeight(context),
@@ -265,11 +334,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 height: displayHeight(context) * 0.015,
                               )),
                           Center(
-                            child: Text('Display Picture',style: TextStyle(
-                              color: Colors.indigoAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context)*0.05
-                            )),
+                            child: Text('Display Picture',
+                                style: TextStyle(
+                                    color: Colors.indigoAccent,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: displayWidth(context) * 0.05)),
                           ),
                           Opacity(
                               opacity: 0,
@@ -614,7 +683,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               ),
                             ),
                           ),
-                          
                           Opacity(
                             opacity: 0,
                             child: Divider(
@@ -709,7 +777,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   controller: email,
                                   validator: (value) {
                                     if (value!.isEmpty ||
-                                        value == null ||
                                         value.length == 0)
                                       return 'Cannot be empty';
                                     else {
@@ -1095,8 +1162,320 @@ class _addFriendScreenState extends State<addFriendScreen> {
                           Opacity(
                               opacity: 0,
                               child: Divider(
+                                height: displayHeight(context) * 0.02,
+                              )),
+                          Text(
+                            'Interests',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: displayWidth(context) * 0.045,
+                            ),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
                                 height: displayHeight(context) * 0.01,
                               )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Cricket',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Dance',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Singing',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Cooking',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Anime',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Football',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'MS Dhoni',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Cartoon',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Art',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Cricket',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Dance',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Mechanics',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Engineering',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Coding',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Horror',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Web Series',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Movies',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Card(
+                                color: Colors.blue[300],
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      'Simping',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                              ),
+                              VerticalDivider(
+                                width: 5,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  addInterestInDialogBox();
+                                },
+                                child: Card(
+                                  color: Colors.deepPurple[300],
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Text(
+                                        '+ Other',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      )),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
