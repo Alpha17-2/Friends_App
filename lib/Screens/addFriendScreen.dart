@@ -15,6 +15,8 @@ class addFriendScreen extends StatefulWidget {
 }
 
 class _addFriendScreenState extends State<addFriendScreen> {
+  Color? seletedColor = Colors.orange[300];
+  Color? unselectedColor = Colors.blue[300];
   Map<String,String> listOfInterests = {};
   TextEditingController? about;
   TextEditingController? addInterest;
@@ -1207,7 +1209,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Cricket")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1231,7 +1233,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Dance")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1255,7 +1257,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Singing")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1279,7 +1281,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Cooking")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1303,7 +1305,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Anime")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1332,7 +1334,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Football")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1356,7 +1358,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Party")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1380,7 +1382,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Cartoon")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1404,7 +1406,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Art")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1425,22 +1427,22 @@ class _addFriendScreenState extends State<addFriendScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  if(listOfInterests.containsKey("Cricket")){
-                                    removeThisInterstFromList("Cricket");
+                                  if(listOfInterests.containsKey("Foodie")){
+                                    removeThisInterstFromList("Foodie");
                                   }
                                   else{
-                                    addThisInterestToList("Cricket");
+                                    addThisInterestToList("Foodie");
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Foodie")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
                                   child: Padding(
                                       padding: const EdgeInsets.all(8),
                                       child: Text(
-                                        'Cricket',
+                                        'Foodie',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
@@ -1457,7 +1459,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Dance")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1481,7 +1483,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Mechanics")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1505,7 +1507,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Engineering")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1534,7 +1536,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Coding")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1558,7 +1560,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Horror")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1582,7 +1584,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Web Series")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1606,7 +1608,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Movies")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
@@ -1635,7 +1637,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   }
                                 },
                                 child: Card(
-                                  color: Colors.blue[300],
+                                  color: listOfInterests.containsKey("Simping")?seletedColor:unselectedColor,
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
