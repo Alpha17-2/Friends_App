@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Friend.dart';
+import 'package:firstapp/Screens/imageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -34,12 +35,13 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> interests = widget.friend!.interests!.split(" ");
-    String day = widget.friend!.dob!.substring(0,2);
-    int month = int.parse(widget.friend!.dob!.substring(3,5))-1;
-    String year = widget.friend!.dob!.substring(6,10);
+    List<dynamic> interests = widget.friend!.interests!;
+    DateTime time = DateTime.parse(widget.friend!.dob!);
+    int doby = time.year;
+    int dobm = time.month;
+    int dobd = time.day;
+    int age = doby - DateTime.now().year;
 
-    int age = 20;
     print(age);
     return Scaffold(
         body: Container(
@@ -88,7 +90,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
               top: displayHeight(context) * 0.05,
               right: displayWidth(context) * 0.01,
               child: SizedBox(
-                height: displayHeight(context) * 0.25,
+                height: displayHeight(context) * 0.32,
                 width: displayWidth(context) * 0.18,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +101,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 10,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Icon(
                             Icons.close,
                             color: Colors.red,
@@ -111,7 +113,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 10,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Icon(
                             Ionicons.heart,
                             color: Colors.pink[600],
@@ -123,12 +125,32 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 10,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Icon(
                             Ionicons.star,
                             color: Colors.indigo[700],
                           ),
                         )),
+                    GestureDetector(onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => imageScreen(
+                        dpImage: widget.friend!.dp,
+                        images: [],
+                        docId: widget.friend!.docId,
+                      ),));
+                    },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Icon(
+                              Ionicons.images,
+                              color: Colors.teal,
+                            ),
+                          )),
+                    ),
                   ],
                 ),
               )),
@@ -281,7 +303,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             height: 5,
                           )),
                       Text(
-                        '${day} ${months[month]}, ${year}',
+                        '${dobd.toString()} ${months[dobm-1]}, ${doby.toString()}',
                         style: TextStyle(
                           color: Colors.grey[500],
                           letterSpacing: 0.45,
