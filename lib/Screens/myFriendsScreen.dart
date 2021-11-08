@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firstapp/Helpers/custom_paint.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Helpers/widgets.dart';
@@ -19,11 +20,10 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   bool isLoading = true;
   final unselectedCategory = [Colors.black54, Colors.black54];
 
-
   @override
   void didChangeDependencies() async {
     if (init) {
-      Provider.of<FriendsManager>(context).setFriends().then((value) {
+      Provider.of<FriendsManager>(context).setFriends(currentUser!.uid.toString()).then((value) {
         isLoading = false;
       });
       init = false;
