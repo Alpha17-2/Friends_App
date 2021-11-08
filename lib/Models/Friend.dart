@@ -4,9 +4,10 @@ class Friend {
   final String? about;
   final String? education;
   final String? profession;
-  final String? interests;
+  final List<dynamic>? interests;
   final String? dp;
   final String? dob;
+  final List<dynamic>? images;
   final String? docId;
   final String? contactNumber;
   final String? instagram;
@@ -21,6 +22,7 @@ class Friend {
 
   Friend(
       {this.title,
+        this.images,
       this.isCloseFriend,
       this.isBestFriend,
       this.gender,
