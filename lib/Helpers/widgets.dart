@@ -9,12 +9,13 @@ Widget showMyFriends(BuildContext context, Friend f) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     elevation: 12,
     child: Container(
+      
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
@@ -35,30 +36,40 @@ Widget showMyFriends(BuildContext context, Friend f) {
                     tag: f.docId!,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(f.dp!),
-                      radius: displayWidth(context) * 0.11,
+                      radius: displayWidth(context) * 0.09,
                     ),
                   ),
                 ),
                 // Title and education
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      f.title!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.0355),
+                    Container(
+                      height: displayHeight(context)*0.03,
+                      width: displayWidth(context)*0.25,
+                      child: Text(
+                        f.title!,
+                        //textAlign: TextAlign.center,
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: displayWidth(context) * 0.0355),
+                      ),
                     ),
-                    Text(
-                      f.education!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: displayWidth(context) * 0.031,
-                          fontWeight: FontWeight.bold),
+                    Container(
+                      height: displayHeight(context)*0.03,
+                      width: displayWidth(context)*0.25,
+                      child: Text(
+                        f.education!,
+                      
+                        style: TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                            color: Colors.black54,
+                            fontSize: displayWidth(context) * 0.031,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 )
@@ -82,7 +93,7 @@ Widget showMyFriends(BuildContext context, Friend f) {
                           Colors.orange[300]!,
                           Colors.orange[200]!
                         ])),
-                height: displayHeight(context) * 0.125,
+                height: displayHeight(context) * 0.15,
                 width: displayWidth(context) * 0.075,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
