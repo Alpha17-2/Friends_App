@@ -70,7 +70,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
             Positioned(
               child: CustomPaint(
                 child: Container(
-                  height: displayHeight(context) * 0.17,
+                  height: displayHeight(context) * 0.13,
                   width: displayWidth(context),
                 ),
                 painter: CurvePainter(),
@@ -80,16 +80,16 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
             Positioned(
               top: displayHeight(context) * 0.05,
               child: CircleAvatar(
-                radius: displayWidth(context) * 0.15,
+                radius: displayWidth(context) * 0.115,
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
-                  radius: displayWidth(context) * 0.13,
+                  radius: displayWidth(context) * 0.1,
                   backgroundImage: AssetImage('images/friendsIcon2.png'),
                 ),
               ),
             ),
             Positioned(
-                top: displayHeight(context) * 0.2,
+                top: displayHeight(context) * 0.17,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,22 +99,22 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.043),
+                          fontSize: displayWidth(context) * 0.04),
                     ),
                     Divider(
-                      height: 2,
+                      height: 1.5,
                     ),
                     Text(
                       '${friends.length.toString()} Friends',
                       style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.038),
+                          fontSize: displayWidth(context) * 0.035),
                     ),
                   ],
                 )),
             Positioned(
-                top: displayHeight(context) * 0.26,
+                top: displayHeight(context) * 0.235,
                 child: Container(
                   height: displayHeight(context) * 0.14,
                   width: displayWidth(context),
@@ -318,9 +318,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   ),
                 )),
             Positioned(
-                top: displayHeight(context) * 0.4,
+                top: displayHeight(context) * 0.38,
                 child: Container(
-                  height: displayHeight(context) * 0.52,
+                  height: displayHeight(context) * 0.54,
                   width: displayWidth(context),
                   //color: Colors.pinkAccent,
                   child: (isLoading)
