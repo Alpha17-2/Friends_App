@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'addFriendScreen.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class homeScreen extends StatelessWidget {
   //const homeScreen({Key? key}) : super(key: key);
@@ -25,36 +24,39 @@ class homeScreen extends StatelessWidget {
     final iconSize = displayWidth(context) * 0.06;
     return Scaffold(
         //backgroundColor: Colors.white,
-        bottomNavigationBar: CurvedNavigationBar(
-          animationCurve: Curves.easeOutQuart,
-          animationDuration: Duration(microseconds: 500000),
-          backgroundColor: Colors.white,
-          color: Colors.orange[400]!,
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.orange[300],
+          onTap: (value) {
+            Provider.of<screenIndexProvider>(context, listen: false)
+                .updateIndex(value);
+          },
           items: [
-            Icon((currentScreen == 0) ? Icons.home : Icons.home_outlined,
-            size: displayWidth(context)*0.05,
-                color: (currentScreen == 0) ? Colors.white : Colors.white70),
-            Icon(
-              (currentScreen == 1)
+            BottomNavigationBarItem(
+                label: "Home",
+                icon: Icon(
+                  (currentScreen == 0) ? Icons.home : Icons.home_outlined,
+                )),
+            BottomNavigationBarItem(
+              label: "New",
+              icon: Icon((currentScreen == 1)
                   ? Icons.add_circle
-                  : Icons.add_circle_outline,size: displayWidth(context)*0.045,
-              color: (currentScreen == 1) ? Colors.white : Colors.white70,
+                  : Icons.add_circle_outline),
             ),
-            Icon(
-              (currentScreen == 2)
-                  ? Icons.group
-                  : Icons.group_outlined,
-                  size: displayWidth(context)*0.05,
-              color: (currentScreen == 2) ? Colors.white : Colors.white70,
-            ),
+            BottomNavigationBarItem(
+              label: "Friends",
+              icon: Icon(
+                (currentScreen == 2) ? Icons.group : Icons.group_outlined,
+              ),
+            )
           ],
-
-          height: displayHeight(context) * 0.07,
-          index: currentScreen,
-          onTap: (value) =>
-              Provider.of<screenIndexProvider>(context, listen: false)
-                  .updateIndex(value),
-        ),
+          backgroundColor: Colors.white,
+          elevation: 15,
+          currentIndex: currentScreen,
+          iconSize: iconSize,
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+        )
+        ,
         body: screens[currentScreen]);
   }
 }
