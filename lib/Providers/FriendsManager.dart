@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/Helpers/constants.dart';
 import 'package:firstapp/Models/Friend.dart';
@@ -12,6 +13,10 @@ class FriendsManager extends ChangeNotifier {
 
   List<Friend> get fetchList {
     return friendsMap.values.toList();
+  }
+
+  Friend? fetchFriendWithDocId(String docId) {
+    return friendsMap[docId];
   }
 
   List<dynamic>? fetchImagesList(String docId) {
@@ -45,6 +50,9 @@ class FriendsManager extends ChangeNotifier {
             interests: value['interests'],
             linkedin: value['linkedin'],
             mail: value['mail'],
+            college: value['college'],
+            school: value['school'],
+            work: value['work'],
             images: value['images'],
             profession: value['profession'],
             snapchat: value['snapchat'],
@@ -63,21 +71,55 @@ class FriendsManager extends ChangeNotifier {
 
   Future<void> updateImageList(String uid, String docId, File? newImage) async {
     try {
+      Random rd = Random();
+      int num = rd.nextInt(100001);
+      int num2 = rd.nextInt(51);
+      int num3 = rd.nextInt(20001);
+      String title = num.toString() + num2.toString() + num3.toString();
       final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
-      String imageUrl = '';
-
-      String imageLocation =
-          'users/${uid}/${docId}/${newImage!.parent.toString()}';
+      String imageLocation = 'users/${uid}/${docId}/${title}';
       final Reference storageReference =
           FirebaseStorage.instance.ref().child(imageLocation);
-      final UploadTask uploadTask = storageReference.putFile(newImage);
+      final UploadTask uploadTask = storageReference.putFile(newImage!);
       final TaskSnapshot taskSnapshot = await uploadTask;
       taskSnapshot.ref.getDownloadURL().then((value) {
         List<dynamic>? temp = friendsMap[docId]!.images;
         temp!.add(value);
         return http.patch(Uri.parse(api), body: json.encode({'images': temp}));
       });
-      print(imageUrl);
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> editFriendDetail(String uid, String docId, Friend friend) async {
+    try {
+      final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+       http.patch(Uri.parse(api), body: jsonEncode({
+         'college': friend.college,
+                'school': friend.school,
+                'work': friend.work,
+                'isBestFriend': friend.isBestFriend,
+                'isCloseFriend': friend.isCloseFriend,
+                'title': friend.title,
+                'images': friend.interests,
+                'dob': friend.dob,
+                'education': friend.education,
+                'gender': friend.gender,
+                'about': friend.about,
+                'profession': friend.profession,
+                'interests': friend.interests,
+                'instagram': friend.instagram,
+                'twitter': friend.twitter,
+                'youtube': friend.youtube,
+                'snapchat': friend.snapchat,
+                'facebook': friend.facebook,
+                'dp': '',
+                'contactNumber': friend.contactNumber,
+                'docId': '',
+                'mail': friend.mail,
+                'linkedin': friend.linkedin,
+       }));
     } catch (error) {
       print(error);
     }
@@ -89,10 +131,13 @@ class FriendsManager extends ChangeNotifier {
       return http
           .post(Uri.parse(api),
               body: json.encode({
+                'college': friend.college,
+                'school': friend.school,
+                'work': friend.work,
                 'isBestFriend': friend.isBestFriend,
                 'isCloseFriend': friend.isCloseFriend,
                 'title': friend.title,
-                'images': ['hello'],
+                'images': [],
                 'dob': friend.dob,
                 'education': friend.education,
                 'gender': friend.gender,
