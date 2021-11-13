@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Friend.dart';
+import 'package:firstapp/Screens/editFriendScreen.dart';
 import 'package:firstapp/Screens/imageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -109,18 +110,24 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Card(
-                        color: Colors.white54,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        elevation: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ),
-                        )),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => editFriendScreen(docId: widget.friend!.docId,),
+                            ));
+                      },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Icon(Icons.edit, color: Colors.yellow),
+                          )),
+                    ),
                     Card(
                         color: Colors.white54,
                         shape: RoundedRectangleBorder(
@@ -226,45 +233,52 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                               onPressed: () {
                                                 // Instagram
                                               },
-                                              icon: Icon(Ionicons.logo_facebook),
+                                              icon:
+                                                  Icon(Ionicons.logo_facebook),
                                               color: Colors.white,
                                             ),
-                                            
-                                            IconButton(iconSize: iconSize,
+                                            IconButton(
+                                              iconSize: iconSize,
                                               onPressed: () {
                                                 // Instagram
                                               },
-                                              icon: Icon(Ionicons.logo_instagram),
+                                              icon:
+                                                  Icon(Ionicons.logo_instagram),
                                               color: Colors.pink[300],
                                             ),
-                                            IconButton(iconSize: iconSize,
+                                            IconButton(
+                                              iconSize: iconSize,
                                               onPressed: () {
                                                 // Twitter
                                               },
                                               icon: Icon(Ionicons.logo_twitter),
                                               color: Colors.blue[400],
                                             ),
-                                            IconButton(iconSize: iconSize,
+                                            IconButton(
+                                              iconSize: iconSize,
                                               onPressed: () {
                                                 // Snapchat
                                               },
-                                              icon: Icon(Ionicons.logo_snapchat),
+                                              icon:
+                                                  Icon(Ionicons.logo_snapchat),
                                               color: Colors.yellow[400],
                                             ),
-                                            IconButton(iconSize: iconSize,
+                                            IconButton(
+                                              iconSize: iconSize,
                                               onPressed: () {
                                                 // LinkedIn
                                               },
-                                              icon: Icon(Ionicons.logo_linkedin),
+                                              icon:
+                                                  Icon(Ionicons.logo_linkedin),
                                               color: Colors.white,
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 8.0),
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0),
                                               child: Image.asset(
                                                 'images/yt.png',
-                                                height:
-                                                    displayHeight(context) * 0.026,
+                                                height: displayHeight(context) *
+                                                    0.026,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
