@@ -1,9 +1,12 @@
 import 'dart:io';
-
+import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/Helpers/custom_paint.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,7 @@ class imageScreen extends StatefulWidget {
 
 class _imageScreenState extends State<imageScreen> {
   User? currentUser;
+  bool? isUploading = false;
   @override
   void initState() {
     currentUser = FirebaseAuth.instance.currentUser;
@@ -43,13 +47,51 @@ class _imageScreenState extends State<imageScreen> {
     }
 
     showImages(int index, BuildContext ctx) {
-      return Container(
-        //color: Colors.pink,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
-          child: Image.network(
-            images?[index],
-            fit: BoxFit.cover,
+      return GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return BackdropFilter(filter: ImageFilter.blur(
+                sigmaX: 10,sigmaY: 10,
+              ),
+              child: Dialog(
+                insetAnimationCurve: Curves.easeInOutQuad,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                elevation: 5,
+                backgroundColor: Colors.transparent,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: 
+                  
+                  
+                  Image.network(
+                    images?[index],
+                   fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              );
+            },
+          );
+        },
+        child: Container(
+          //color: Colors.pink,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: CachedNetworkImage(imageUrl: images?[index],fadeInCurve: Curves.easeInOutCubicEmphasized,fit: BoxFit.cover,
+            placeholder: (context, url) {
+              return SpinKitHourGlass(
+                            color: Colors.black54,
+                          size: displayWidth(context) *
+                                                    0.2,
+                                              );
+            },)
+            
+            
+  
           ),
         ),
       );
@@ -88,17 +130,100 @@ class _imageScreenState extends State<imageScreen> {
           await pickImage().then((value) async {
             await Future.delayed(Duration(seconds: 1, microseconds: 5000))
                 .then((value) {
-                  showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  height: displayHeight(context) * 0.3,
-                  color: Colors.white,
-                  
-                );
-              },
-            );
-                });    
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Container(
+                    height: displayHeight(context) * 0.4,
+                    color: Colors.white,
+                    child: Stack(
+                        alignment: Alignment.center,
+                        fit: StackFit.loose,
+                        children: [
+                          Positioned(
+                            child: CustomPaint(
+                              child: Container(
+                                height: displayHeight(context) * 0.1,
+                                width: displayWidth(context),
+                              ),
+                              painter: CurvePainter(),
+                            ),
+                            top: 0,
+                          ),
+                          Positioned(
+                              top: displayHeight(context) * 0.13,
+                              left: displayWidth(context) * 0.08,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.file(
+                                  _imageFile!,
+                                  height: displayHeight(context) * 0.2,
+                                  width: displayWidth(context) * 0.35,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          Positioned(
+                              top: displayHeight(context) * 0.15,
+                              right: displayWidth(context) * 0.1,
+                              child: Text(
+                                "Upload this image ?",
+                                style: TextStyle(
+                                  overflow: TextOverflow.clip,
+                                  color: Colors.orange[300],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: displayWidth(context) * 0.04,
+                                ),
+                              )),
+                          Positioned(
+                              bottom: displayHeight(context) * 0.12,
+                              left: displayWidth(context) * 0.52,
+                              child: TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.red[200])),
+                                onPressed: () {
+                                  setState(() {
+                                    _imageFile = null;
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                child: Text(
+                                  'No',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                          Positioned(
+                              bottom: displayHeight(context) * 0.12,
+                              right: displayWidth(context) * 0.1,
+                              child: TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.green[300])),
+                                onPressed: () async {
+                                  Provider.of<FriendsManager>(context,
+                                          listen: false)
+                                      .updateImageList(currentUser!.uid,
+                                          widget.docId!, _imageFile)
+                                      .then((value) {
+                                    Navigator.pop(context);
+                                  });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                        'Successfully uploaded image ! It may take some time to reflect changes across the app'),
+                                    duration: Duration(seconds: 10),
+                                  ));
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                        ]),
+                  );
+                },
+              );
+            });
           });
         },
         elevation: 5,
@@ -121,7 +246,8 @@ class _imageScreenState extends State<imageScreen> {
                   itemCount: images.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 15,
                       childAspectRatio: 0.8),
                   itemBuilder: (context, index) {
                     return showImages(index, context);
