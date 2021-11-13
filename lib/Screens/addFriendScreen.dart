@@ -20,6 +20,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
   Color? unselectedColor = Colors.blue[300];
   User? currentUser = FirebaseAuth.instance.currentUser;
   Map<String, String> listOfInterests = {};
+  TextEditingController? school;
+  TextEditingController? college;
+  TextEditingController? workAt;
   TextEditingController? about;
   TextEditingController? addInterest;
   TextEditingController? dob;
@@ -30,6 +33,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
   TextEditingController? instagram;
   TextEditingController? interest;
   bool isMale = true;
+  bool seletedAnyInterestCard = false;
   late bool isUploading;
   TextEditingController? linkedin;
   TextEditingController? phone;
@@ -39,7 +43,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
   TextEditingController? title;
   TextEditingController? twiiter;
   TextEditingController? youtube;
-
+  String selectedCard = '';
   final _formKey = GlobalKey<FormState>();
   File? _imageFile;
 
@@ -47,6 +51,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
   void dispose() {
     addInterest!.dispose();
     twiiter!.dispose();
+    school!.dispose();
+    college!.dispose();
+    workAt!.dispose();
     title!.dispose();
     about!.dispose();
     edu!.dispose();
@@ -66,6 +73,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    school = TextEditingController();
+    college = TextEditingController();
+    workAt = TextEditingController();
     addInterest = TextEditingController();
     phone = TextEditingController();
     title = TextEditingController();
@@ -96,6 +106,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
     }
 
     clearAllTextField() {
+      workAt!.clear();
+      college!.clear();
+      school!.clear();
       email!.clear();
       twiiter!.clear();
       linkedin!.clear();
@@ -233,7 +246,18 @@ class _addFriendScreenState extends State<addFriendScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-           TextButton(
+          (seletedAnyInterestCard)
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      listOfInterests.remove(selectedCard);
+                      selectedCard = '';
+                      seletedAnyInterestCard = false;
+                    });
+                  },
+                  icon: Icon(Icons.delete),
+                  color: Colors.redAccent)
+              : TextButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       setState(() {
@@ -343,7 +367,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
         ),
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 12.0, left: 10, right: 10, bottom: 10),
+              const EdgeInsets.only(top: 10.0, left: 6, right: 6, bottom: 10),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: (isUploading)
@@ -473,8 +497,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(
-                                            2000), //DateTime.now() - not to allow to choose before today.
-                                        lastDate: DateTime(2101));
+                                            1980), //DateTime.now() - not to allow to choose before today.
+                                        lastDate: DateTime(2100));
 
                                     if (pickedDate != null) {
                                       print(
@@ -497,7 +521,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'dd/mm/yyyy',
+                                    hintText: 'YYYY-MM-DD',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -596,7 +620,97 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 height: displayHeight(context) * 0.02,
                               )),
                           Text(
-                            'Education',
+                            'School',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.01,
+                              )),
+                          Container(
+                            height: displayHeight(context) * 0.05,
+                            width: displayWidth(context),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1.1)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                  bottom: 2.0),
+                              child: Center(
+                                child: TextFormField(
+                                  controller: school,
+                                  
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                        fontSize: displayWidth(context) * 0.04),
+                                    hintText: 'School\'s name',
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.02,
+                              )),
+                          Text(
+                            'College',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.01,
+                              )),
+                          Container(
+                            height: displayHeight(context) * 0.05,
+                            width: displayWidth(context),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1.1)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                  bottom: 2.0),
+                              child: Center(
+                                child: TextFormField(
+                                  controller: college,
+                                  
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                        fontSize: displayWidth(context) * 0.04),
+                                    hintText: 'College name',
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.02,
+                              )),
+                          Text(
+                            'Highest Qualification',
                             style: TextStyle(color: Colors.black),
                           ),
                           Opacity(
@@ -620,15 +734,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: edu,
-                                  validator: (value) {
-                                    if (value!.isEmpty || value.length == 0)
-                                      return 'Cannot be empty';
-                                    return null;
-                                  },
+                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'School or University name',
+                                
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -639,6 +749,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               ),
                             ),
                           ),
+
+                          
                           Opacity(
                               opacity: 0,
                               child: Divider(
@@ -669,11 +781,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: profession,
-                                  validator: (value) {
-                                    if (value!.isEmpty || value.length == 0)
-                                      return 'Cannot be empty';
-                                    return null;
-                                  },
+                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
@@ -1151,7 +1259,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'Twitter ID',
+                                    hintText: 'Snapchat ID',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -1241,511 +1349,87 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Divider(
                                 height: displayHeight(context) * 0.01,
                               )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Cricket")) {
-                                    removeThisInterstFromList("Cricket");
-                                  } else {
-                                    addThisInterestToList("Cricket");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Cricket")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Cricket',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Dance")) {
-                                    removeThisInterstFromList("Dance");
-                                  } else {
-                                    addThisInterestToList("Dance");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Dance")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Dance',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Singing")) {
-                                    removeThisInterstFromList("Singing");
-                                  } else {
-                                    addThisInterestToList("Singing");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Singing")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Singing',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Cooking")) {
-                                    removeThisInterstFromList("Cooking");
-                                  } else {
-                                    addThisInterestToList("Cooking");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Cooking")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Cooking',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Anime")) {
-                                    removeThisInterstFromList("Anime");
-                                  } else {
-                                    addThisInterestToList("Anime");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Anime")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Anime',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Football")) {
-                                    removeThisInterstFromList("Football");
-                                  } else {
-                                    addThisInterestToList("Football");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Football")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Football',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Party")) {
-                                    removeThisInterstFromList("Party");
-                                  } else {
-                                    addThisInterestToList("Party");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Party")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Party',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Cartoon")) {
-                                    removeThisInterstFromList("Cartoon");
-                                  } else {
-                                    addThisInterestToList("Cartoon");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Cartoon")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Cartoon',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Art")) {
-                                    removeThisInterstFromList("Art");
-                                  } else {
-                                    addThisInterestToList("Art");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Art")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Art',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Horror")) {
-                                    removeThisInterstFromList("Horror");
-                                  } else {
-                                    addThisInterestToList("Horror");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Horror")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Horror',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Foodie")) {
-                                    removeThisInterstFromList("Foodie");
-                                  } else {
-                                    addThisInterestToList("Foodie");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Foodie")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Foodie',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Dance")) {
-                                    removeThisInterstFromList("Dance");
-                                  } else {
-                                    addThisInterestToList("Dance");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Dance")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Dance',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests
-                                      .containsKey("Mechanics")) {
-                                    removeThisInterstFromList("Mechanics");
-                                  } else {
-                                    addThisInterestToList("Mechanics");
-                                  }
-                                },
-                                child: Card(
-                                  color:
-                                      listOfInterests.containsKey("Mechanics")
-                                          ? seletedColor
-                                          : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Mechanics',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests
-                                      .containsKey("Engineering")) {
-                                    removeThisInterstFromList("Engineering");
-                                  } else {
-                                    addThisInterestToList("Engineering");
-                                  }
-                                },
-                                child: Card(
-                                  color:
-                                      listOfInterests.containsKey("Engineering")
-                                          ? seletedColor
-                                          : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Engineering',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Coding")) {
-                                    removeThisInterstFromList("Coding");
-                                  } else {
-                                    addThisInterestToList("Coding");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Coding")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Coding',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests
-                                      .containsKey("Web Series")) {
-                                    removeThisInterstFromList("Web Series");
-                                  } else {
-                                    addThisInterestToList("Web Series");
-                                  }
-                                },
-                                child: Card(
-                                  color:
-                                      listOfInterests.containsKey("Web Series")
-                                          ? seletedColor
-                                          : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Web Series',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  if (listOfInterests.containsKey("Movies")) {
-                                    removeThisInterstFromList("Movies");
-                                  } else {
-                                    addThisInterestToList("Movies");
-                                  }
-                                },
-                                child: Card(
-                                  color: listOfInterests.containsKey("Movies")
-                                      ? seletedColor
-                                      : unselectedColor,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        'Movies',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.032,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  addInterestInDialogBox();
-                                },
-                                child: Card(
-                                  color: Colors.deepPurple[300],
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Text(
-                                        '+ Other',
-                                        style: TextStyle(
-                                            fontSize:
-                                                displayWidth(context) * 0.035,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      )),
-                                ),
-                              ),
-                            ],
+                          Container(
+                            height: displayHeight(context) * 0.06,
+                            width: displayWidth(context),
+                            // color: Colors.red,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      addInterestInDialogBox();
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Colors.black,
+                                    )),
+                                Container(
+                                  height: displayHeight(context) * 0.045,
+                                  width: displayWidth(context) * 0.72,
+                                  //color: Colors.red,
+                                  child: Center(
+                                    child: (listOfInterests.length != 0)
+                                        ? ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: listOfInterests.keys
+                                                .toList()
+                                                .length,
+                                            itemBuilder: (context, index) {
+                                              return InkWell(
+                                                onLongPress: () {
+                                                  setState(() {
+                                                    if (!seletedAnyInterestCard) {
+                                                      selectedCard =
+                                                          listOfInterests.keys
+                                                              .toList()[index]
+                                                              .toString();
+                                                      seletedAnyInterestCard =
+                                                          true;
+                                                    }
+                                                  });
+                                                },
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  color:
+                                                      (seletedAnyInterestCard)
+                                                          ? Colors.grey[300]
+                                                          : Colors.teal[300],
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: Text(
+                                                        listOfInterests.keys
+                                                            .toList()[index]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                (seletedAnyInterestCard)
+                                                                    ? Colors
+                                                                        .black
+                                                                    : Colors
+                                                                        .white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : Text('No interests'),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
