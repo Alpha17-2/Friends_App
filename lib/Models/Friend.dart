@@ -9,6 +9,9 @@ class Friend {
   final String? dob;
   final List<dynamic>? images;
   final String? docId;
+  final String? college;
+  final String? school;
+  final String? work;
   final String? contactNumber;
   final String? instagram;
   final String? twitter;
@@ -21,8 +24,12 @@ class Friend {
   final bool? isCloseFriend;
 
   Friend(
+
       {this.title,
-        this.images,
+      this.images,
+      this.college,
+      this.school,
+      this.work,
       this.isCloseFriend,
       this.isBestFriend,
       this.gender,
