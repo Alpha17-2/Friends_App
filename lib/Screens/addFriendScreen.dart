@@ -135,7 +135,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
     dpNotExist() {
       return CircleAvatar(
         backgroundColor: Colors.grey[200],
-        backgroundImage: AssetImage((isMale?'images/male.jpg':'images/female.jpg')),
+        backgroundImage:
+            AssetImage((isMale ? 'images/male.jpg' : 'images/female.jpg')),
         radius: displayWidth(context) * 0.18,
       );
     }
@@ -286,7 +287,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 title: title!.text.toString(),
                                 twitter: twiiter!.text.toString(),
                                 youtube: youtube!.text.toString(),
-                                
                               ))
                           .then((value) {
                         setState(() {
@@ -381,9 +381,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                              child:  (_imageFile != null)
-                                      ? dpExists()
-                                      : dpNotExist()),
+                              child: (_imageFile != null)
+                                  ? dpExists()
+                                  : dpNotExist()),
                           Opacity(
                               opacity: 0,
                               child: Divider(
@@ -803,7 +803,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Divider(
                                 height: displayHeight(context) * 0.02,
                               )),
-                              Text(
+                          Text(
                             'Work at',
                             style: TextStyle(color: Colors.black),
                           ),

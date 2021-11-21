@@ -201,25 +201,36 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             context: context,
                             builder: (context) {
                               return Container(
-                                height: displayHeight(context)*0.3,
+                                height: displayHeight(context) * 0.3,
                                 width: displayWidth(context),
-                                child: Center(child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text('Error !!',style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: displayWidth(context)*0.05,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                    Opacity(opacity: 0.0,child: Divider()),
-                                    Text('No contact number found',style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: displayWidth(context)*0.042,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                  ],
-                                ),),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Error !!',
+                                        style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize:
+                                              displayWidth(context) * 0.05,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Opacity(opacity: 0.0, child: Divider()),
+                                      Text(
+                                        'No contact number found',
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize:
+                                              displayWidth(context) * 0.042,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                           );
@@ -242,30 +253,41 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                       onTap: () {
                         if (widget.friend!.mail != '')
                           connectUsViaMail(widget.friend!.mail!);
-                          else {
+                        else {
                           showModalBottomSheet(
                             context: context,
                             builder: (context) {
                               return Container(
-                                height: displayHeight(context)*0.3,
+                                height: displayHeight(context) * 0.3,
                                 width: displayWidth(context),
-                                child: Center(child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text('Error !!',style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: displayWidth(context)*0.05,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                    Opacity(opacity: 0.0,child: Divider()),
-                                    Text('No email address found',style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: displayWidth(context)*0.042,
-                                      fontWeight: FontWeight.w500,
-                                    ),),
-                                  ],
-                                ),),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Error !!',
+                                        style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize:
+                                              displayWidth(context) * 0.05,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Opacity(opacity: 0.0, child: Divider()),
+                                      Text(
+                                        'No email address found',
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize:
+                                              displayWidth(context) * 0.042,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                           );
