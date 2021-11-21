@@ -75,12 +75,21 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                   bottomLeft: Radius.circular(45),
                   bottomRight: Radius.circular(45),
                 ),
-                child: Image.network(
-                  widget.friend!.dp!,
-                  height: displayHeight(context) * 0.55,
-                  width: displayWidth(context),
-                  fit: BoxFit.cover,
-                ),
+                child: (widget.friend!.dp == '' || widget.friend!.dp!.isEmpty)
+                    ? Image.asset(
+                        widget.friend!.gender == "Male"
+                            ? 'images/male.jpg'
+                            : 'images/female.jpg',
+                        height: displayHeight(context) * 0.55,
+                        width: displayWidth(context),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        widget.friend!.dp!,
+                        height: displayHeight(context) * 0.55,
+                        width: displayWidth(context),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
@@ -115,7 +124,9 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => editFriendScreen(docId: widget.friend!.docId,),
+                              builder: (context) => editFriendScreen(
+                                docId: widget.friend!.docId,
+                              ),
                             ));
                       },
                       child: Card(
@@ -159,7 +170,6 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             MaterialPageRoute(
                               builder: (context) => imageScreen(
                                 dpImage: widget.friend!.dp,
-                                images: widget.friend!.images,
                                 docId: widget.friend!.docId,
                               ),
                             ));
