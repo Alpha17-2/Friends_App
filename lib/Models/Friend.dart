@@ -7,7 +7,6 @@ class Friend {
   final List<dynamic>? interests;
   final String? dp;
   final String? dob;
-  final List<dynamic>? images;
   final String? docId;
   final String? college;
   final String? school;
@@ -26,7 +25,6 @@ class Friend {
   Friend(
 
       {this.title,
-      this.images,
       this.college,
       this.school,
       this.work,
