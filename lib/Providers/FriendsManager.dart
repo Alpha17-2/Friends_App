@@ -20,12 +20,12 @@ class FriendsManager extends ChangeNotifier {
     return friendsMap[docId];
   }
 
-  
-
   Future<void> setFriends(String uid) async {
     try {
       Map<String, Friend> temp = {};
+
       final String api = constants().fetchApi + 'users/${uid}.json';
+      print(api);
       final response = await http.get(Uri.parse(api));
       print(response.statusCode);
       final Map<String, dynamic> data =
@@ -68,7 +68,7 @@ class FriendsManager extends ChangeNotifier {
   }
 
   Future<void> updateImageList(String uid, String docId, File? newImage) async {
-    print('this is doc id'+docId);
+    print('this is doc id' + docId);
     try {
       Random rd = Random();
       int num = rd.nextInt(100001);
@@ -89,6 +89,19 @@ class FriendsManager extends ChangeNotifier {
             .collection('images')
             .add({'url': value});
       });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> deleteFriend(String uid, String docId) async {
+    try {
+      final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+      http.delete(Uri.parse(api)).then((value) {
+        friendsMap.remove(docId);
+         notifyListeners();
+      });
+     
     } catch (error) {
       print(error);
     }
@@ -159,7 +172,12 @@ class FriendsManager extends ChangeNotifier {
                   'mail': friend.mail,
                   'linkedin': friend.linkedin,
                 }))
-            .then((value) {});
+            .then((value) {
+          var data = jsonDecode(value.body) as Map<String, dynamic>;
+          print(data['name'] + 'key id');
+          friendsMap[data['name']] = friend;
+          notifyListeners();
+        });
       } catch (error) {
         print(error);
       }
@@ -209,6 +227,8 @@ class FriendsManager extends ChangeNotifier {
                   'dp': value,
                 }));
           });
+          friendsMap[docId!] = friend;
+          notifyListeners();
         });
       } catch (error) {
         print(error);
