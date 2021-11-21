@@ -258,7 +258,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                             title: title!.text.toString(),
                             twitter: twiiter!.text.toString(),
                             youtube: youtube!.text.toString(),
-                            images: [],
+                            
                           ))
                       .then((value) {
                     setState(() {
