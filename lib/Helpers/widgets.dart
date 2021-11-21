@@ -3,6 +3,16 @@ import 'package:firstapp/Models/Friend.dart';
 import 'package:firstapp/Screens/friendDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+connectUsViaMail(String mail) async {
+ final String url = 'mailto:$mail';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 Widget showMyFriends(BuildContext context, Friend f) {
   return Card(
@@ -34,8 +44,11 @@ Widget showMyFriends(BuildContext context, Friend f) {
                   },
                   child: Hero(
                     tag: f.docId!,
-                    child: CircleAvatar(
+                    child: (f.dp !=null && f.dp!='')?CircleAvatar(
                       backgroundImage: NetworkImage(f.dp!),
+                      radius: displayWidth(context) * 0.09,
+                    ):CircleAvatar(
+                      backgroundImage: AssetImage((f.gender=='Male')?'images/male.jpg':'images/female.jpg'),
                       radius: displayWidth(context) * 0.09,
                     ),
                   ),
