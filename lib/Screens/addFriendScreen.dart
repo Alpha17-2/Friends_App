@@ -135,11 +135,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
     dpNotExist() {
       return CircleAvatar(
         backgroundColor: Colors.grey[200],
-        child: Icon(
-          Icons.person,
-          size: displayWidth(context) * 0.15,
-          color: Colors.black38,
-        ),
+        backgroundImage: AssetImage((isMale?'images/male.jpg':'images/female.jpg')),
         radius: displayWidth(context) * 0.18,
       );
     }
@@ -287,7 +283,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 title: title!.text.toString(),
                                 twitter: twiiter!.text.toString(),
                                 youtube: youtube!.text.toString(),
-                                images: [],
+                                
                               ))
                           .then((value) {
                         setState(() {
@@ -382,22 +378,32 @@ class _addFriendScreenState extends State<addFriendScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
-                              child: GestureDetector(
-                                  onTap: () => pickImage(),
-                                  child: (_imageFile != null)
+                              child:  (_imageFile != null)
                                       ? dpExists()
-                                      : dpNotExist())),
+                                      : dpNotExist()),
                           Opacity(
                               opacity: 0,
                               child: Divider(
                                 height: displayHeight(context) * 0.015,
                               )),
                           Center(
-                            child: Text('Display Picture',
-                                style: TextStyle(
-                                    color: Colors.indigoAccent,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: displayWidth(context) * 0.04)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Display Picture',
+                                    style: TextStyle(
+                                        color: Colors.indigoAccent,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            displayWidth(context) * 0.04)),
+                                IconButton(
+                                    onPressed: () {
+                                      pickImage();
+                                    },
+                                    icon: Icon(Icons.add_a_photo_outlined,
+                                        color: Colors.orange[400])),
+                              ],
+                            ),
                           ),
                           Opacity(
                               opacity: 0,
@@ -644,7 +650,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: school,
-                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
@@ -689,7 +694,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: college,
-                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
@@ -734,11 +738,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: edu,
-                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -749,8 +751,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               ),
                             ),
                           ),
-
-                          
                           Opacity(
                               opacity: 0,
                               child: Divider(
@@ -781,7 +781,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   controller: profession,
-                                  
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
