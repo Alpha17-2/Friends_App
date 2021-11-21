@@ -64,3 +64,19 @@ class wrapper extends StatelessWidget {
       return authScreen();
   }
 }
+
+
+/*
+        Todo
+        1: Try to add a delete button on Friend screen's friend card (orange one) .
+        2: Implement a function to search friends.
+        3: Implement the logic to filter friends in provided categories
+        4: Modify card icons(Best friend and close friend) in friend detail screen .
+        5: Implement functions to launch social media apps.
+        6: Display Best friends and close friends in homepage.
+        7: Remove boss baby from center and replace it with loading spinner .
+        8: Display DP at the right corner of Snapshots screen .
+        9: Create app icon .  
+      
+
+*/
