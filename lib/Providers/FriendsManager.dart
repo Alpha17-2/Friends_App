@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/Helpers/constants.dart';
 import 'package:firstapp/Models/Friend.dart';
@@ -19,9 +20,7 @@ class FriendsManager extends ChangeNotifier {
     return friendsMap[docId];
   }
 
-  List<dynamic>? fetchImagesList(String docId) {
-    return friendsMap[docId]!.images;
-  }
+  
 
   Future<void> setFriends(String uid) async {
     try {
@@ -38,7 +37,7 @@ class FriendsManager extends ChangeNotifier {
             isBestFriend: value['isBestFriend'],
             isCloseFriend: value['isCloseFriend'],
             title: value['title'],
-            docId: value['docId'],
+            docId: key,
             dp: value['dp'],
             dob: value['dob'],
             about: value['about'],
@@ -47,13 +46,12 @@ class FriendsManager extends ChangeNotifier {
             facebook: value['facebook'],
             gender: value['gender'],
             instagram: value['instagram'],
-            interests: value['interests'],
+            interests: value['interests'] == null ? [] : value['interests'],
             linkedin: value['linkedin'],
             mail: value['mail'],
             college: value['college'],
             school: value['school'],
             work: value['work'],
-            images: value['images'],
             profession: value['profession'],
             snapchat: value['snapchat'],
             twitter: value['twitter'],
@@ -70,6 +68,7 @@ class FriendsManager extends ChangeNotifier {
   }
 
   Future<void> updateImageList(String uid, String docId, File? newImage) async {
+    print('this is doc id'+docId);
     try {
       Random rd = Random();
       int num = rd.nextInt(100001);
@@ -83,9 +82,12 @@ class FriendsManager extends ChangeNotifier {
       final UploadTask uploadTask = storageReference.putFile(newImage!);
       final TaskSnapshot taskSnapshot = await uploadTask;
       taskSnapshot.ref.getDownloadURL().then((value) {
-        List<dynamic>? temp = friendsMap[docId]!.images;
-        temp!.add(value);
-        return http.patch(Uri.parse(api), body: json.encode({'images': temp}));
+        print(docId);
+        FirebaseFirestore.instance
+            .collection(uid)
+            .doc(docId)
+            .collection('images')
+            .add({'url': value});
       });
     } catch (error) {
       print(error);
@@ -95,85 +97,122 @@ class FriendsManager extends ChangeNotifier {
   Future<void> editFriendDetail(String uid, String docId, Friend friend) async {
     try {
       final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
-       http.patch(Uri.parse(api), body: jsonEncode({
-         'college': friend.college,
-                'school': friend.school,
-                'work': friend.work,
-                'isBestFriend': friend.isBestFriend,
-                'isCloseFriend': friend.isCloseFriend,
-                'title': friend.title,
-                'images': friend.interests,
-                'dob': friend.dob,
-                'education': friend.education,
-                'gender': friend.gender,
-                'about': friend.about,
-                'profession': friend.profession,
-                'interests': friend.interests,
-                'instagram': friend.instagram,
-                'twitter': friend.twitter,
-                'youtube': friend.youtube,
-                'snapchat': friend.snapchat,
-                'facebook': friend.facebook,
-                'dp': '',
-                'contactNumber': friend.contactNumber,
-                'docId': '',
-                'mail': friend.mail,
-                'linkedin': friend.linkedin,
-       }));
+      http.patch(Uri.parse(api),
+          body: jsonEncode({
+            'college': friend.college,
+            'school': friend.school,
+            'work': friend.work,
+            'isBestFriend': friend.isBestFriend,
+            'isCloseFriend': friend.isCloseFriend,
+            'title': friend.title,
+            'images': friend.interests,
+            'dob': friend.dob,
+            'education': friend.education,
+            'gender': friend.gender,
+            'about': friend.about,
+            'profession': friend.profession,
+            'interests': friend.interests,
+            'instagram': friend.instagram,
+            'twitter': friend.twitter,
+            'youtube': friend.youtube,
+            'snapchat': friend.snapchat,
+            'facebook': friend.facebook,
+            'dp': '',
+            'contactNumber': friend.contactNumber,
+            'docId': '',
+            'mail': friend.mail,
+            'linkedin': friend.linkedin,
+          }));
     } catch (error) {
       print(error);
     }
   }
 
   Future<void> addFriend(String uid, File? image, Friend friend) async {
-    try {
-      final String api = constants().fetchApi + 'users/${uid}.json';
-      return http
-          .post(Uri.parse(api),
-              body: json.encode({
-                'college': friend.college,
-                'school': friend.school,
-                'work': friend.work,
-                'isBestFriend': friend.isBestFriend,
-                'isCloseFriend': friend.isCloseFriend,
-                'title': friend.title,
-                'images': [],
-                'dob': friend.dob,
-                'education': friend.education,
-                'gender': friend.gender,
-                'about': friend.about,
-                'profession': friend.profession,
-                'interests': friend.interests,
-                'instagram': friend.instagram,
-                'twitter': friend.twitter,
-                'youtube': friend.youtube,
-                'snapchat': friend.snapchat,
-                'facebook': friend.facebook,
-                'dp': '',
-                'contactNumber': friend.contactNumber,
-                'docId': '',
-                'mail': friend.mail,
-                'linkedin': friend.linkedin,
-              }))
-          .then((value) async {
-        final data = json.decode(value.body) as Map<String, dynamic>;
-        String? docId = data['name'];
-        final api2 = constants().fetchApi + 'users/${uid}/${docId}.json';
-        String imageLocation = 'users/${uid}/${docId}/dp';
-        final Reference storageReference =
-            FirebaseStorage.instance.ref().child(imageLocation);
-        final UploadTask uploadTask = storageReference.putFile(image!);
-        final TaskSnapshot taskSnapshot = await uploadTask;
-        taskSnapshot.ref.getDownloadURL().then((value) {
-          http.patch(Uri.parse(api2),
-              body: json.encode({
-                'docId': docId,
-                'dp': value,
-              }));
+    if (image == null) {
+      try {
+        final String api = constants().fetchApi + 'users/${uid}.json';
+        return http
+            .post(Uri.parse(api),
+                body: json.encode({
+                  'college': friend.college,
+                  'school': friend.school,
+                  'work': friend.work,
+                  'isBestFriend': friend.isBestFriend,
+                  'isCloseFriend': friend.isCloseFriend,
+                  'title': friend.title,
+                  'images': [],
+                  'dob': friend.dob,
+                  'education': friend.education,
+                  'gender': friend.gender,
+                  'about': friend.about,
+                  'profession': friend.profession,
+                  'interests': friend.interests,
+                  'instagram': friend.instagram,
+                  'twitter': friend.twitter,
+                  'youtube': friend.youtube,
+                  'snapchat': friend.snapchat,
+                  'facebook': friend.facebook,
+                  'dp': '',
+                  'contactNumber': friend.contactNumber,
+                  'docId': '',
+                  'mail': friend.mail,
+                  'linkedin': friend.linkedin,
+                }))
+            .then((value) {});
+      } catch (error) {
+        print(error);
+      }
+    } else {
+      try {
+        final String api = constants().fetchApi + 'users/${uid}.json';
+        return http
+            .post(Uri.parse(api),
+                body: json.encode({
+                  'college': friend.college,
+                  'school': friend.school,
+                  'work': friend.work,
+                  'isBestFriend': friend.isBestFriend,
+                  'isCloseFriend': friend.isCloseFriend,
+                  'title': friend.title,
+                  'images': [],
+                  'dob': friend.dob,
+                  'education': friend.education,
+                  'gender': friend.gender,
+                  'about': friend.about,
+                  'profession': friend.profession,
+                  'interests': friend.interests,
+                  'instagram': friend.instagram,
+                  'twitter': friend.twitter,
+                  'youtube': friend.youtube,
+                  'snapchat': friend.snapchat,
+                  'facebook': friend.facebook,
+                  'dp': '',
+                  'contactNumber': friend.contactNumber,
+                  'docId': '',
+                  'mail': friend.mail,
+                  'linkedin': friend.linkedin,
+                }))
+            .then((value) async {
+          final data = json.decode(value.body) as Map<String, dynamic>;
+          String? docId = data['name'];
+          final api2 = constants().fetchApi + 'users/${uid}/${docId}.json';
+          String imageLocation = 'users/${uid}/${docId}/dp';
+          final Reference storageReference =
+              FirebaseStorage.instance.ref().child(imageLocation);
+          final UploadTask uploadTask = storageReference.putFile(image);
+          final TaskSnapshot taskSnapshot = await uploadTask;
+          taskSnapshot.ref.getDownloadURL().then((value) {
+            http.patch(Uri.parse(api2),
+                body: json.encode({
+                  'docId': docId,
+                  'dp': value,
+                }));
+          });
         });
-      });
-    } catch (error) {
-      print(error);
+      } catch (error) {
+        print(error);
+      }
     }
   }
 }
