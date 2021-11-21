@@ -1,11 +1,15 @@
 import 'dart:math';
-
+import 'package:firstapp/Helpers/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Models/Friend.dart';
+import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:firstapp/Screens/editFriendScreen.dart';
 import 'package:firstapp/Screens/imageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class friendDetailScreen extends StatefulWidget {
   final Friend? friend;
@@ -112,9 +116,9 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
               )),
           Positioned(
               top: displayHeight(context) * 0.05,
-              right: displayWidth(context) * 0.01,
+              right: 0,
               child: SizedBox(
-                height: displayHeight(context) * 0.32,
+                height: displayHeight(context) * 0.425,
                 width: displayWidth(context) * 0.18,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,6 +130,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             MaterialPageRoute(
                               builder: (context) => editFriendScreen(
                                 docId: widget.friend!.docId,
+                                f: widget.friend,
                               ),
                             ));
                       },
@@ -135,7 +140,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               borderRadius: BorderRadius.circular(8)),
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(6.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Icon(Icons.edit, color: Colors.yellow),
                           )),
                     ),
@@ -145,7 +150,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 10,
                         child: Padding(
-                          padding: const EdgeInsets.all(6.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: Icon(
                             Ionicons.heart,
                             color: Colors.pink[600],
@@ -157,7 +162,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 10,
                         child: Padding(
-                          padding: const EdgeInsets.all(6.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: Icon(
                             Ionicons.star,
                             color: Colors.indigo[700],
@@ -180,10 +185,126 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               borderRadius: BorderRadius.circular(8)),
                           elevation: 10,
                           child: Padding(
-                            padding: const EdgeInsets.all(6.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Ionicons.images,
                               color: Colors.teal,
+                            ),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (widget.friend!.contactNumber != '')
+                          launch(('tel://${widget.friend!.contactNumber}'));
+                        else {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height: displayHeight(context)*0.3,
+                                width: displayWidth(context),
+                                child: Center(child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text('Error !!',style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: displayWidth(context)*0.05,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
+                                    Opacity(opacity: 0.0,child: Divider()),
+                                    Text('No contact number found',style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: displayWidth(context)*0.042,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
+                                  ],
+                                ),),
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(
+                              Ionicons.call,
+                              color: Colors.blue,
+                            ),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (widget.friend!.mail != '')
+                          connectUsViaMail(widget.friend!.mail!);
+                          else {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                height: displayHeight(context)*0.3,
+                                width: displayWidth(context),
+                                child: Center(child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text('Error !!',style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: displayWidth(context)*0.05,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
+                                    Opacity(opacity: 0.0,child: Divider()),
+                                    Text('No email address found',style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: displayWidth(context)*0.042,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
+                                  ],
+                                ),),
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(
+                              Icons.mail,
+                              color: Colors.orange,
+                            ),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<FriendsManager>(context, listen: false)
+                            .deleteFriend(
+                                FirebaseAuth.instance.currentUser!.uid
+                                    .toString(),
+                                widget.friend!.docId!)
+                            .then((value) {
+                          Navigator.pop(context);
+                        });
+                      },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: Colors.red[300],
                             ),
                           )),
                     ),
@@ -322,32 +443,14 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${widget.friend!.title!}, ${age.toString()}',
-                                  style: TextStyle(
-                                      letterSpacing: 0.2,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Zen",
-                                      fontSize: displayWidth(context) * 0.05),
-                                ),
-                                Opacity(
-                                    opacity: 0.0,
-                                    child: Divider(
-                                      height: 5,
-                                    )),
-                                Text(
-                                  '${widget.friend!.profession}, ${widget.friend!.education}',
-                                  style: TextStyle(
-                                    color: Colors.grey[500],
-                                    fontSize: displayWidth(context) * 0.042,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              '${widget.friend!.title!}, ${age.toString()}',
+                              style: TextStyle(
+                                  letterSpacing: 0.2,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Zen",
+                                  fontSize: displayWidth(context) * 0.048),
                             ),
                             Text(
                               widget.friend!.gender!,
@@ -358,55 +461,174 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             )
                           ],
                         ),
-                        Opacity(opacity: 0.0, child: Divider()),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.02,
+                            )),
                         Text(
                           'Birthday',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.black87,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.05),
+                              letterSpacing: 0.45,
+                              fontSize: displayWidth(context) * 0.035),
                         ),
                         Opacity(
                             opacity: 0.0,
                             child: Divider(
-                              height: 5,
+                              height: displayHeight(context) * 0.003,
                             )),
                         Text(
                           '${dobd.toString()} ${months[dobm - 1]}, ${doby.toString()}',
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.04,
+                            fontSize: displayWidth(context) * 0.032,
                           ),
                         ),
-                        Opacity(opacity: 0.0, child: Divider()),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.012,
+                            )),
+                        Text(
+                          'School',
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.45,
+                              fontSize: displayWidth(context) * 0.035),
+                        ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.003,
+                            )),
+                        Text(
+                          (widget.friend!.school != null &&
+                                  widget.friend!.school != ''
+                              ? '${widget.friend!.school}'
+                              : 'Not available'),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            letterSpacing: 0.45,
+                            fontSize: displayWidth(context) * 0.032,
+                          ),
+                        ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.012,
+                            )),
+                        Text(
+                          'College',
+                          style: TextStyle(
+                              color: Colors.black87,
+                              letterSpacing: 0.45,
+                              fontWeight: FontWeight.bold,
+                              fontSize: displayWidth(context) * 0.035),
+                        ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.003,
+                            )),
+                        Text(
+                          (widget.friend!.college != null &&
+                                  widget.friend!.college != ''
+                              ? '${widget.friend!.college}'
+                              : 'Not available'),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            letterSpacing: 0.45,
+                            fontSize: displayWidth(context) * 0.032,
+                          ),
+                        ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.012,
+                            )),
+                        Text(
+                          'Profession',
+                          style: TextStyle(
+                              color: Colors.black87,
+                              letterSpacing: 0.45,
+                              fontWeight: FontWeight.bold,
+                              fontSize: displayWidth(context) * 0.035),
+                        ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.003,
+                            )),
+                        (widget.friend!.profession != null &&
+                                widget.friend!.profession != '')
+                            ? (widget.friend!.work != null &&
+                                    widget.friend!.work != '')
+                                ? Text(
+                                    '${widget.friend!.profession} at ${widget.friend!.work}',
+                                    style: TextStyle(
+                                      color: Colors.grey[500],
+                                      letterSpacing: 0.45,
+                                      fontSize: displayWidth(context) * 0.032,
+                                    ),
+                                  )
+                                : Text(
+                                    '${widget.friend!.profession}',
+                                    style: TextStyle(
+                                      color: Colors.grey[500],
+                                      letterSpacing: 0.45,
+                                      fontSize: displayWidth(context) * 0.032,
+                                    ),
+                                  )
+                            : Text(
+                                'Not available',
+                                style: TextStyle(
+                                  color: Colors.grey[500],
+                                  letterSpacing: 0.45,
+                                  fontSize: displayWidth(context) * 0.032,
+                                ),
+                              ),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.012,
+                            )),
                         Text(
                           'About',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.05),
+                              letterSpacing: 0.45,
+                              fontSize: displayWidth(context) * 0.035),
                         ),
                         Opacity(
                             opacity: 0.0,
                             child: Divider(
-                              height: 2,
+                              height: displayHeight(context) * 0.003,
                             )),
                         Text(
                           widget.friend!.about!,
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.04,
+                            fontSize: displayWidth(context) * 0.032,
                           ),
                         ),
-                        Opacity(opacity: 0.0, child: Divider()),
+                        Opacity(
+                            opacity: 0.0,
+                            child: Divider(
+                              height: displayHeight(context) * 0.012,
+                            )),
                         Text(
                           'Interests',
                           style: TextStyle(
                               color: Colors.black,
+                              letterSpacing: 0.45,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.05),
+                              fontSize: displayWidth(context) * 0.035),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -430,7 +652,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                   color: cardColors[value],
                                   child: Center(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(4.0),
                                       child: Text(
                                         interests[index],
                                         style: TextStyle(
