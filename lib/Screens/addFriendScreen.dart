@@ -80,7 +80,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
     phone = TextEditingController();
     title = TextEditingController();
     about = TextEditingController();
-    dob = TextEditingController();
+    dob = TextEditingController(text: "2000-01-01");
     edu = TextEditingController();
     instagram = TextEditingController();
     youtube = TextEditingController();
@@ -264,6 +264,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               currentUser!.uid.toString(),
                               _imageFile,
                               Friend(
+                                college: college!.text.toString(),
+                                school: school!.text.toString(),
+                                work: workAt!.text.toString(),
                                 about: about!.text.toString(),
                                 contactNumber: phone!.text.toString(),
                                 dob: dob!.text.toString(),
@@ -785,6 +788,50 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
                                     hintText: 'Student , Engineer , Doctor ..',
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.02,
+                              )),
+                              Text(
+                            'Work at',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Opacity(
+                              opacity: 0,
+                              child: Divider(
+                                height: displayHeight(context) * 0.01,
+                              )),
+                          Container(
+                            height: displayHeight(context) * 0.05,
+                            width: displayWidth(context),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1.1)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14.0,
+                                  left: 8.0,
+                                  right: 8.0,
+                                  bottom: 2.0),
+                              child: Center(
+                                child: TextFormField(
+                                  controller: workAt,
+                                  decoration: InputDecoration(
+                                    hintStyle: TextStyle(
+                                        fontSize: displayWidth(context) * 0.04),
+                                    hintText: 'Company or organisation name',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
