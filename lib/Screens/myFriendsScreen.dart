@@ -108,8 +108,21 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                     Divider(
                       height: 1.5,
                     ),
+                    (currentCategory==0)?
                     Text(
                       '${allFriends.length.toString()} Friends',
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: displayWidth(context) * 0.035),
+                    ):(currentCategory==1)?Text(
+                      '${bestFriends.length.toString()} Friends',
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                          fontSize: displayWidth(context) * 0.035),
+                    ):Text(
+                      '${closeFriends.length.toString()} Friends',
                       style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,

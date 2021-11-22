@@ -116,33 +116,34 @@ class FriendsManager extends ChangeNotifier {
         final UploadTask uploadTask = storageReference.putFile(image);
         final TaskSnapshot taskSnapshot = await uploadTask;
         taskSnapshot.ref.getDownloadURL().then((value) {
-         final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
-        http.patch(Uri.parse(api),
-            body: jsonEncode({
-              'college': friend.college,
-              'school': friend.school,
-              'work': friend.work,
-              'isBestFriend': friend.isBestFriend,
-              'isCloseFriend': friend.isCloseFriend,
-              'title': friend.title,
-              'images': friend.interests,
-              'dob': friend.dob,
-              'education': friend.education,
-              'gender': friend.gender,
-              'about': friend.about,
-              'profession': friend.profession,
-              'interests': friend.interests,
-              'instagram': friend.instagram,
-              'twitter': friend.twitter,
-              'youtube': friend.youtube,
-              'snapchat': friend.snapchat,
-              'facebook': friend.facebook,
-              'dp': value,
-              'contactNumber': friend.contactNumber,
-              'docId': '',
-              'mail': friend.mail,
-              'linkedin': friend.linkedin,
-            })); 
+          final String api =
+              constants().fetchApi + 'users/${uid}/${docId}.json';
+          http.patch(Uri.parse(api),
+              body: jsonEncode({
+                'college': friend.college,
+                'school': friend.school,
+                'work': friend.work,
+                'isBestFriend': friend.isBestFriend,
+                'isCloseFriend': friend.isCloseFriend,
+                'title': friend.title,
+                'images': friend.interests,
+                'dob': friend.dob,
+                'education': friend.education,
+                'gender': friend.gender,
+                'about': friend.about,
+                'profession': friend.profession,
+                'interests': friend.interests,
+                'instagram': friend.instagram,
+                'twitter': friend.twitter,
+                'youtube': friend.youtube,
+                'snapchat': friend.snapchat,
+                'facebook': friend.facebook,
+                'dp': value,
+                'contactNumber': friend.contactNumber,
+                'docId': '',
+                'mail': friend.mail,
+                'linkedin': friend.linkedin,
+              }));
         });
       } catch (error) {
         print(error);
@@ -179,6 +180,50 @@ class FriendsManager extends ChangeNotifier {
       } catch (error) {
         print(error);
       }
+    }
+  }
+
+  Future<void> updateBestFriend(
+    String? uid,
+    String? docId,
+  ) async {
+    try {
+      bool? isCurrentlyBestFriend = friendsMap[docId]!.isBestFriend;
+      final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+      http
+          .patch(Uri.parse(api),
+              body: json.encode({
+                'isBestFriend': !isCurrentlyBestFriend!,
+              }))
+          .then((value) {
+        Friend updateFriend = Friend(
+            about: friendsMap[docId]!.about,
+            college: friendsMap[docId]!.college,
+            contactNumber: friendsMap[docId]!.contactNumber,
+            dob: friendsMap[docId]!.dob,
+            docId: friendsMap[docId]!.docId,
+            dp: friendsMap[docId]!.dp,
+            education: friendsMap[docId]!.education,
+            facebook: friendsMap[docId]!.facebook,
+            gender: friendsMap[docId]!.gender,
+            instagram: friendsMap[docId]!.instagram,
+            interests: friendsMap[docId]!.interests,
+            isBestFriend: !isCurrentlyBestFriend,
+            isCloseFriend: friendsMap[docId]!.isCloseFriend,
+            linkedin: friendsMap[docId]!.linkedin,
+            mail: friendsMap[docId]!.mail,
+            profession: friendsMap[docId]!.profession,
+            school: friendsMap[docId]!.school,
+            snapchat: friendsMap[docId]!.snapchat,
+            title: friendsMap[docId]!.title,
+            twitter: friendsMap[docId]!.twitter,
+            work: friendsMap[docId]!.work,
+            youtube: friendsMap[docId]!.youtube);
+        friendsMap[docId!] = updateFriend;
+        notifyListeners();
+      });
+    } catch (error) {
+      print(error);
     }
   }
 

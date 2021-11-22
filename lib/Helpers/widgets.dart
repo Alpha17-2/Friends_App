@@ -121,17 +121,23 @@ Widget showMyFriends(BuildContext context, Friend f) {
                       child: IconButton(
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<FriendsManager>(context,listen: false)
+                                .updateBestFriend(
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    f.docId);
+                          },
+                          
                           icon: (Icon((f.isBestFriend!)
-                              ? Ionicons.heart_circle
-                              : Ionicons.heart_circle_outline))),
+                              ? Icons.favorite
+                              : Icons.favorite_border_outlined))),
                     ),
                     Expanded(
                       child: IconButton(
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
                           onPressed: () {},
-                          icon: (Icon((f.isBestFriend!)
+                          icon: (Icon((f.isCloseFriend!)
                               ? Ionicons.star
                               : Ionicons.star_outline))),
                     ),
@@ -140,7 +146,6 @@ Widget showMyFriends(BuildContext context, Friend f) {
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
                           onPressed: () async {
-                            
                             String friendName = f.title!;
                             Provider.of<FriendsManager>(context, listen: false)
                                 .deleteFriend(
@@ -148,9 +153,9 @@ Widget showMyFriends(BuildContext context, Friend f) {
                                         .toString(),
                                     f.docId!)
                                 .then((value) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('Removed ${friendName} from your friend list.')));
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Removed ${friendName} from your friend list.')));
                             });
                           },
                           icon: Icon(Icons.delete_forever)),
