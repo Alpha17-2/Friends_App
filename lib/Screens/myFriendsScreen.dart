@@ -23,7 +23,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
   @override
   void didChangeDependencies() async {
     if (init) {
-      Provider.of<FriendsManager>(context).setFriends(currentUser!.uid.toString()).then((value) {
+      Provider.of<FriendsManager>(context)
+          .setFriends(currentUser!.uid.toString())
+          .then((value) {
         isLoading = false;
       });
       init = false;
@@ -39,7 +41,11 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Friend> friends = Provider.of<FriendsManager>(context).fetchList;
+    List<Friend> allFriends = Provider.of<FriendsManager>(context).fetchList;
+    List<Friend> bestFriends =
+        allFriends.where((element) => element.isBestFriend!).toList();
+    List<Friend> closeFriends =
+        allFriends.where((element) => element.isCloseFriend!).toList();
     int currentCategory =
         Provider.of<categoryManager>(context).fetchCurrentCategory;
     searchBox() {
@@ -57,8 +63,6 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
             )),
       );
     }
-
-    
 
     return Container(
         height: displayHeight(context),
@@ -105,7 +109,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                       height: 1.5,
                     ),
                     Text(
-                      '${friends.length.toString()} Friends',
+                      '${allFriends.length.toString()} Friends',
                       style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -165,7 +169,10 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                       borderRadius: BorderRadius.circular(45)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 6.0, left: 16, right: 16, bottom: 6),
+                                        top: 6.0,
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 6),
                                     child: Center(
                                       child: Row(
                                         mainAxisAlignment:
@@ -175,7 +182,8 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                         children: [
                                           Image.asset(
                                             'images/all.png',
-                                            height: displayHeight(context) * 0.028,
+                                            height:
+                                                displayHeight(context) * 0.028,
                                             fit: BoxFit.cover,
                                           ),
                                           VerticalDivider(
@@ -186,8 +194,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: displayWidth(context) *
-                                                    0.03),
+                                                fontSize:
+                                                    displayWidth(context) *
+                                                        0.03),
                                           )
                                         ],
                                       ),
@@ -220,7 +229,10 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                       borderRadius: BorderRadius.circular(45)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 6.0, left: 16, right: 16, bottom: 6),
+                                        top: 6.0,
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 6),
                                     child: Center(
                                       child: Row(
                                         mainAxisAlignment:
@@ -230,7 +242,8 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                         children: [
                                           Image.asset(
                                             'images/bff.png',
-                                            height: displayHeight(context) * 0.028,
+                                            height:
+                                                displayHeight(context) * 0.028,
                                             fit: BoxFit.cover,
                                           ),
                                           VerticalDivider(
@@ -241,8 +254,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: displayWidth(context) *
-                                                    0.03),
+                                                fontSize:
+                                                    displayWidth(context) *
+                                                        0.03),
                                           )
                                         ],
                                       ),
@@ -326,7 +340,7 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   child: (isLoading)
                       ? Center(child: CircularProgressIndicator())
                       : GridView.builder(
-                        padding: EdgeInsets.only(left:10,right: 10),
+                          padding: EdgeInsets.only(left: 10, right: 10),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -334,9 +348,13 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                             mainAxisSpacing: 5,
                             //childAspectRatio: 0.5
                           ),
-                          itemCount: friends.length,
+                          itemCount: currentCategory==0
+                          ?allFriends.length
+                          :currentCategory == 1 ? bestFriends.length:closeFriends.length ,
                           itemBuilder: (context, index) {
-                            return showMyFriends(context, friends[index]);
+                            return showMyFriends(context,currentCategory==0
+                          ?allFriends[index]
+                          :currentCategory == 1 ? bestFriends[index]:closeFriends[index]);
                           },
                         ),
                 ))

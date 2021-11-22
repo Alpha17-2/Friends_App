@@ -139,12 +139,19 @@ Widget showMyFriends(BuildContext context, Friend f) {
                       child: IconButton(
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
-                          onPressed: () {
+                          onPressed: () async {
+                            
+                            String friendName = f.title!;
                             Provider.of<FriendsManager>(context, listen: false)
                                 .deleteFriend(
                                     FirebaseAuth.instance.currentUser!.uid
                                         .toString(),
-                                    f.docId!);
+                                    f.docId!)
+                                .then((value) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Removed ${friendName} from your friend list.')));
+                            });
                           },
                           icon: Icon(Icons.delete_forever)),
                     )
