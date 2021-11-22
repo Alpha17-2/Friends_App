@@ -183,6 +183,50 @@ class FriendsManager extends ChangeNotifier {
     }
   }
 
+  Future<void> updateCloseFriend(
+    String? uid,
+    String? docId,
+  ) async {
+    try {
+      bool? isCurrentlyCloseFriend = friendsMap[docId]!.isCloseFriend;
+      final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+      http
+          .patch(Uri.parse(api),
+              body: json.encode({
+                'isCloseFriend': !isCurrentlyCloseFriend!,
+              }))
+          .then((value) {
+        Friend updateFriend = Friend(
+            about: friendsMap[docId]!.about,
+            college: friendsMap[docId]!.college,
+            contactNumber: friendsMap[docId]!.contactNumber,
+            dob: friendsMap[docId]!.dob,
+            docId: friendsMap[docId]!.docId,
+            dp: friendsMap[docId]!.dp,
+            education: friendsMap[docId]!.education,
+            facebook: friendsMap[docId]!.facebook,
+            gender: friendsMap[docId]!.gender,
+            instagram: friendsMap[docId]!.instagram,
+            interests: friendsMap[docId]!.interests,
+            isBestFriend: friendsMap[docId]!.isBestFriend,
+            isCloseFriend: !isCurrentlyCloseFriend,
+            linkedin: friendsMap[docId]!.linkedin,
+            mail: friendsMap[docId]!.mail,
+            profession: friendsMap[docId]!.profession,
+            school: friendsMap[docId]!.school,
+            snapchat: friendsMap[docId]!.snapchat,
+            title: friendsMap[docId]!.title,
+            twitter: friendsMap[docId]!.twitter,
+            work: friendsMap[docId]!.work,
+            youtube: friendsMap[docId]!.youtube);
+        friendsMap[docId!] = updateFriend;
+        notifyListeners();
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
   Future<void> updateBestFriend(
     String? uid,
     String? docId,

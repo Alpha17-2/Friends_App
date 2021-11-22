@@ -122,12 +122,11 @@ Widget showMyFriends(BuildContext context, Friend f) {
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
                           onPressed: () {
-                            Provider.of<FriendsManager>(context,listen: false)
+                            Provider.of<FriendsManager>(context, listen: false)
                                 .updateBestFriend(
                                     FirebaseAuth.instance.currentUser!.uid,
                                     f.docId);
                           },
-                          
                           icon: (Icon((f.isBestFriend!)
                               ? Icons.favorite
                               : Icons.favorite_border_outlined))),
@@ -136,7 +135,13 @@ Widget showMyFriends(BuildContext context, Friend f) {
                       child: IconButton(
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<FriendsManager>(context,listen: false)
+                                .updateCloseFriend(
+                                    FirebaseAuth.instance.currentUser!.uid,
+                                    f.docId);
+                                  
+                          },
                           icon: (Icon((f.isCloseFriend!)
                               ? Ionicons.star
                               : Ionicons.star_outline))),
