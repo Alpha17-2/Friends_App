@@ -176,6 +176,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               builder: (context) => imageScreen(
                                 dpImage: widget.friend!.dp,
                                 docId: widget.friend!.docId,
+                                gender: widget.friend!.gender,
                               ),
                             ));
                       },

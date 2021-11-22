@@ -15,8 +15,9 @@ import 'package:provider/provider.dart';
 class imageScreen extends StatefulWidget {
   final String? dpImage;
   final String? docId;
+  final String? gender;
 
-  imageScreen({this.dpImage, this.docId});
+  imageScreen({this.dpImage, this.docId,this.gender});
 
   @override
   State<imageScreen> createState() => _imageScreenState();
@@ -82,7 +83,7 @@ class _imageScreenState extends State<imageScreen> {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
               child: CachedNetworkImage(
-                imageUrl:url,
+                imageUrl: url,
                 fadeInCurve: Curves.easeInOutCubicEmphasized,
                 fit: BoxFit.cover,
                 placeholder: (context, url) {
@@ -105,10 +106,15 @@ class _imageScreenState extends State<imageScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(widget.dpImage!),
-                radius: displayWidth(context) * 0.05,
-              ),
+              child: (widget.dpImage != null)
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(widget.dpImage!),
+                      radius: displayWidth(context) * 0.05,
+                    )
+                  : CircleAvatar(
+                    backgroundImage: AssetImage(widget.gender=='Male'?'images/male.jpg':'images/female.jpg'),
+                    radius: displayWidth(context) * 0.05,
+                  ),
             ),
           ],
           title: Text(
@@ -262,7 +268,7 @@ class _imageScreenState extends State<imageScreen> {
                       itemBuilder: (context, index) {
                         print(snapshot.data.docs[index].data()['url']);
                         return showImages(
-                             context, snapshot.data.docs[index].data()['url']);
+                            context, snapshot.data.docs[index].data()['url']);
                       });
                 }),
           ),
