@@ -73,6 +73,7 @@ class wrapper extends StatelessWidget {
         Update : Done.
         2: Implement a function to search friends.
         3: Implement the logic to filter friends in provided categories
+        Feedback : Done
         4: Modify card icons(Best friend and close friend) in friend detail screen .
         5: Implement functions to launch social media apps.
         6: Display Best friends and close friends in homepage.

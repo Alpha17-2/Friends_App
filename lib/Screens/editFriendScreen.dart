@@ -77,6 +77,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
     for (int i = 0; i < initInterest!.length; ++i) {
       listOfInterests[initInterest[i]] = initInterest[i];
     }
+    isMale = widget.f!.gender == "Male" ? true : false;
     school = TextEditingController();
     college = TextEditingController();
     workAt = TextEditingController();
@@ -119,11 +120,8 @@ class _editFriendScreenState extends State<editFriendScreen> {
     dpNotExist() {
       return CircleAvatar(
         backgroundColor: Colors.grey[200],
-        child: Icon(
-          Icons.person,
-          size: displayWidth(context) * 0.15,
-          color: Colors.black38,
-        ),
+        backgroundImage:
+            AssetImage((isMale ? 'images/male.jpg' : 'images/female.jpg')),
         radius: displayWidth(context) * 0.18,
       );
     }
@@ -252,6 +250,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                         });
                         Provider.of<FriendsManager>(context, listen: false)
                             .editFriendDetail(
+                              _imageFile,
                                 currentUser!.uid.toString(),
                                 widget.f!.docId!,
                                 Friend(
@@ -327,24 +326,33 @@ class _editFriendScreenState extends State<editFriendScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Center(
-                                    child: GestureDetector(
-                                        onTap: () => pickImage(),
-                                        child: (_imageFile != null)
+                                    child:  (_imageFile != null)
                                             ? dpExists()
-                                            : dpNotExist())),
+                                            : dpNotExist()),
                                 Opacity(
                                     opacity: 0,
                                     child: Divider(
                                       height: displayHeight(context) * 0.015,
                                     )),
                                 Center(
-                                  child: Text('Display Picture',
-                                      style: TextStyle(
-                                          color: Colors.indigoAccent,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              displayWidth(context) * 0.04)),
-                                ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Display Picture',
+                                    style: TextStyle(
+                                        color: Colors.indigoAccent,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            displayWidth(context) * 0.04)),
+                                IconButton(
+                                    onPressed: () {
+                                      pickImage();
+                                    },
+                                    icon: Icon(Icons.add_a_photo_outlined,
+                                        color: Colors.orange[400])),
+                              ],
+                            ),
+                          ),
                                 Opacity(
                                     opacity: 0,
                                     child: Divider(

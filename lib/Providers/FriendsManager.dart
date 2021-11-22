@@ -99,45 +99,86 @@ class FriendsManager extends ChangeNotifier {
       final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
       http.delete(Uri.parse(api)).then((value) {
         friendsMap.remove(docId);
-         notifyListeners();
+        notifyListeners();
       });
-     
     } catch (error) {
       print(error);
     }
   }
 
-  Future<void> editFriendDetail(String uid, String docId, Friend friend) async {
-    try {
-      final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
-      http.patch(Uri.parse(api),
-          body: jsonEncode({
-            'college': friend.college,
-            'school': friend.school,
-            'work': friend.work,
-            'isBestFriend': friend.isBestFriend,
-            'isCloseFriend': friend.isCloseFriend,
-            'title': friend.title,
-            'images': friend.interests,
-            'dob': friend.dob,
-            'education': friend.education,
-            'gender': friend.gender,
-            'about': friend.about,
-            'profession': friend.profession,
-            'interests': friend.interests,
-            'instagram': friend.instagram,
-            'twitter': friend.twitter,
-            'youtube': friend.youtube,
-            'snapchat': friend.snapchat,
-            'facebook': friend.facebook,
-            'dp': '',
-            'contactNumber': friend.contactNumber,
-            'docId': '',
-            'mail': friend.mail,
-            'linkedin': friend.linkedin,
-          }));
-    } catch (error) {
-      print(error);
+  Future<void> editFriendDetail(
+      File? image, String uid, String docId, Friend friend) async {
+    if (image != null) {
+      try {
+        String imageLocation = 'users/${uid}/${docId}/dp';
+        final Reference storageReference =
+            FirebaseStorage.instance.ref().child(imageLocation);
+        final UploadTask uploadTask = storageReference.putFile(image);
+        final TaskSnapshot taskSnapshot = await uploadTask;
+        taskSnapshot.ref.getDownloadURL().then((value) {
+         final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+        http.patch(Uri.parse(api),
+            body: jsonEncode({
+              'college': friend.college,
+              'school': friend.school,
+              'work': friend.work,
+              'isBestFriend': friend.isBestFriend,
+              'isCloseFriend': friend.isCloseFriend,
+              'title': friend.title,
+              'images': friend.interests,
+              'dob': friend.dob,
+              'education': friend.education,
+              'gender': friend.gender,
+              'about': friend.about,
+              'profession': friend.profession,
+              'interests': friend.interests,
+              'instagram': friend.instagram,
+              'twitter': friend.twitter,
+              'youtube': friend.youtube,
+              'snapchat': friend.snapchat,
+              'facebook': friend.facebook,
+              'dp': value,
+              'contactNumber': friend.contactNumber,
+              'docId': '',
+              'mail': friend.mail,
+              'linkedin': friend.linkedin,
+            })); 
+        });
+      } catch (error) {
+        print(error);
+      }
+    } else {
+      try {
+        final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
+        http.patch(Uri.parse(api),
+            body: jsonEncode({
+              'college': friend.college,
+              'school': friend.school,
+              'work': friend.work,
+              'isBestFriend': friend.isBestFriend,
+              'isCloseFriend': friend.isCloseFriend,
+              'title': friend.title,
+              'images': friend.interests,
+              'dob': friend.dob,
+              'education': friend.education,
+              'gender': friend.gender,
+              'about': friend.about,
+              'profession': friend.profession,
+              'interests': friend.interests,
+              'instagram': friend.instagram,
+              'twitter': friend.twitter,
+              'youtube': friend.youtube,
+              'snapchat': friend.snapchat,
+              'facebook': friend.facebook,
+              'dp': '',
+              'contactNumber': friend.contactNumber,
+              'docId': '',
+              'mail': friend.mail,
+              'linkedin': friend.linkedin,
+            }));
+      } catch (error) {
+        print(error);
+      }
     }
   }
 
