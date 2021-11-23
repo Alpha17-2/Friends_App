@@ -189,7 +189,6 @@ Widget showMyFriends(BuildContext context, Friend f) {
                                           'Yes',
                                           style: TextStyle(color: Colors.white),
                                         )),
-                                    
                                   ],
                                 );
                               },
@@ -204,4 +203,34 @@ Widget showMyFriends(BuildContext context, Friend f) {
           ],
         )),
   );
+}
+
+Future<void> launchUrl(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+String get snapchatUrl {
+  return 'https://www.snapchat.com/add/';
+}
+
+String get linkedInUrl {
+  return '';
+}
+
+String get facebookUrl {
+  return '';
+}
+
+
+
+String get instagramUrl {
+  return 'https://www.instagram.com/';
+}
+
+String get twitterUrl {
+  return 'https://twitter.com/';
 }

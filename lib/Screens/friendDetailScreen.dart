@@ -332,7 +332,6 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        
                         Provider.of<FriendsManager>(context, listen: false)
                             .deleteFriend(
                                 FirebaseAuth.instance.currentUser!.uid
@@ -409,7 +408,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                // Instagram
+                                                launchUrl(
+                                                    facebookUrl + f.facebook!);
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_facebook),
@@ -418,7 +418,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                // Instagram
+                                                launchUrl(instagramUrl +
+                                                    f.instagram!);
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_instagram),
@@ -427,7 +428,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                // Twitter
+                                                launchUrl(
+                                                    twitterUrl + f.twitter!);
                                               },
                                               icon: Icon(Ionicons.logo_twitter),
                                               color: Colors.blue[400],
@@ -435,7 +437,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                // Snapchat
+                                                launchUrl(
+                                                    snapchatUrl + f.snapchat!);
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_snapchat),
@@ -444,7 +447,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                // LinkedIn
+                                                launchUrl(
+                                                    linkedInUrl + f.linkedin!);
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_linkedin),
@@ -453,11 +457,17 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 8.0),
-                                              child: Image.asset(
-                                                'images/yt.png',
-                                                height: displayHeight(context) *
-                                                    0.026,
-                                                fit: BoxFit.cover,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  launchUrl(f.youtube!);
+                                                },
+                                                child: Image.asset(
+                                                  'images/yt.png',
+                                                  height:
+                                                      displayHeight(context) *
+                                                          0.026,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ],
