@@ -17,7 +17,9 @@ class myFriendsScreen extends StatefulWidget {
 class _myFriendsScreenState extends State<myFriendsScreen> {
   User? currentUser;
   bool init = true;
+  TextEditingController? searchFriend;
   bool isLoading = true;
+  List<Friend> displayList = [];
   final unselectedCategory = [Colors.black54, Colors.black54];
 
   @override
@@ -35,12 +37,14 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
 
   @override
   void initState() {
+    searchFriend = TextEditingController();
     currentUser = FirebaseAuth.instance.currentUser;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    
     List<Friend> allFriends = Provider.of<FriendsManager>(context).fetchList;
     List<Friend> bestFriends =
         allFriends.where((element) => element.isBestFriend!).toList();
@@ -48,8 +52,19 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
         allFriends.where((element) => element.isCloseFriend!).toList();
     int currentCategory =
         Provider.of<categoryManager>(context).fetchCurrentCategory;
+
     searchBox() {
       return TextFormField(
+        controller: searchFriend,
+        onChanged: (value) {
+          setState(() {
+            print(searchFriend!.text.toString());
+            displayList = allFriends
+                .where((element) =>
+                    element.title!.toLowerCase().contains(value.toLowerCase()))
+                .toList();
+          });
+        },
         decoration: InputDecoration(
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -108,26 +123,29 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                     Divider(
                       height: 1.5,
                     ),
-                    (currentCategory==0)?
-                    Text(
-                      '${allFriends.length.toString()} Friends',
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.035),
-                    ):(currentCategory==1)?Text(
-                      '${bestFriends.length.toString()} Friends',
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.035),
-                    ):Text(
-                      '${closeFriends.length.toString()} Friends',
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: displayWidth(context) * 0.035),
-                    ),
+                    (currentCategory == 0)
+                        ? Text(
+                            '${allFriends.length.toString()} Friends',
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: displayWidth(context) * 0.035),
+                          )
+                        : (currentCategory == 1)
+                            ? Text(
+                                '${bestFriends.length.toString()} Friends',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: displayWidth(context) * 0.035),
+                              )
+                            : Text(
+                                '${closeFriends.length.toString()} Friends',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: displayWidth(context) * 0.035),
+                              ),
                   ],
                 )),
             Positioned(
@@ -350,8 +368,33 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   height: displayHeight(context) * 0.54,
                   width: displayWidth(context),
                   //color: Colors.pinkAccent,
-                  child: (isLoading)
-                      ? Center(child: CircularProgressIndicator())
+                  child: (searchFriend!.text.toString() == '')
+                      ? (isLoading)
+                          ? Center(child: CircularProgressIndicator())
+                          : GridView.builder(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 25,
+                                mainAxisSpacing: 5,
+                                //childAspectRatio: 0.5
+                              ),
+                              itemCount: currentCategory == 0
+                                  ? allFriends.length
+                                  : currentCategory == 1
+                                      ? bestFriends.length
+                                      : closeFriends.length,
+                              itemBuilder: (context, index) {
+                                return showMyFriends(
+                                    context,
+                                    currentCategory == 0
+                                        ? allFriends[index]
+                                        : currentCategory == 1
+                                            ? bestFriends[index]
+                                            : closeFriends[index]);
+                              },
+                            )
                       : GridView.builder(
                           padding: EdgeInsets.only(left: 10, right: 10),
                           gridDelegate:
@@ -361,13 +404,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                             mainAxisSpacing: 5,
                             //childAspectRatio: 0.5
                           ),
-                          itemCount: currentCategory==0
-                          ?allFriends.length
-                          :currentCategory == 1 ? bestFriends.length:closeFriends.length ,
+                          itemCount: displayList.length,
                           itemBuilder: (context, index) {
-                            return showMyFriends(context,currentCategory==0
-                          ?allFriends[index]
-                          :currentCategory == 1 ? bestFriends[index]:closeFriends[index]);
+                            return showMyFriends(context, displayList[index]);
                           },
                         ),
                 ))

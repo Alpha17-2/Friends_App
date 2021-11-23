@@ -68,16 +68,13 @@ class wrapper extends StatelessWidget {
 
 /*
         Todo
-        1: Try to add a delete button on Friend screen's friend card (orange one) .
-        Feedback : Created delete button and it is working but Snackbar is yet to be implemented.
-        Update : Done.
+        
         2: Implement a function to search friends.
-        3: Implement the logic to filter friends in provided categories
-        Feedback : Done
+        
         4: Modify card icons(Best friend and close friend) in friend detail screen .
         5: Implement functions to launch social media apps.
         6: Display Best friends and close friends in homepage.
-        7: Remove boss baby from center and replace it with loading spinner .
+        
         8: Display DP at the right corner of Snapshots screen .
         9: Create app icon .  
 */

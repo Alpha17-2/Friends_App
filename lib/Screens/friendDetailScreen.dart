@@ -54,8 +54,10 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> interests = widget.friend!.interests!;
-    DateTime time = DateTime.parse(widget.friend!.dob!);
+    Friend? f = Provider.of<FriendsManager>(context)
+        .fetchFriendWithDocId(widget.friend!.docId!);
+    List<dynamic>? interests = f!.interests;
+    DateTime time = DateTime.parse(f.dob!);
     int doby = time.year;
     int dobm = time.month;
     int dobd = time.day;
@@ -73,15 +75,15 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
           Positioned(
             top: 0,
             child: Hero(
-              tag: widget.friend!.docId!,
+              tag: f.docId!,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(45),
                   bottomRight: Radius.circular(45),
                 ),
-                child: (widget.friend!.dp == '' || widget.friend!.dp!.isEmpty)
+                child: (f.dp == '' || f.dp!.isEmpty)
                     ? Image.asset(
-                        widget.friend!.gender == "Male"
+                        f.gender == "Male"
                             ? 'images/male.jpg'
                             : 'images/female.jpg',
                         height: displayHeight(context) * 0.55,
@@ -89,7 +91,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                         fit: BoxFit.cover,
                       )
                     : Image.network(
-                        widget.friend!.dp!,
+                        f.dp!,
                         height: displayHeight(context) * 0.55,
                         width: displayWidth(context),
                         fit: BoxFit.cover,
@@ -129,7 +131,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => editFriendScreen(
-                                docId: widget.friend!.docId,
+                                docId: f.docId,
                                 f: widget.friend,
                               ),
                             ));
@@ -141,10 +143,39 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           elevation: 10,
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.edit, color: Colors.yellow),
+                            child: Icon(Icons.edit, color: Colors.yellowAccent),
                           )),
                     ),
-                    Card(
+                    InkWell(
+                      onTap: () {
+                        Provider.of<FriendsManager>(context, listen: false)
+                            .updateBestFriend(
+                                FirebaseAuth.instance.currentUser!.uid,
+                                f.docId);
+                      },
+                      child: Card(
+                          color: Colors.white54,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(
+                              (f.isBestFriend!)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.pink[600],
+                            ),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<FriendsManager>(context, listen: false)
+                            .updateCloseFriend(
+                                FirebaseAuth.instance.currentUser!.uid,
+                                f.docId);
+                      },
+                      child: Card(
                         color: Colors.white54,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
@@ -152,31 +183,23 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Icon(
-                            Ionicons.heart,
-                            color: Colors.pink[600],
-                          ),
-                        )),
-                    Card(
-                        color: Colors.white54,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        elevation: 10,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Icon(
-                            Ionicons.star,
+                            (f.isCloseFriend!)
+                                ? Ionicons.star
+                                : Ionicons.star_outline,
                             color: Colors.indigo[700],
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => imageScreen(
-                                dpImage: widget.friend!.dp,
-                                docId: widget.friend!.docId,
-                                gender: widget.friend!.gender,
+                                dpImage: f.dp,
+                                docId: f.docId,
+                                gender: f.gender,
                               ),
                             ));
                       },
@@ -189,14 +212,14 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Ionicons.images,
-                              color: Colors.teal,
+                              color: Colors.teal[800],
                             ),
                           )),
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (widget.friend!.contactNumber != '')
-                          launch(('tel://${widget.friend!.contactNumber}'));
+                        if (f.contactNumber != '')
+                          launch(('tel://${f.contactNumber}'));
                         else {
                           showModalBottomSheet(
                             context: context,
@@ -246,14 +269,14 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Ionicons.call,
-                              color: Colors.blue,
+                              color: Colors.blue[800],
                             ),
                           )),
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (widget.friend!.mail != '')
-                          connectUsViaMail(widget.friend!.mail!);
+                        if (f.mail != '')
+                          connectUsViaMail(f.mail!);
                         else {
                           showModalBottomSheet(
                             context: context,
@@ -303,17 +326,18 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.mail,
-                              color: Colors.orange,
+                              color: Colors.orange[700],
                             ),
                           )),
                     ),
                     GestureDetector(
                       onTap: () {
+                        
                         Provider.of<FriendsManager>(context, listen: false)
                             .deleteFriend(
                                 FirebaseAuth.instance.currentUser!.uid
                                     .toString(),
-                                widget.friend!.docId!)
+                                f.docId!)
                             .then((value) {
                           Navigator.pop(context);
                         });
@@ -327,7 +351,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             padding: const EdgeInsets.all(4.0),
                             child: Icon(
                               Icons.delete_forever,
-                              color: Colors.red[300],
+                              color: Colors.red[700],
                             ),
                           )),
                     ),
@@ -467,7 +491,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              '${widget.friend!.title!}, ${age.toString()}',
+                              '${f.title!}, ${age.toString()}',
                               style: TextStyle(
                                   letterSpacing: 0.2,
                                   color: Colors.black87,
@@ -476,7 +500,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                   fontSize: displayWidth(context) * 0.048),
                             ),
                             Text(
-                              widget.friend!.gender!,
+                              f.gender!,
                               style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -529,9 +553,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               height: displayHeight(context) * 0.003,
                             )),
                         Text(
-                          (widget.friend!.school != null &&
-                                  widget.friend!.school != ''
-                              ? '${widget.friend!.school}'
+                          (f.school != null && f.school != ''
+                              ? '${f.school}'
                               : 'Not available'),
                           style: TextStyle(
                             color: Colors.grey[500],
@@ -558,9 +581,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               height: displayHeight(context) * 0.003,
                             )),
                         Text(
-                          (widget.friend!.college != null &&
-                                  widget.friend!.college != ''
-                              ? '${widget.friend!.college}'
+                          (f.college != null && f.college != ''
+                              ? '${f.college}'
                               : 'Not available'),
                           style: TextStyle(
                             color: Colors.grey[500],
@@ -586,12 +608,10 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             child: Divider(
                               height: displayHeight(context) * 0.003,
                             )),
-                        (widget.friend!.profession != null &&
-                                widget.friend!.profession != '')
-                            ? (widget.friend!.work != null &&
-                                    widget.friend!.work != '')
+                        (f.profession != null && f.profession != '')
+                            ? (f.work != null && f.work != '')
                                 ? Text(
-                                    '${widget.friend!.profession} at ${widget.friend!.work}',
+                                    '${f.profession} at ${f.work}',
                                     style: TextStyle(
                                       color: Colors.grey[500],
                                       letterSpacing: 0.45,
@@ -599,7 +619,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                     ),
                                   )
                                 : Text(
-                                    '${widget.friend!.profession}',
+                                    '${f.profession}',
                                     style: TextStyle(
                                       color: Colors.grey[500],
                                       letterSpacing: 0.45,
@@ -633,7 +653,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               height: displayHeight(context) * 0.003,
                             )),
                         Text(
-                          widget.friend!.about!,
+                          f.about!,
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
@@ -677,7 +697,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        interests[index],
+                                        interests![index],
                                         style: TextStyle(
                                             color: Colors.black45,
                                             fontWeight: FontWeight.w500),
@@ -687,7 +707,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                 ),
                               );
                             },
-                            itemCount: interests.length,
+                            itemCount: interests!.length,
                           ),
                         ),
                       ],

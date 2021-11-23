@@ -250,11 +250,10 @@ class _imageScreenState extends State<imageScreen> {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
-                      child: Image.asset(
-                        'images/bb.png',
-                        fit: BoxFit.fitHeight,
-                        height: displayHeight(context) * 0.3,
-                      ),
+                      child: SpinKitFadingCube(
+                        color: Colors.orange[300]!,
+                        size: displayWidth(context)*0.08,
+                      )
                     );
                   }
                   return GridView.builder(
