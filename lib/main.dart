@@ -6,6 +6,7 @@ import 'package:firstapp/Providers/categoryManager.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/authScreen.dart';
 import 'package:firstapp/Screens/homeScreen.dart';
+import 'package:firstapp/Screens/welcomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +60,7 @@ class wrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return homeScreen();
+      return welcomeScreen();
     } else
       return authScreen();
   }
@@ -70,6 +71,5 @@ class wrapper extends StatelessWidget {
         Todo
         
         1. Authenticate email address.
-        5: Implement functions to launch social media apps.
         6: Display Best friends and close friends in homepage.
 */

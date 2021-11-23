@@ -19,7 +19,8 @@ class authservice {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
 //sign in with email and password  !!
-  Future<String?> signIn({required String email, required String password}) async {
+  Future<String?> signIn(
+      {required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "valid";
@@ -28,22 +29,25 @@ class authservice {
     }
   }
 
-  Future<void> changeDisplayName(String displayName)async{
-    try{
+  Future<void> changeDisplayName(String displayName) async {
+    try {
       User user = FirebaseAuth.instance.currentUser!;
       return user.updateDisplayName(displayName);
-    }
-    catch(error){
+    } catch (error) {
       print(error);
     }
   }
 
-  Future<String?> signUp({required String email,String? displayName, required String password}) async {
+  Future<String?> signUp(
+      {required String email,
+      String? displayName,
+      required String password}) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-            value.user!.updateDisplayName(displayName);
+        value.user!.updateDisplayName(displayName);
+        value.user!.sendEmailVerification();
       });
       return "valid";
     } on FirebaseAuthException catch (e) {
