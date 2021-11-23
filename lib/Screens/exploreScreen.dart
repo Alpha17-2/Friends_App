@@ -2,24 +2,88 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
+import 'package:firstapp/Models/Friend.dart';
 import 'package:firstapp/Models/quote.dart';
+import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:firstapp/Providers/QuoteProvider.dart';
 import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class exploreScreen extends StatelessWidget {
+class exploreScreen extends StatefulWidget {
   //const exploreScreen({Key? key}) : super(key: key);
+  @override
+  State<exploreScreen> createState() => _exploreScreenState();
+}
+
+class _exploreScreenState extends State<exploreScreen> {
   Random random = Random();
+
   final authservice _auth = authservice(FirebaseAuth.instance);
+
   User? currentUser = FirebaseAuth.instance.currentUser;
+
   final _keyForm = GlobalKey<FormState>();
+
+  bool isFriedsLoading = true;
+
+  List<Friend> bestFriends = [];
+
+  bool init = true;
+
   TextEditingController displayNameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (init) {
+      Provider.of<FriendsManager>(context)
+          .setFriends(currentUser!.uid)
+          .then((value) {
+        isFriedsLoading = false;
+      });
+      init = false;
+      super.didChangeDependencies();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     List<quoteModel> quotes = QuoteProvider().fetchQuotesList;
-
+    bestFriends = Provider.of<FriendsManager>(context)
+        .fetchList
+        .where((element) => element.isBestFriend!)
+        .toList();
     final randomInddex = random.nextInt(quotes.length);
+    displayBestFriends(BuildContext context, Friend f) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(f.dp!),
+            radius: displayWidth(context) * 0.065,
+          ),
+          Opacity(
+            child: Divider(
+              height: 1,
+            ),
+            opacity: 0.0,
+          ),
+          Text(
+            f.title!,
+            style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.4),
+          ),
+        ],
+      );
+    }
+
     return Container(
       height: displayHeight(context),
       width: displayWidth(context),
@@ -162,6 +226,36 @@ class exploreScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: displayWidth(context) * 0.05,
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: displayHeight(context) * 0.12,
+              width: displayWidth(context),
+              child: (bestFriends.length == 0)
+                  ? Center(
+                      child: Text(
+                        'No friends to display',
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: displayBestFriends(
+                                  context, bestFriends[index]),
+                            );
+                          },
+                          itemCount: bestFriends.length,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                    ),
             ),
           ),
           Padding(

@@ -5,6 +5,7 @@ import 'package:firstapp/Providers/FriendsManager.dart';
 import 'package:firstapp/Providers/categoryManager.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/authScreen.dart';
+import 'package:firstapp/Screens/deciderScreen.dart';
 import 'package:firstapp/Screens/homeScreen.dart';
 import 'package:firstapp/Screens/welcomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: Consumer<AuthNotifier>(
               builder: (context, notifier, child) {
-                return notifier.user != null ? homeScreen() : wrapper();
+                return notifier.user != null ? deciderScreen() : wrapper();
               },
             )));
   }
@@ -60,7 +61,7 @@ class wrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return welcomeScreen();
+      return deciderScreen();
     } else
       return authScreen();
   }
