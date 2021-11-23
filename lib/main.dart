@@ -69,12 +69,7 @@ class wrapper extends StatelessWidget {
 /*
         Todo
         
-        2: Implement a function to search friends.
-        
-        4: Modify card icons(Best friend and close friend) in friend detail screen .
+        1. Authenticate email address.
         5: Implement functions to launch social media apps.
         6: Display Best friends and close friends in homepage.
-        
-        8: Display DP at the right corner of Snapshots screen .
-        9: Create app icon .  
 */

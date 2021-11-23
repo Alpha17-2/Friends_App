@@ -136,11 +136,10 @@ Widget showMyFriends(BuildContext context, Friend f) {
                           color: Colors.white,
                           iconSize: displayWidth(context) * 0.035,
                           onPressed: () {
-                            Provider.of<FriendsManager>(context,listen: false)
+                            Provider.of<FriendsManager>(context, listen: false)
                                 .updateCloseFriend(
                                     FirebaseAuth.instance.currentUser!.uid,
                                     f.docId);
-                                  
                           },
                           icon: (Icon((f.isCloseFriend!)
                               ? Ionicons.star
@@ -152,16 +151,49 @@ Widget showMyFriends(BuildContext context, Friend f) {
                           iconSize: displayWidth(context) * 0.035,
                           onPressed: () async {
                             String friendName = f.title!;
-                            Provider.of<FriendsManager>(context, listen: false)
-                                .deleteFriend(
-                                    FirebaseAuth.instance.currentUser!.uid
-                                        .toString(),
-                                    f.docId!)
-                                .then((value) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    'Unfriend',
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                   content: Text(
-                                      'Removed ${friendName} from your friend list.')));
-                            });
+                                    'Are you sure you want to unfriend ${friendName} ?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('No')),
+                                    TextButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.red[400]),
+                                        ),
+                                        onPressed: () {
+                                          Provider.of<FriendsManager>(context,
+                                                  listen: false)
+                                              .deleteFriend(
+                                                  FirebaseAuth
+                                                      .instance.currentUser!.uid
+                                                      .toString(),
+                                                  f.docId!);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          'Yes',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
+                                    
+                                  ],
+                                );
+                              },
+                            );
                           },
                           icon: Icon(Icons.delete_forever)),
                     )
