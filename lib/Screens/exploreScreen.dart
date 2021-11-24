@@ -10,6 +10,8 @@ import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'friendDetailScreen.dart';
+
 class exploreScreen extends StatefulWidget {
   //const exploreScreen({Key? key}) : super(key: key);
   @override
@@ -63,12 +65,26 @@ class _exploreScreenState extends State<exploreScreen> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          (f.dp!='')?CircleAvatar(
-            backgroundImage: NetworkImage(f.dp!),
-            radius: displayWidth(context) * 0.065,
-          ):CircleAvatar(
-            radius: displayWidth(context) * 0.065,
-            backgroundImage: AssetImage((f.gender=='Male')?'images/male.jpg':'images/female.jpg'),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => friendDetailScreen(
+                            friend: f,
+                          ),
+                        ));
+            },
+            child: Hero(
+              tag: f.docId!,
+              child: (f.dp!='')?CircleAvatar(
+                backgroundImage: NetworkImage(f.dp!),
+                radius: displayWidth(context) * 0.065,
+              ):CircleAvatar(
+                radius: displayWidth(context) * 0.065,
+                backgroundImage: AssetImage((f.gender=='Male')?'images/male.jpg':'images/female.jpg'),
+              ),
+            ),
           ),
           Opacity(
             child: Divider(

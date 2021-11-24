@@ -282,7 +282,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                             isUploading = false;
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(
-                                    "Congratulations !! ${title!.text.toString()} is now your friend")));
+                                    "Successfully updated details")));
                           });
                         });
                       }
