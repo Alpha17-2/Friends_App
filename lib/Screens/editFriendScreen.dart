@@ -899,8 +899,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                                         validator: (value) {
                                           if (value!.length == 0)
                                             return null;
-                                          else if (value != null &&
-                                              value.length != 10)
+                                          else if (value.length != 10)
                                             return 'Mobile number should contain 10 digits';
                                           else
                                             return null;

@@ -6,8 +6,6 @@ import 'package:firstapp/Providers/categoryManager.dart';
 import 'package:firstapp/Providers/screenIndexProvider.dart';
 import 'package:firstapp/Screens/authScreen.dart';
 import 'package:firstapp/Screens/deciderScreen.dart';
-import 'package:firstapp/Screens/homeScreen.dart';
-import 'package:firstapp/Screens/welcomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -69,8 +67,6 @@ class wrapper extends StatelessWidget {
 
 
 /*
-        Todo
+       
         
-        1. Authenticate email address.
-        6: Display Best friends and close friends in homepage.
 */
