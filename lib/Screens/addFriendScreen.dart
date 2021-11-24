@@ -368,7 +368,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
         ),
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 10.0, left: 6, right: 6, bottom: 10),
+              const EdgeInsets.only(top: 10.0, left: 6, right: 6, bottom: 0),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: (isUploading)

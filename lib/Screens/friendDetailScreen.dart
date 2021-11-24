@@ -332,14 +332,56 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Provider.of<FriendsManager>(context, listen: false)
-                            .deleteFriend(
-                                FirebaseAuth.instance.currentUser!.uid
-                                    .toString(),
-                                f.docId!)
-                            .then((value) {
-                          Navigator.pop(context);
-                        });
+                        String friendName = f.title!;
+
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Unfriend',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              content: Text(
+                                'Are you sure you want to unfriend ${friendName} ?',
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('No')),
+                                TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red[400]),
+                                    ),
+                                    onPressed: () async {
+                                      Provider.of<FriendsManager>(context,
+                                              listen: false)
+                                          .deleteFriend(
+                                              FirebaseAuth
+                                                  .instance.currentUser!.uid
+                                                  .toString(),
+                                              f.docId!)
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    'Removed ${friendName} from your friends .')));
+                                      });
+                                    },
+                                    child: Text(
+                                      'Yes',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: Card(
                           color: Colors.white54,
@@ -424,17 +466,15 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                if(f.instagram!=''){
+                                                if (f.instagram != '') {
                                                   launchUrl(instagramUrl +
-                                                    f.instagram!);
-                                                }
-                                                else {
+                                                      f.instagram!);
+                                                } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                           content: Text(
                                                               'We couldn\'t find any Instagram account for ${f.title} ')));
                                                 }
-                                                    
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_instagram),
@@ -443,12 +483,10 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                if(f.twitter!=''){
+                                                if (f.twitter != '') {
                                                   launchUrl(
-                                                    twitterUrl + f.twitter!);
-                                                }
-                                                
-                                                    else {
+                                                      twitterUrl + f.twitter!);
+                                                } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                           content: Text(
@@ -461,12 +499,10 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                if(f.snapchat!=''){
-                                                   launchUrl(
-                                                    snapchatUrl + f.snapchat!);
-                                                }
-                                               
-                                                    else {
+                                                if (f.snapchat != '') {
+                                                  launchUrl(snapchatUrl +
+                                                      f.snapchat!);
+                                                } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                           content: Text(
@@ -480,11 +516,9 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                if(f.linkedin!=''){
+                                                if (f.linkedin != '') {
                                                   launchUrl(f.linkedin!);
-                                                }
-                                                
-                                                else {
+                                                } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(SnackBar(
                                                           content: Text(
@@ -500,16 +534,15 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                                   top: 8.0),
                                               child: InkWell(
                                                 onTap: () {
-                                                  if(f.youtube!=''){
+                                                  if (f.youtube != '') {
                                                     launchUrl(f.youtube!);
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                'We couldn\'t find ${f.title}\'s youtube channel ')));
                                                   }
-                                                  
-                                                  else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(
-                                                              'We couldn\'t find ${f.title}\'s youtube channel ')));
-                                                }
                                                 },
                                                 child: Image.asset(
                                                   'images/yt.png',
