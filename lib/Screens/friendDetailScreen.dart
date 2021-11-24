@@ -408,8 +408,14 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                launchUrl(
-                                                    facebookUrl + f.facebook!);
+                                                if (f.facebook != '') {
+                                                  launchUrl(f.facebook!);
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find any facebook account for ${f.title} ')));
+                                                }
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_facebook),
@@ -418,8 +424,17 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                launchUrl(instagramUrl +
+                                                if(f.instagram!=''){
+                                                  launchUrl(instagramUrl +
                                                     f.instagram!);
+                                                }
+                                                else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find any Instagram account for ${f.title} ')));
+                                                }
+                                                    
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_instagram),
@@ -428,8 +443,17 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                launchUrl(
+                                                if(f.twitter!=''){
+                                                  launchUrl(
                                                     twitterUrl + f.twitter!);
+                                                }
+                                                
+                                                    else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find any Twitter account for ${f.title} ')));
+                                                }
                                               },
                                               icon: Icon(Ionicons.logo_twitter),
                                               color: Colors.blue[400],
@@ -437,8 +461,17 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                launchUrl(
+                                                if(f.snapchat!=''){
+                                                   launchUrl(
                                                     snapchatUrl + f.snapchat!);
+                                                }
+                                               
+                                                    else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find any Snapchat account for ${f.title} ')));
+                                                }
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_snapchat),
@@ -447,8 +480,16 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                             IconButton(
                                               iconSize: iconSize,
                                               onPressed: () {
-                                                launchUrl(
-                                                    linkedInUrl + f.linkedin!);
+                                                if(f.linkedin!=''){
+                                                  launchUrl(f.linkedin!);
+                                                }
+                                                
+                                                else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find any Linkedin account for ${f.title} ')));
+                                                }
                                               },
                                               icon:
                                                   Icon(Ionicons.logo_linkedin),
@@ -459,7 +500,16 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                                   top: 8.0),
                                               child: InkWell(
                                                 onTap: () {
-                                                  launchUrl(f.youtube!);
+                                                  if(f.youtube!=''){
+                                                    launchUrl(f.youtube!);
+                                                  }
+                                                  
+                                                  else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              'We couldn\'t find ${f.title}\'s youtube channel ')));
+                                                }
                                                 },
                                                 child: Image.asset(
                                                   'images/yt.png',

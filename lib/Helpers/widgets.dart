@@ -217,15 +217,6 @@ String get snapchatUrl {
   return 'https://www.snapchat.com/add/';
 }
 
-String get linkedInUrl {
-  return '';
-}
-
-String get facebookUrl {
-  return '';
-}
-
-
 
 String get instagramUrl {
   return 'https://www.instagram.com/';

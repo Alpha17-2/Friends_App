@@ -151,6 +151,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
             content: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('What is your friend interested in ?'),
                   Opacity(
@@ -168,6 +169,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextFormField(
+                        
                         controller: interest,
                         toolbarOptions: ToolbarOptions(
                             copy: true,
@@ -1071,7 +1073,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'Facebook ID',
+                                    hintText: 'Facebook link',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -1248,7 +1250,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'Linkedin ID',
+                                    hintText: 'Linkedin url',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
@@ -1368,7 +1370,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
-                                    hintText: 'Youtube channel',
+                                    hintText: 'Youtube channel url',
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
