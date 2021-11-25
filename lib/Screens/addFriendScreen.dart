@@ -850,7 +850,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 height: displayHeight(context) * 0.02,
                               )),
                           Text(
-                            'About',
+                            'About *',
                             style: TextStyle(color: Colors.black),
                           ),
                           Opacity(
