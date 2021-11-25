@@ -28,8 +28,14 @@ class FriendsManager extends ChangeNotifier {
       print(api);
       final response = await http.get(Uri.parse(api));
       print(response.statusCode);
+      if (json.decode(response.body) == null) {
+        friendsMap = temp;
+        notifyListeners();
+        return;
+      }
       final Map<String, dynamic> data =
           json.decode(response.body) as Map<String, dynamic>;
+      print(data.isEmpty);
       if (data.length != 0) {
         print('enter');
         data.forEach((key, value) {
