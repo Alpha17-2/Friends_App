@@ -640,7 +640,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 height: displayHeight(context) * 0.01,
                               )),
                           Container(
-                            height: displayHeight(context) * 0.05,
+                            height: displayHeight(context) * 0.075,
                             width: displayWidth(context),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -654,8 +654,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   bottom: 2.0),
                               child: Center(
                                 child: TextFormField(
+                                  //expands: true,
+                                  maxLength : 50,
                                   controller: school,
                                   decoration: InputDecoration(
+
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
                                     hintText: 'School\'s name',
@@ -684,7 +687,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 height: displayHeight(context) * 0.01,
                               )),
                           Container(
-                            height: displayHeight(context) * 0.05,
+                            height: displayHeight(context) * 0.075,
                             width: displayWidth(context),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
@@ -698,6 +701,7 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   bottom: 2.0),
                               child: Center(
                                 child: TextFormField(
+                                  maxLength: 50,
                                   controller: college,
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
