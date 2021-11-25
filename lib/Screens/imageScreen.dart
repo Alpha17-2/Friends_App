@@ -106,7 +106,7 @@ class _imageScreenState extends State<imageScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
-              child: (widget.dpImage != null)
+              child: (widget.dpImage != null && widget.dpImage!='')
                   ? CircleAvatar(
                       backgroundImage: NetworkImage(widget.dpImage!),
                       radius: displayWidth(context) * 0.05,
