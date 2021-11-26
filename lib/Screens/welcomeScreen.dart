@@ -3,7 +3,6 @@ import 'package:firstapp/Helpers/custom_paint.dart';
 import 'package:firstapp/Helpers/deviceSize.dart';
 import 'package:firstapp/Services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 
 class welcomeScreen extends StatelessWidget {
   final authservice _auth = authservice(FirebaseAuth.instance);
