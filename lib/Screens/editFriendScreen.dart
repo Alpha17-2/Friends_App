@@ -250,7 +250,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                         });
                         Provider.of<FriendsManager>(context, listen: false)
                             .editFriendDetail(
-                              _imageFile,
+                                _imageFile,
                                 currentUser!.uid.toString(),
                                 widget.f!.docId!,
                                 Friend(
@@ -281,8 +281,7 @@ class _editFriendScreenState extends State<editFriendScreen> {
                           setState(() {
                             isUploading = false;
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "Successfully updated details")));
+                                content: Text("Successfully updated details")));
                           });
                         });
                       }
@@ -326,33 +325,33 @@ class _editFriendScreenState extends State<editFriendScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Center(
-                                    child:  (_imageFile != null)
-                                            ? dpExists()
-                                            : dpNotExist()),
+                                    child: (_imageFile != null)
+                                        ? dpExists()
+                                        : dpNotExist()),
                                 Opacity(
                                     opacity: 0,
                                     child: Divider(
                                       height: displayHeight(context) * 0.015,
                                     )),
                                 Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Display Picture',
-                                    style: TextStyle(
-                                        color: Colors.indigoAccent,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize:
-                                            displayWidth(context) * 0.04)),
-                                IconButton(
-                                    onPressed: () {
-                                      pickImage();
-                                    },
-                                    icon: Icon(Icons.add_a_photo_outlined,
-                                        color: Colors.orange[400])),
-                              ],
-                            ),
-                          ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Display Picture',
+                                          style: TextStyle(
+                                              color: Colors.indigoAccent,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: displayWidth(context) *
+                                                  0.04)),
+                                      IconButton(
+                                          onPressed: () {
+                                            pickImage();
+                                          },
+                                          icon: Icon(Icons.add_a_photo_outlined,
+                                              color: Colors.orange[400])),
+                                    ],
+                                  ),
+                                ),
                                 Opacity(
                                     opacity: 0,
                                     child: Divider(
@@ -950,8 +949,8 @@ class _editFriendScreenState extends State<editFriendScreen> {
                                       child: TextFormField(
                                         controller: email,
                                         validator: (value) {
-                                          if (value == '') return null;
-                                        
+                                          if (value == '')
+                                            return null;
                                           else {
                                             bool emailValid = RegExp(
                                                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")

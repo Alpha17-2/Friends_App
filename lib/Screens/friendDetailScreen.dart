@@ -803,7 +803,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                             itemCount: interests!.length,
                           ),
                         ),
-                        Opacity(opacity: 0,child: Divider()),
+                        Opacity(opacity: 0, child: Divider()),
                       ],
                     ),
                   ),

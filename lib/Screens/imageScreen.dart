@@ -17,7 +17,7 @@ class imageScreen extends StatefulWidget {
   final String? docId;
   final String? gender;
 
-  imageScreen({this.dpImage, this.docId,this.gender});
+  imageScreen({this.dpImage, this.docId, this.gender});
 
   @override
   State<imageScreen> createState() => _imageScreenState();
@@ -106,15 +106,17 @@ class _imageScreenState extends State<imageScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
-              child: (widget.dpImage != null && widget.dpImage!='')
+              child: (widget.dpImage != null && widget.dpImage != '')
                   ? CircleAvatar(
                       backgroundImage: NetworkImage(widget.dpImage!),
                       radius: displayWidth(context) * 0.05,
                     )
                   : CircleAvatar(
-                    backgroundImage: AssetImage(widget.gender=='Male'?'images/male.jpg':'images/female.jpg'),
-                    radius: displayWidth(context) * 0.05,
-                  ),
+                      backgroundImage: AssetImage(widget.gender == 'Male'
+                          ? 'images/male.jpg'
+                          : 'images/female.jpg'),
+                      radius: displayWidth(context) * 0.05,
+                    ),
             ),
           ],
           title: Text(
@@ -250,11 +252,10 @@ class _imageScreenState extends State<imageScreen> {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (!snapshot.hasData) {
                     return Center(
-                      child: SpinKitFadingCube(
-                        color: Colors.orange[300]!,
-                        size: displayWidth(context)*0.08,
-                      )
-                    );
+                        child: SpinKitFadingCube(
+                      color: Colors.orange[300]!,
+                      size: displayWidth(context) * 0.08,
+                    ));
                   }
                   return GridView.builder(
                       itemCount: snapshot.data.docs.length,

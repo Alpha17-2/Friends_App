@@ -12,9 +12,8 @@ class welcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         centerTitle: true,
-       // title: CircleAvatar(backgroundImage: AssetImage('images/logo.png'),backgroundColor: Colors.white,radius: displayWidth(context)*0.08,),
+        // title: CircleAvatar(backgroundImage: AssetImage('images/logo.png'),backgroundColor: Colors.white,radius: displayWidth(context)*0.08,),
         elevation: 0,
         backgroundColor: Colors.orange[600],
       ),
@@ -32,7 +31,8 @@ class welcomeScreen extends StatelessWidget {
               ),
               painter: CurvePainter(),
             ),
-            Opacity(opacity: 0.0, child: Divider()),Opacity(opacity: 0.0,child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -45,7 +45,8 @@ class welcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Opacity(opacity: 0.0, child: Divider()),Opacity(opacity: 0.0,child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -97,7 +98,7 @@ class welcomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Opacity(opacity: 0.0,child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -149,14 +150,19 @@ class welcomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Opacity(opacity: 0.0,child: Divider()),
-            Opacity(opacity: 0.0,child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
+            Opacity(opacity: 0.0, child: Divider()),
             TextButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigo)),
-              onPressed: () => _auth.signOut(), child: Text('LOGOUT',style: TextStyle(
-              color: Colors.white,
-              fontSize: displayWidth(context)*0.045,
-            ),))
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.indigo)),
+                onPressed: () => _auth.signOut(),
+                child: Text(
+                  'LOGOUT',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: displayWidth(context) * 0.045,
+                  ),
+                ))
           ],
         ),
       ),

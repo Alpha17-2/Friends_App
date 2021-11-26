@@ -44,7 +44,6 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     List<Friend> allFriends = Provider.of<FriendsManager>(context).fetchList;
     List<Friend> bestFriends =
         allFriends.where((element) => element.isBestFriend!).toList();
@@ -395,24 +394,28 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                             : closeFriends[index]);
                               },
                             )
-                      : (displayList.length==0)?Center(child: Padding(
-                        padding: const EdgeInsets.only(bottom:30.0),
-                        child: Text('No friends found'),
-                      ),)
-                      :GridView.builder(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 25,
-                            mainAxisSpacing: 5,
-                            //childAspectRatio: 0.5
-                          ),
-                          itemCount: displayList.length,
-                          itemBuilder: (context, index) {
-                            return showMyFriends(context, displayList[index]);
-                          },
-                        ),
+                      : (displayList.length == 0)
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 30.0),
+                                child: Text('No friends found'),
+                              ),
+                            )
+                          : GridView.builder(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 25,
+                                mainAxisSpacing: 5,
+                                //childAspectRatio: 0.5
+                              ),
+                              itemCount: displayList.length,
+                              itemBuilder: (context, index) {
+                                return showMyFriends(
+                                    context, displayList[index]);
+                              },
+                            ),
                 ))
           ],
         ));
