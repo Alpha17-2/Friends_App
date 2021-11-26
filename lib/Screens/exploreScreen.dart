@@ -293,8 +293,8 @@ class _exploreScreenState extends State<exploreScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'Dancing',
-                  wordSpacing: 2.2,
+                  fontFamily: 'Kalam',
+                  wordSpacing: 1,
                   fontWeight: FontWeight.w500,
                   fontSize: displayWidth(context) * 0.058,
                 ),

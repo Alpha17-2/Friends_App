@@ -91,3 +91,7 @@ flutter:
     - family: Zen
       fonts:
         - asset: fonts/Zen.ttf
+
+    - family: Kalam
+      fonts:
+        - asset: fonts/Kalam.ttf

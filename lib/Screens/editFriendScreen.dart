@@ -78,9 +78,9 @@ class _editFriendScreenState extends State<editFriendScreen> {
       listOfInterests[initInterest[i]] = initInterest[i];
     }
     isMale = widget.f!.gender == "Male" ? true : false;
-    school = TextEditingController();
-    college = TextEditingController();
-    workAt = TextEditingController();
+    school = TextEditingController(text: widget.f!.school);
+    college = TextEditingController(text: widget.f!.college);
+    workAt = TextEditingController(text: widget.f!.work);
     interest = TextEditingController();
     phone = TextEditingController(text: widget.f!.contactNumber);
     title = TextEditingController(text: widget.f!.title);
