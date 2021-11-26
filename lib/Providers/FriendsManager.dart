@@ -164,7 +164,6 @@ class FriendsManager extends ChangeNotifier {
               'isBestFriend': friend.isBestFriend,
               'isCloseFriend': friend.isCloseFriend,
               'title': friend.title,
-              'images': friend.interests,
               'dob': friend.dob,
               'education': friend.education,
               'gender': friend.gender,
