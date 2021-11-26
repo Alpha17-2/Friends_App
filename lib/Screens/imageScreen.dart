@@ -262,7 +262,7 @@ class _imageScreenState extends State<imageScreen> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 0.6,
-                        crossAxisSpacing: 5,
+                        crossAxisSpacing: 15,
                         mainAxisSpacing: 10,
                       ),
                       itemBuilder: (context, index) {

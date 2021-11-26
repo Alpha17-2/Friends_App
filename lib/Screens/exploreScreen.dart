@@ -80,10 +80,10 @@ class _exploreScreenState extends State<exploreScreen> {
               child: (f.dp != '')
                   ? CircleAvatar(
                       backgroundImage: NetworkImage(f.dp!),
-                      radius: displayWidth(context) * 0.065,
+                      radius: displayWidth(context) * 0.072,
                     )
                   : CircleAvatar(
-                      radius: displayWidth(context) * 0.065,
+                      radius: displayWidth(context) * 0.072,
                       backgroundImage: AssetImage((f.gender == 'Male')
                           ? 'images/male.jpg'
                           : 'images/female.jpg'),
@@ -92,7 +92,7 @@ class _exploreScreenState extends State<exploreScreen> {
           ),
           Opacity(
             child: Divider(
-              height: 1,
+              height: displayHeight(context)*0.0065,
             ),
             opacity: 0.0,
           ),
@@ -101,7 +101,7 @@ class _exploreScreenState extends State<exploreScreen> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: Colors.black54,
-                fontSize: displayWidth(context) * 0.032,
+                fontSize: displayWidth(context) * 0.0335,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1),
           ),
@@ -259,7 +259,7 @@ class _exploreScreenState extends State<exploreScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: displayHeight(context) * 0.12,
+                height: displayHeight(context) * 0.14,
                 width: displayWidth(context),
                 child: (bestFriends.length == 0)
                     ? Center(

@@ -118,7 +118,13 @@ class _editFriendScreenState extends State<editFriendScreen> {
     }
 
     dpNotExist() {
-      return CircleAvatar(
+      return (widget.f!.dp!='')?CircleAvatar(
+        backgroundImage: NetworkImage(widget.f!.dp!),
+        radius: displayWidth(context) * 0.18,
+      ):
+      
+      
+      CircleAvatar(
         backgroundColor: Colors.grey[200],
         backgroundImage:
             AssetImage((isMale ? 'images/male.jpg' : 'images/female.jpg')),
