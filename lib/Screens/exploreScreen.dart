@@ -68,22 +68,26 @@ class _exploreScreenState extends State<exploreScreen> {
           GestureDetector(
             onTap: () {
               Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => friendDetailScreen(
-                            friend: f,
-                          ),
-                        ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => friendDetailScreen(
+                      friend: f,
+                    ),
+                  ));
             },
             child: Hero(
               tag: f.docId!,
-              child: (f.dp!='')?CircleAvatar(
-                backgroundImage: NetworkImage(f.dp!),
-                radius: displayWidth(context) * 0.065,
-              ):CircleAvatar(
-                radius: displayWidth(context) * 0.065,
-                backgroundImage: AssetImage((f.gender=='Male')?'images/male.jpg':'images/female.jpg'),
-              ),
+              child: (f.dp != '')
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(f.dp!),
+                      radius: displayWidth(context) * 0.065,
+                    )
+                  : CircleAvatar(
+                      radius: displayWidth(context) * 0.065,
+                      backgroundImage: AssetImage((f.gender == 'Male')
+                          ? 'images/male.jpg'
+                          : 'images/female.jpg'),
+                    ),
             ),
           ),
           Opacity(
@@ -97,7 +101,7 @@ class _exploreScreenState extends State<exploreScreen> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: Colors.black54,
-                fontSize: displayWidth(context)*0.032,
+                fontSize: displayWidth(context) * 0.032,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1),
           ),
@@ -170,7 +174,8 @@ class _exploreScreenState extends State<exploreScreen> {
                                               return null;
                                             },
                                             decoration: InputDecoration(
-                                              hintText: currentUser!.displayName,
+                                              hintText:
+                                                  currentUser!.displayName,
                                               labelText: 'Display name',
                                             ),
                                           ),
@@ -180,7 +185,8 @@ class _exploreScreenState extends State<exploreScreen> {
                                               onPressed: () {
                                                 _auth
                                                     .changeDisplayName(
-                                                        displayNameController.text
+                                                        displayNameController
+                                                            .text
                                                             .toString())
                                                     .then((value) {
                                                   Navigator.pop(context);

@@ -23,7 +23,6 @@ class Friend {
   final bool? isCloseFriend;
 
   Friend(
-
       {this.title,
       this.college,
       this.school,

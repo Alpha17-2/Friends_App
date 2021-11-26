@@ -4,7 +4,6 @@ class AuthOptions extends ChangeNotifier {
   bool loginState = true;
   bool viewPass = false;
 
-
   bool get fetchObscureTextInfo {
     return viewPass;
   }

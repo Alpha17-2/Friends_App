@@ -169,7 +169,6 @@ class _addFriendScreenState extends State<addFriendScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextFormField(
-                        
                         controller: interest,
                         toolbarOptions: ToolbarOptions(
                             copy: true,
@@ -272,7 +271,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 work: workAt!.text.toString(),
                                 about: about!.text.toString(),
                                 contactNumber: phone!.text.toString(),
-                                dob:dob!.text.isEmpty?"2000-01-01":dob!.text.toString(),
+                                dob: dob!.text.isEmpty
+                                    ? "2000-01-01"
+                                    : dob!.text.toString(),
                                 docId: '',
                                 dp: '',
                                 isBestFriend: false,
@@ -655,10 +656,9 @@ class _addFriendScreenState extends State<addFriendScreen> {
                               child: Center(
                                 child: TextFormField(
                                   //expands: true,
-                                  maxLength : 50,
+                                  maxLength: 50,
                                   controller: school,
                                   decoration: InputDecoration(
-
                                     hintStyle: TextStyle(
                                         fontSize: displayWidth(context) * 0.04),
                                     hintText: 'School\'s name',
@@ -939,10 +939,11 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                   keyboardType: TextInputType.phone,
                                   validator: (value) {
                                     if (value!.length == 0)
-                                            return null;
+                                      return null;
                                     else if (value.length != 10)
                                       return 'Mobile number should contain 10 digits';
-                                    else return null;
+                                    else
+                                      return null;
                                   },
                                   decoration: InputDecoration(
                                     hintStyle: TextStyle(
@@ -989,8 +990,8 @@ class _addFriendScreenState extends State<addFriendScreen> {
                                 child: TextFormField(
                                   controller: email,
                                   validator: (value) {
-                                     if (value == '') return null;
-                                    
+                                    if (value == '')
+                                      return null;
                                     else {
                                       bool emailValid = RegExp(
                                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")

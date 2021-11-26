@@ -55,8 +55,7 @@ class homeScreen extends StatelessWidget {
           iconSize: iconSize,
           showUnselectedLabels: true,
           showSelectedLabels: true,
-        )
-        ,
+        ),
         body: screens[currentScreen]);
   }
 }
