@@ -395,7 +395,11 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                                             : closeFriends[index]);
                               },
                             )
-                      : GridView.builder(
+                      : (displayList.length==0)?Center(child: Padding(
+                        padding: const EdgeInsets.only(bottom:30.0),
+                        child: Text('No friends found'),
+                      ),)
+                      :GridView.builder(
                           padding: EdgeInsets.only(left: 10, right: 10),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
