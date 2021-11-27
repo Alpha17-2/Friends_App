@@ -100,7 +100,7 @@ class _exploreScreenState extends State<exploreScreen> {
             f.title!,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                color: Colors.black54,
+                color: Colors.black87,
                 fontSize: displayWidth(context) * 0.0335,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1),
@@ -292,10 +292,10 @@ class _exploreScreenState extends State<exploreScreen> {
                 quotes[randomInddex].quote!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.black54,
                   fontFamily: 'Kalam',
                   wordSpacing: 1,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                   fontSize: displayWidth(context) * 0.058,
                 ),
               ),

@@ -209,22 +209,24 @@ class _imageScreenState extends State<imageScreen> {
                                           MaterialStateProperty.all(
                                               Colors.green[300])),
                                   onPressed: () async {
+                                    setState(() {
+                                      isUploading = true;
+                                    });
+                                     Navigator.pop(context);
                                     Provider.of<FriendsManager>(context,
                                             listen: false)
                                         .updateImageList(currentUser!.uid,
                                             widget.docId!, _imageFile)
                                         .then((value) {
-                                      Navigator.pop(context);
+                                          setState(() {
+                                            isUploading = false;
+                                          });
+                                     
                                     });
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(
-                                          'Successfully uploaded image ! It may take some time to reflect changes across the app'),
-                                      duration: Duration(seconds: 10),
-                                    ));
+
                                   },
                                   child: Text(
-                                    'Yes',
+                                    (isUploading!)?'Uploading...':'Yes',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 )),
@@ -241,7 +243,20 @@ class _imageScreenState extends State<imageScreen> {
           height: displayHeight(context),
           width: displayWidth(context),
           color: Colors.white,
-          child: Padding(
+          child: (isUploading!)?Center(
+            child:  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SpinKitHourGlass(color: Colors.indigo,size: displayWidth(context)*0.15,),
+                  Opacity(opacity: 0.0,child: Divider(),),
+                  Text('Uploading ...',style: TextStyle(
+                    fontSize: displayWidth(context)*0.045,
+                    color: Colors.teal,fontWeight: FontWeight.bold),)
+                ],
+              ),
+            
+          ):Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 12),
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
