@@ -25,9 +25,9 @@ class FriendsManager extends ChangeNotifier {
       Map<String, Friend> temp = {};
 
       final String api = constants().fetchApi + 'users/${uid}.json';
-     
+
       final response = await http.get(Uri.parse(api));
-      print(response.statusCode);
+      
       if (json.decode(response.body) == null) {
         friendsMap = temp;
         notifyListeners();
@@ -35,9 +35,8 @@ class FriendsManager extends ChangeNotifier {
       }
       final Map<String, dynamic> data =
           json.decode(response.body) as Map<String, dynamic>;
-      print(data.isEmpty);
+      
       if (data.length != 0) {
-        
         data.forEach((key, value) {
           temp[key] = Friend(
             isBestFriend: value['isBestFriend'],
@@ -65,7 +64,7 @@ class FriendsManager extends ChangeNotifier {
           );
         });
       }
-      
+
       friendsMap = temp;
       notifyListeners();
     } catch (error) {
@@ -154,6 +153,8 @@ class FriendsManager extends ChangeNotifier {
         print(error);
       }
     } else {
+      print('entry here');
+      print(friend.dp);
       try {
         final String api = constants().fetchApi + 'users/${uid}/${docId}.json';
         http.patch(Uri.parse(api),

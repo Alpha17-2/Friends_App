@@ -80,10 +80,10 @@ class _exploreScreenState extends State<exploreScreen> {
               child: (f.dp != '')
                   ? CircleAvatar(
                       backgroundImage: NetworkImage(f.dp!),
-                      radius: displayWidth(context) * 0.072,
+                      radius: displayWidth(context) * 0.08,
                     )
                   : CircleAvatar(
-                      radius: displayWidth(context) * 0.072,
+                      radius: displayWidth(context) * 0.08,
                       backgroundImage: AssetImage((f.gender == 'Male')
                           ? 'images/male.jpg'
                           : 'images/female.jpg'),
@@ -257,7 +257,7 @@ class _exploreScreenState extends State<exploreScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top:8.0,bottom: 8.0,left: 1),
               child: Container(
                 height: displayHeight(context) * 0.14,
                 width: displayWidth(context),
@@ -274,7 +274,7 @@ class _exploreScreenState extends State<exploreScreen> {
                           child: ListView.builder(
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
+                                padding: const EdgeInsets.only(right: 20.0),
                                 child: displayBestFriends(
                                     context, bestFriends[index]),
                               );
@@ -296,7 +296,7 @@ class _exploreScreenState extends State<exploreScreen> {
                   fontFamily: 'Kalam',
                   wordSpacing: 1,
                   fontWeight: FontWeight.bold,
-                  fontSize: displayWidth(context) * 0.058,
+                  fontSize: displayWidth(context) * 0.055,
                 ),
               ),
             ),

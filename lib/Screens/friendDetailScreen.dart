@@ -36,7 +36,9 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
     super.initState();
     isDrawerOpen = false;
   }
-
+  final Shader linearGradient = LinearGradient(
+      colors: <Color>[Colors.indigo[300]!, Colors.indigo[400]!,Colors.indigo[700]!],
+    ).createShader(new Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
   final List<String> months = [
     'January',
     'February',
@@ -143,7 +145,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           elevation: 10,
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.edit, color: Colors.yellowAccent),
+                            child: Icon(Icons.edit, color: Color(0xfb32174d)),
                           )),
                     ),
                     InkWell(
@@ -587,10 +589,12 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               '${f.title!}, ${age.toString()}',
                               style: TextStyle(
                                   letterSpacing: 0.2,
-                                  color: Colors.black87,
+                                 // color: Colors.orange[700],
+                                 // color: Color(0xFB907EEC),
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: "Zen",
-                                  fontSize: displayWidth(context) * 0.048),
+                                  foreground: new Paint()..shader = linearGradient,
+                                  //fontFamily: "Zen",
+                                  fontSize: displayWidth(context) * 0.052),
                             ),
                             Text(
                               f.gender!,
@@ -612,7 +616,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.45,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -624,7 +628,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.032,
+                            fontSize: displayWidth(context) * 0.035,
                           ),
                         ),
                         Opacity(
@@ -638,7 +642,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black87,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.45,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -652,7 +656,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.032,
+                            fontSize: displayWidth(context) * 0.035,
                           ),
                         ),
                         Opacity(
@@ -666,7 +670,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black87,
                               letterSpacing: 0.45,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -680,7 +684,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.032,
+                            fontSize: displayWidth(context) * 0.035,
                           ),
                         ),
                         Opacity(
@@ -694,7 +698,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black87,
                               letterSpacing: 0.45,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -707,8 +711,8 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                     '${f.profession} at ${f.work}',
                                     style: TextStyle(
                                       color: Colors.grey[500],
-                                      letterSpacing: 0.45,
-                                      fontSize: displayWidth(context) * 0.032,
+                                      letterSpacing: 0.2,
+                                      fontSize: displayWidth(context) * 0.035,
                                     ),
                                   )
                                 : Text(
@@ -716,7 +720,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                     style: TextStyle(
                                       color: Colors.grey[500],
                                       letterSpacing: 0.45,
-                                      fontSize: displayWidth(context) * 0.032,
+                                      fontSize: displayWidth(context) * 0.035,
                                     ),
                                   )
                             : Text(
@@ -724,7 +728,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                 style: TextStyle(
                                   color: Colors.grey[500],
                                   letterSpacing: 0.45,
-                                  fontSize: displayWidth(context) * 0.032,
+                                  fontSize: displayWidth(context) * 0.035,
                                 ),
                               ),
                         Opacity(
@@ -738,7 +742,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.45,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -750,7 +754,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                           style: TextStyle(
                             color: Colors.grey[500],
                             letterSpacing: 0.45,
-                            fontSize: displayWidth(context) * 0.032,
+                            fontSize: displayWidth(context) * 0.035,
                           ),
                         ),
                         Opacity(
@@ -764,7 +768,7 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                               color: Colors.black,
                               letterSpacing: 0.45,
                               fontWeight: FontWeight.bold,
-                              fontSize: displayWidth(context) * 0.035),
+                              fontSize: displayWidth(context) * 0.038),
                         ),
                         Opacity(
                             opacity: 0.0,
@@ -783,16 +787,18 @@ class _friendDetailScreenState extends State<friendDetailScreen> {
                                 padding: const EdgeInsets.only(right: 10.0),
                                 child: Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  elevation: 5,
+                                      borderRadius: BorderRadius.circular(17.5)),
+                                  elevation: 3.5,
                                   color: cardColors[value],
                                   child: Center(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
+                                      padding: const EdgeInsets.only(left:6.0,right:6.0,top: 2,bottom: 2),
                                       child: Text(
                                         interests![index],
                                         style: TextStyle(
                                             color: Colors.black45,
+                                            letterSpacing: 0.35,
+                                            fontSize: displayWidth(context)*0.03,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),

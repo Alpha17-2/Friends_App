@@ -362,9 +362,9 @@ class _myFriendsScreenState extends State<myFriendsScreen> {
                   ),
                 )),
             Positioned(
-                top: displayHeight(context) * 0.38,
+                top: displayHeight(context) * 0.375,
                 child: Container(
-                  height: displayHeight(context) * 0.54,
+                  height: displayHeight(context) * 0.56,
                   width: displayWidth(context),
                   //color: Colors.pinkAccent,
                   child: (searchFriend!.text.toString() == '')
