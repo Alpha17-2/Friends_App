@@ -55,10 +55,9 @@ Subhojeet Sahoo
 ## Contribute
 
 1. Check out the issues .
-2. Comment 'want to work on this' to work on the particular issue and wait for the admin to assign you with the task .
-3. After you are assigned with a task fork the the project
-4. Make required changes and commit (git commit -m 'Added some feature or fixed this issue') .
-5. Create new Pull Request
+2. Comment 'want to work on this' to work on the particular issue and wait for the admin to assign you with the task.
+3. Make required changes and commit (git commit -m 'Added some feature or fixed this issue').
+4. Create new Pull Request
 
 ## Happy Fluttering 
 
