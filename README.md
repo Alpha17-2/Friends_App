@@ -8,6 +8,10 @@ Flutter made app dedicated to friends .
 
 | <img src = "snaps/5.png" height = "400em" /> || <img src = "snaps/1.png" height = "400em" /> || <img src = "snaps/2.png" height = "400em" /> || <img src = "snaps/3.png" height = "400em" /> || <img src = "snaps/4.png" height = "400em"/>
 
+## Download
+
+<a href='https://play.google.com/store/apps/details?id=com.Alpha.Friends_App'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
 ## Requirements
 
 * Dart sdk: ">=2.12.0-0 <3.0.0
