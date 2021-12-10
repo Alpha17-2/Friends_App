@@ -225,7 +225,7 @@ class _exploreScreenState extends State<exploreScreen> {
                                 ),
                               ),
                               Text(
-                                currentUser!.displayName!,
+                                currentUser!.displayName==null?'User':currentUser!.displayName!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
