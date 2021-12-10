@@ -169,7 +169,7 @@ class _exploreScreenState extends State<exploreScreen> {
                                           child: TextFormField(
                                             controller: displayNameController,
                                             validator: (value) {
-                                              if (value!.isEmpty)
+                                              if (value!.isEmpty || value=='')
                                                 return 'Cannot be empty';
                                               return null;
                                             },
@@ -183,7 +183,8 @@ class _exploreScreenState extends State<exploreScreen> {
                                         actions: [
                                           TextButton(
                                               onPressed: () {
-                                                _auth
+                                                if(_keyForm.currentState!.validate()){
+                                                  _auth
                                                     .changeDisplayName(
                                                         displayNameController
                                                             .text
@@ -191,6 +192,8 @@ class _exploreScreenState extends State<exploreScreen> {
                                                     .then((value) {
                                                   Navigator.pop(context);
                                                 });
+                                                }
+                                                
                                               },
                                               child: Text('Submit'))
                                         ],
